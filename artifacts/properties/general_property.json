@@ -1,0 +1,8 @@
+{
+  "//": "allowed browser names: ff, firefox, ch, chrome",
+  "browser": "ff",
+  "firefox_driver": "artifacts/drivers/geckodriver",
+  "chrome_driver": "artifacts/drivers/chromedriver",
+  "home_page_de": "https://www.app2drive.com",
+  "home_page_en": "https://www.app2drive.com/en"
+}
