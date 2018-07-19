@@ -6,6 +6,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import utils.JsonReader;
 
 import java.io.File;
@@ -19,7 +20,7 @@ public class A2Driver implements WebDriver {
 
     private WebDriver driver;
     private final String browserName;
-    private final int timeout = 30;
+
     private final String chromeDriverPath;
     private final String firefoxDriverPath;
 
