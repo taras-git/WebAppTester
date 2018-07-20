@@ -4,6 +4,7 @@ import driver.A2Driver;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
+import pages.BookingPage;
 import pages.HomePage;
 import utils.JsonReader;
 
@@ -13,12 +14,15 @@ import utils.JsonReader;
 public class BaseTestCase {
 
     protected WebDriver driver;
-    protected String homePageEn = JsonReader.getPropertyFileValue("home_page_en");
+
+    protected HomePage homePage;
+    protected BookingPage bookingPage;
 
     @BeforeTest
     public void getDriver() throws Exception {
         driver = new A2Driver(JsonReader.getPropertyFileValue("browser"));
         driver.manage().window().maximize();
+        initPages();
     }
 
     @AfterTest
@@ -26,9 +30,8 @@ public class BaseTestCase {
         driver.quit();
     }
 
-    public HomePage openHomePage() {
-        driver.get(homePageEn);
-
-        return new HomePage(this.driver);
+    public void initPages(){
+        homePage = new HomePage(driver);
+        bookingPage = new BookingPage(driver);
     }
 }
