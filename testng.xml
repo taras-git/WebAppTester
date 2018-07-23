@@ -3,7 +3,7 @@
 
 <suite name="A2D_Test" verbose="1">
 
-    <parameter name="browser" value="firefox" />
+    <parameter name="browser" value="chrome" />
 
     <test name="Test">
         <classes>

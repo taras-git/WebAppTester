@@ -1,8 +1,13 @@
 {
   "//": "allowed browser names: ff, firefox, ch, chrome",
-  "browser": "ch",
-  "firefox_driver": "artifacts/drivers/geckodriver",
-  "chrome_driver": "artifacts/drivers/chromedriver",
+  "browser": "ff",
+  "firefox_driver_linux": "artifacts/drivers/linux/geckodriver",
+  "chrome_driver_linux": "artifacts/drivers/linux/chromedriver",
+  "firefox_driver_macos": "artifacts/drivers/macos/geckodriver",
+  "chrome_driver_macos": "artifacts/drivers/macos/chromedriver",
+  "firefox_driver_windows": "artifacts/drivers/windows/geckodriver.exe",
+  "chrome_driver_windows": "artifacts/drivers/windows/chromedriver.exe",
+
   "home_page_de": "https://www.app2drive.com",
   "home_page_en": "https://www.app2drive.com/en"
 }
