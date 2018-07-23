@@ -6,12 +6,15 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import utils.JsonReader;
 
 import java.io.File;
 import java.util.List;
 import java.util.Set;
+
+import static utils.OsName.isMac;
+import static utils.OsName.isUnix;
+import static utils.OsName.isWindows;
 
 /**
  * Created by taras on 7/18/18.
@@ -21,12 +24,17 @@ public class A2Driver implements WebDriver {
     private WebDriver driver;
     private final String browserName;
 
-    private final String chromeDriverPath;
-    private final String firefoxDriverPath;
+    private String chromeDriverPath;
+    private String firefoxDriverPath;
+
+    private final String chromeDriverPathLinux = JsonReader.getPropertyFileValue("chrome_driver_linux");
+    private final String firefoxDriverPathLinux =JsonReader.getPropertyFileValue("firefox_driver_linux");
+    private final String chromeDriverPathMacos = JsonReader.getPropertyFileValue("chrome_driver_macos");
+    private final String firefoxDriverPathMacos = JsonReader.getPropertyFileValue("firefox_driver_macos");
+    private final String chromeDriverPathWindows = JsonReader.getPropertyFileValue("chrome_driver_windows");
+    private final String firefoxDriverPathWindows = JsonReader.getPropertyFileValue("firefox_driver_windows");
 
     public A2Driver(String browserName) {
-        chromeDriverPath = JsonReader.getPropertyFileValue("chrome_driver");
-        firefoxDriverPath = JsonReader.getPropertyFileValue("firefox_driver");
         this.browserName = browserName;
         this.driver = createDriver(browserName);
     }
@@ -43,10 +51,36 @@ public class A2Driver implements WebDriver {
         throw new RuntimeException ("invalid browser name, please check out property json file");
     }
 
+    private String getDriverPath(String browserName) {
+        if (browserName.equalsIgnoreCase("firefox") ||
+                browserName.equalsIgnoreCase("ff")) {
+            if (isUnix()) return firefoxDriverPathLinux;
+            if (isMac()) return firefoxDriverPathMacos;
+            if (isWindows()) return firefoxDriverPathWindows;
+        }
+
+        if (browserName.equalsIgnoreCase("chrome") ||
+                browserName.equalsIgnoreCase("ch")) {
+            if (isUnix()) return chromeDriverPathLinux;
+            if (isMac()) return chromeDriverPathMacos;
+            if (isWindows()) return chromeDriverPathWindows;
+        }
+
+        return null;
+    }
+
     private WebDriver chromeDriver() {
-        if (!new File(chromeDriverPath).exists())
+        chromeDriverPath = getDriverPath(this.browserName);
+
+        if (chromeDriverPath == null){
+            throw new RuntimeException
+                    ("chromeDriverPath is not correctly set, please check the property file");
+        }
+
+        if (!new File(chromeDriverPath).exists()) {
             throw new RuntimeException
                     ("chromedriver executable file does not exist!");
+        }
 
         try {
             System.setProperty("webdriver.chrome.driver", chromeDriverPath);
@@ -60,6 +94,13 @@ public class A2Driver implements WebDriver {
     }
 
     private WebDriver firefoxDriver() {
+        firefoxDriverPath = getDriverPath(this.browserName);
+
+        if (firefoxDriverPath == null){
+            throw new RuntimeException
+                    ("firefoxDriverPath is not correctly set, please check the property file");
+        }
+
         if (!new File(firefoxDriverPath).exists())
             throw new RuntimeException
                     ("firefox executable file does not exist!");
