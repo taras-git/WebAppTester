@@ -7,6 +7,7 @@ import org.testng.ITestResult;
 import org.testng.annotations.*;
 import pages.BookingPage;
 import pages.HomePage;
+import pages.RatesPage;
 import utils.JsonReader;
 
 import javax.imageio.ImageIO;
@@ -32,11 +33,12 @@ public class BaseTestCase {
 
     protected HomePage homePage;
     protected BookingPage bookingPage;
-
+    protected RatesPage ratesPage;
 
     public void initPages(){
         homePage = new HomePage(driver);
         bookingPage = new BookingPage(driver);
+        ratesPage = new RatesPage(driver);
     }
 
     @BeforeSuite
@@ -58,14 +60,15 @@ public class BaseTestCase {
         initPages();
     }
 
-    @AfterMethod
+    @AfterMethod(alwaysRun = true)
     public void closeBrowser(ITestResult result) {
         takeScreenshot(result);
         driver.quit();
     }
 
     private void takeScreenshot(ITestResult result) {
-        if(result.getStatus() == ITestResult.FAILURE) {
+        if(result.getStatus() == ITestResult.FAILURE ||
+                result.getStatus() == ITestResult.SKIP) {
             try {
                 takeScreenshotWithRobot(result, SCREENSHOTS_FOLDER);
                 System.out.println("Screenshot taken");
@@ -91,7 +94,7 @@ public class BaseTestCase {
     private String getTime(){
         LocalDateTime now = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy_MM_dd_HH_mm_ss");
-        return now.format(formatter).toString();
+        return now.format(formatter);
     }
 
     private void createScreenshotFolder(String screenshotFolder) {

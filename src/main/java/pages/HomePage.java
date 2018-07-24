@@ -4,6 +4,10 @@ import baseclasses.BasePage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import utils.JsonReader;
 
 /**
@@ -12,6 +16,12 @@ import utils.JsonReader;
 public class HomePage extends BasePage{
 
     protected String homePageEn = JsonReader.getPropertyFileValue("home_page_en");
+
+    @FindBy(xpath = "//nav[@id=\"top-navigation\"]//*[contains(text(), 'Book Vehicle')]")
+    WebElement bookVehicle;
+
+    @FindBy(xpath = "//ul[@id='menu-top-navigation-en-1']//a[contains(text(), 'Rates')]")
+    WebElement rates;
 
     public HomePage(WebDriver driver) {
         super(driver);
@@ -23,8 +33,10 @@ public class HomePage extends BasePage{
     }
 
     public void clickBookVehicle() {
-        WebElement bookVehicle=driver.findElement(By.xpath("//nav[@id=\"top-navigation\"]" +
-                "//*[contains(text(), 'Book Vehicle')]"));
         bookVehicle.click();
+    }
+
+    public void clickRates(){
+        rates.click();
     }
 }
