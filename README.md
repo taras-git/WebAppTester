@@ -25,3 +25,37 @@ Install these software and libraries:
 * [IntelliJIDEA](https://www.jetbrains.com/idea/) - Java IDE
 * [Maven](https://maven.apache.org/) - Dependency Management
 * [Selenium](https://www.seleniumhq.org/) - Web Application test tool
+
+
+## Page Object (PO) Pattern
+
+This framework uses PO to separate page classes from tests classes.
+There are 2 main base classes:
+    BaserPage.java
+    BaseTestCase.java
+
+Every page (HomePage, BookingPage...) is inhereted from BasePage.
+Every testcase is inhereted from BaseTestCase.
+
+All pages are instantiated in BaseTestCase.java:
+
+```
+    public void initPages(){
+        homePage = new HomePage(driver);
+        bookingPage = new BookingPage(driver);
+        ...
+    }
+```
+
+Doing this, writing the testcase becomes very straightforward:
+
+```
+    @Test
+    public void navigateToBookingPage() {
+        homePage.start()
+                .clickBookVehicle();
+        bookingPage.verifyBookingPageDisplayed();
+    }
+```
+
+
