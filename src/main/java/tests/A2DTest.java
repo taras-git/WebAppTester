@@ -15,4 +15,13 @@ public class A2DTest extends BaseTestCase {
 
         bookingPage.verifyBookingPageDisplayed();
     }
+
+    @Test
+    public void navigateToRatesPage() {
+        homePage.start()
+                .clickRates();
+
+        ratesPage.verifyRatesPageDisplayed();
+    }
+
 }
