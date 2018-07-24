@@ -7,6 +7,7 @@
   "chrome_driver_macos": "artifacts/drivers/macos/chromedriver",
   "firefox_driver_windows": "artifacts/drivers/windows/geckodriver.exe",
   "chrome_driver_windows": "artifacts/drivers/windows/chromedriver.exe",
+  "failed_tests_screenshot_folder": "test-output/screenshots/",
 
   "home_page_de": "https://www.app2drive.com",
   "home_page_en": "https://www.app2drive.com/en"
