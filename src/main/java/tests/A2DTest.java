@@ -37,6 +37,6 @@ public class A2DTest extends BaseTestCase {
         homePage.start()
                 .clickHowItWorks();
 
-        HowItWorksPage.verifyHow_it_worksPageDisplayed();
+        HowItWorksPage.verifyHowItWorksPageDisplayed();
     }
 }
