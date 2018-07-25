@@ -12,7 +12,6 @@ public class A2DTest extends BaseTestCase {
     public void navigateToBookingPage() {
         homePage.start()
                 .clickBookVehicle();
-
         bookingPage.verifyBookingPageDisplayed();
     }
 
@@ -20,7 +19,6 @@ public class A2DTest extends BaseTestCase {
     public void navigateToRatesPage() {
         homePage.start()
                 .clickRates();
-
         ratesPage.verifyRatesPageDisplayed();
     }
 
@@ -28,7 +26,6 @@ public class A2DTest extends BaseTestCase {
     public void navigateToFleetPage() {
         homePage.start()
                 .clickFleet();
-
         fleetPage.verifyFleetPageDisplayed();
     }
 
@@ -36,7 +33,6 @@ public class A2DTest extends BaseTestCase {
     public void navigateToHowItWorksPage() {
         homePage.start()
                 .clickHowItWorks();
-
-        HowItWorksPage.verifyHowItWorksPageDisplayed();
+        howItWorksPage.verifyHowItWorksPageDisplayed();
     }
 }

@@ -5,10 +5,7 @@ import org.openqa.selenium.WebDriver;
 import org.testng.ITestContext;
 import org.testng.ITestResult;
 import org.testng.annotations.*;
-import pages.BookingPage;
-import pages.FleetPage;
-import pages.HomePage;
-import pages.RatesPage;
+import pages.*;
 import utils.JsonReader;
 
 import javax.imageio.ImageIO;
@@ -36,12 +33,14 @@ public class BaseTestCase {
     protected BookingPage bookingPage;
     protected RatesPage ratesPage;
     protected FleetPage fleetPage;
+    protected HowItWorksPage howItWorksPage;
 
-    public void initPages(){
+    public void initPages(WebDriver driver){
         homePage = new HomePage(driver);
         bookingPage = new BookingPage(driver);
         ratesPage = new RatesPage(driver);
         fleetPage = new FleetPage(driver);
+        howItWorksPage = new HowItWorksPage(driver);
     }
 
     @BeforeSuite
@@ -60,7 +59,7 @@ public class BaseTestCase {
 
         driver = new A2Driver(browser);
         driver.manage().window().maximize();
-        initPages();
+        initPages(driver);
     }
 
     @AfterMethod(alwaysRun = true)
