@@ -65,7 +65,7 @@ public class A2DTest extends BaseTestCase {
         homePage.start()
                 .clickApplyAsPartner();
 
-        applyAsPartnerPage.verifyApplyAsPartnerPageDisplayed;
+        applyAsPartnerPage.verifyApplyAsPartnerPageDisplayed();
     }
 
     @Test
@@ -73,7 +73,7 @@ public class A2DTest extends BaseTestCase {
         homePage.start()
                 .clickCorporateMobility();
 
-        corporateMobilityPage.verifyCorporateMobilityPageDisplayed;
+        corporateMobilityPage.verifyCorporateMobilityPageDisplayed();
     }
 
     @Test
@@ -81,6 +81,6 @@ public class A2DTest extends BaseTestCase {
         homePage.start()
                 .clickContact();
 
-        contactPage.verifyContactPageDisplayed;
+        contactPage.verifyContactPageDisplayed();
     }
 }
