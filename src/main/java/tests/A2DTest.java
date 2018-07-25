@@ -24,4 +24,12 @@ public class A2DTest extends BaseTestCase {
         ratesPage.verifyRatesPageDisplayed();
     }
 
+    @Test
+    public void navigateToFleetPage() {
+        homePage.start()
+                .clickFleet();
+
+        fleetPage.verifyFleetPageDisplayed();
+    }
+
 }
