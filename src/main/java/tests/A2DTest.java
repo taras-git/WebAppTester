@@ -49,7 +49,7 @@ public class A2DTest extends BaseTestCase {
     }
 
     @Test
-    public void navigateToBlog90 {
+    public void navigateToBlog() {
         homePage.start()
                 .clickBlog();
 
