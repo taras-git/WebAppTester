@@ -33,10 +33,10 @@ public class A2DTest extends BaseTestCase {
     }
 
     @Test
-    public void navigateToHow_it_worksPage() {
+    public void navigateToHowItWorksPage() {
         homePage.start()
-                .clickHow_it_works();
+                .clickHowItWorks();
 
-        How_it_worksPage.verifyHow_it_worksPageDisplayed();
+        HowItWorksPage.verifyHow_it_worksPageDisplayed();
     }
 }
