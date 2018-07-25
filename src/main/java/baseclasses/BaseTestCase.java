@@ -35,6 +35,8 @@ public class BaseTestCase {
     protected FleetPage fleetPage;
     protected HowItWorksPage howItWorksPage;
     protected ContactPage contactPage;
+    protected BlogPage blogPage;
+    protected CompanyPage companyPage;
 
     public void initPages(WebDriver driver){
         homePage = new HomePage(driver);
@@ -43,6 +45,8 @@ public class BaseTestCase {
         fleetPage = new FleetPage(driver);
         howItWorksPage = new HowItWorksPage(driver);
         contactPage = new ContactPage(driver);
+        blogPage = new BlogPage(driver);
+        companyPage = new CompanyPage(driver);
     }
 
     @BeforeSuite
