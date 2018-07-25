@@ -2,6 +2,7 @@ package baseclasses;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 
@@ -18,4 +19,10 @@ public class BasePage {
         PageFactory.initElements(driver, this);
         this.wait = new WebDriverWait(driver, 10);
     }
+
+    public void verifyPageDisplayed(String textInUrl, String pageName) {
+        if (!wait.until(ExpectedConditions.urlContains(textInUrl)))
+            throw new RuntimeException(pageName + " page is not displayed");
+    }
+
 }
