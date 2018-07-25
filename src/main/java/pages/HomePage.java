@@ -39,4 +39,7 @@ public class HomePage extends BasePage{
     public void clickRates(){
         rates.click();
     }
+
+    public void clickFleet() {
+    }
 }
