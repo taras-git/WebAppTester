@@ -39,4 +39,20 @@ public class A2DTest extends BaseTestCase {
 
         HowItWorksPage.verifyHowItWorksPageDisplayed();
     }
+
+    @Test
+    public void navigateToCompanyPage() {
+        homePage.start()
+                .clickCompany();
+
+        companyPage.verifyCompanyPageDisplayed();
+    }
+
+    @Test
+    public void navigateToBlog() {
+        homePage.start()
+                .clickBlog();
+
+        blogPage.verifyBlogPageDisplayed();
+    }
 }
