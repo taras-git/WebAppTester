@@ -23,6 +23,9 @@ public class HomePage extends BasePage{
     @FindBy(xpath = "//ul[@id='menu-top-navigation-en-1']//a[contains(text(), 'Rates')]")
     WebElement rates;
 
+    @FindBy(xpath = "//ul[@id='menu-top-navigation-en-1']//a[contains(text(), 'Fleet')]")
+    WebElement fleet;
+
     public HomePage(WebDriver driver) {
         super(driver);
     }
@@ -41,5 +44,6 @@ public class HomePage extends BasePage{
     }
 
     public void clickFleet() {
+        fleet.click();
     }
 }
