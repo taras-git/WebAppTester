@@ -55,4 +55,36 @@ public class A2DTest extends BaseTestCase {
 
         blogPage.verifyBlogPageDisplayed();
     }
+
+    @Test
+    public void navigateToRegisterNowPage() {
+        homePage.start()
+                .clickRegisterNow();
+
+        registerNowPage.verifyRegisterNowPageDisplayed();
+    }
+
+    @Test
+    public void navigateToApplyAsPartnerPage() {
+        homePage.start()
+                .clickApplyAsPartner();
+
+        applyAsPartnerPage.verifyApplyAsPartnerPageDisplayed;
+    }
+
+    @Test
+    public void navigateToCorporateMobilityPage() {
+        homePage.start()
+                .clickCorporateMobility();
+
+        corporateMobilityPage.verifyCorporateMobilityPageDisplayed;
+    }
+
+    @Test
+    public void navigateToContactPage() {
+        homePage.start()
+                .clickContact();
+
+        contactPage.verifyContactPageDisplayed;
+    }
 }
