@@ -53,6 +53,6 @@ public class A2DTest extends BaseTestCase {
         homePage.start()
                 .clickBlog();
 
-        BlogPage.verifyBlogPageDisplayed();
+        blogPage.verifyBlogPageDisplayed();
     }
 }
