@@ -6,6 +6,7 @@ import org.testng.ITestContext;
 import org.testng.ITestResult;
 import org.testng.annotations.*;
 import pages.BookingPage;
+import pages.FleetPage;
 import pages.HomePage;
 import pages.RatesPage;
 import utils.JsonReader;
@@ -34,11 +35,13 @@ public class BaseTestCase {
     protected HomePage homePage;
     protected BookingPage bookingPage;
     protected RatesPage ratesPage;
+    protected FleetPage fleetPage;
 
     public void initPages(){
         homePage = new HomePage(driver);
         bookingPage = new BookingPage(driver);
         ratesPage = new RatesPage(driver);
+        fleetPage = new FleetPage(driver);
     }
 
     @BeforeSuite
