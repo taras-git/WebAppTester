@@ -40,7 +40,6 @@ public class A2DTest extends BaseTestCase {
     public void navigateToCompanyPage() {
         homePage.start()
                 .clickCompany();
-
         companyPage.verifyCompanyPageDisplayed();
     }
 
@@ -48,7 +47,6 @@ public class A2DTest extends BaseTestCase {
     public void navigateToBlog() {
         homePage.start()
                 .clickBlog();
-
         blogPage.verifyBlogPageDisplayed();
     }
 }
