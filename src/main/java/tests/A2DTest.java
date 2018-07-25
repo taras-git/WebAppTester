@@ -32,4 +32,11 @@ public class A2DTest extends BaseTestCase {
         fleetPage.verifyFleetPageDisplayed();
     }
 
+    @Test
+    public void navigateToHowItWorksPage() {
+        homePage.start()
+                .clickHowItWorks();
+
+        HowItWorksPage.verifyHowItWorksPageDisplayed();
+    }
 }
