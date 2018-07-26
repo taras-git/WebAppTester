@@ -63,4 +63,20 @@ public class HomePage extends BasePage{
     public void clickBlog() {
         blog.click();
     }
+
+    public void clickRegisterNow() {
+        //TODO create method
+    }
+
+    public void clickApplyAsPartner() {
+        //TODO create method
+    }
+
+    public void clickCorporateMobility() {
+        //TODO create method
+    }
+
+    public void clickContact() {
+        //TODO create method
+    }
 }
