@@ -10,6 +10,6 @@ public class CorporateMobility extends BasePage {
     }
 
     public void verifyCorporateMobilityPageDisplayed() {
-        super.verifyPageDisplayed("CORPORATE", "CorporateMobiity");
+        super.verifyPageDisplayed("become_a_corporate_customer", "CorporateMobiity");
     }
 }

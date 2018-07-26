@@ -38,8 +38,8 @@ public class BaseTestCase {
     protected BlogPage blogPage;
     protected CompanyPage companyPage;
     protected RegisterNowPage registerNowPage;
-    protected ApplyAsPartner applyAsPartner;
-    protected CorporateMobility corporateMobility;
+    protected ApplyAsPartnerPage applyAsPartnerPage;
+    protected CorporateMobilityPage corporateMobilityPage;
 
     public void initPages(WebDriver driver){
         homePage = new HomePage(driver);
@@ -51,8 +51,8 @@ public class BaseTestCase {
         blogPage = new BlogPage(driver);
         companyPage = new CompanyPage(driver);
         registerNowPage = new RegisterNowPage(driver);
-        applyAsPartner = new ApplyAsPartner(driver);
-        corporateMobility = new CorporateMobility(driver);
+        applyAsPartnerPage = new ApplyAsPartnerPage(driver);
+        corporateMobilityPage = new CorporateMobilityPage(driver);
     }
 
     @BeforeSuite
