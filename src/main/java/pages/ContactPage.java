@@ -1,6 +1,7 @@
 package pages;
 
 import baseclasses.BasePage;
+import org.openqa.selenium.WebDriver;
 
 public class ContactPage extends BasePage {
 
