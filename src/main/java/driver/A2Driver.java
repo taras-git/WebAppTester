@@ -1,11 +1,11 @@
 package driver;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.firefox.FirefoxProfile;
 import utils.JsonReader;
 
 import java.io.File;
@@ -19,7 +19,7 @@ import static utils.OsName.isWindows;
 /**
  * Created by taras on 7/18/18.
  */
-public class A2Driver implements WebDriver {
+public class A2Driver implements WebDriver{
 
     private WebDriver driver;
     private final String browserName;
@@ -86,6 +86,7 @@ public class A2Driver implements WebDriver {
             System.setProperty("webdriver.chrome.driver", chromeDriverPath);
             ChromeOptions options = new ChromeOptions();
             options.addArguments("--start-maximised");
+            options.addArguments("--disable-local-storage");
             return new ChromeDriver();
         } catch (Exception ex) {
             throw new RuntimeException
@@ -107,7 +108,18 @@ public class A2Driver implements WebDriver {
 
         try {
             System.setProperty("webdriver.gecko.driver", firefoxDriverPath);
-            return new FirefoxDriver();
+            FirefoxProfile ffprofile = new FirefoxProfile();
+            ffprofile.setPreference("network.cookie.cookieBehavior", 0);
+            // disable push notifications
+            ffprofile.setPreference("dom.webnotifications.enabled", false);
+            ffprofile.setPreference("geo.prompt.testing", false);
+            ffprofile.setPreference("geo.prompt.testing.allow", false);
+            ffprofile.setPreference("geo.enabled", false);
+            FirefoxOptions options = new FirefoxOptions();
+            options.setProfile(ffprofile);
+
+            return new FirefoxDriver(options);
+
         } catch (Exception ex) {
             throw new RuntimeException
                     ("could not create firefox driver");
