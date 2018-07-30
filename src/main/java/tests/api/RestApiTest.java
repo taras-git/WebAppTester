@@ -48,11 +48,11 @@ public class RestApiTest {
     }
 
     private void siteIsUp(String url) {
-        get(url)//
-                .then()//
-                .contentType(ContentType.HTML)//
-                .and()//
-                .assertThat()//
+        get(url)
+                .then()
+                .contentType(ContentType.HTML)
+                .and()
+                .assertThat()
                 .statusCode(200);
     }
 }
