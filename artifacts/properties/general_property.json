@@ -10,5 +10,9 @@
   "failed_tests_screenshot_folder": "test-output/screenshots/",
 
   "home_page_de": "https://www.app2drive.com",
-  "home_page_en": "https://www.app2drive.com/en"
+  "home_page_en": "https://www.app2drive.com/en",
+
+  "//": "Details to make a Booking",
+  "test_user_credentials": "YXBwMmRyaXZlckB5YWhvby5jb20lcyUzMzIyMTFSdSQkTWFOTiElcyUwMTAxMTk3MA==",
+  "location": "Aschaffenburg"
 }

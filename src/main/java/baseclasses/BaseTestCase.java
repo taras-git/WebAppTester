@@ -8,16 +8,8 @@ import org.testng.annotations.*;
 import pages.*;
 import utils.JsonReader;
 
-import javax.imageio.ImageIO;
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import static utils.Utils.createFolder;
+import static utils.Utils.takeScreenshot;
 
 
 /**
@@ -40,6 +32,8 @@ public class BaseTestCase {
     protected RegisterNowPage registerNowPage;
     protected ApplyAsPartnerPage applyAsPartnerPage;
     protected CorporateMobilityPage corporateMobilityPage;
+    protected ChooseCarPage chooseCarPage;
+    protected LoginPage loginPage;
 
     public void initPages(WebDriver driver){
         homePage = new HomePage(driver);
@@ -53,11 +47,13 @@ public class BaseTestCase {
         registerNowPage = new RegisterNowPage(driver);
         applyAsPartnerPage = new ApplyAsPartnerPage(driver);
         corporateMobilityPage = new CorporateMobilityPage(driver);
+        chooseCarPage = new ChooseCarPage(driver);
+        loginPage = new LoginPage(driver);
     }
 
     @BeforeSuite
     public void setup(){
-        createScreenshotFolder(SCREENSHOTS_FOLDER);
+        createFolder(SCREENSHOTS_FOLDER);
     }
 
     @BeforeMethod
@@ -76,48 +72,8 @@ public class BaseTestCase {
 
     @AfterMethod(alwaysRun = true)
     public void closeBrowser(ITestResult result) {
-        takeScreenshot(result);
+        takeScreenshot(result, SCREENSHOTS_FOLDER);
         driver.quit();
     }
 
-    private void takeScreenshot(ITestResult result) {
-        if(result.getStatus() == ITestResult.FAILURE ||
-                result.getStatus() == ITestResult.SKIP) {
-            try {
-                takeScreenshotWithRobot(result, SCREENSHOTS_FOLDER);
-                System.out.println("Screenshot taken");
-            } catch (Exception e) {
-                System.out.println("Exception while taking screenshot!");
-                e.printStackTrace();
-            }
-        }
-    }
-
-    private void takeScreenshotWithRobot(ITestResult result, String screenshotFolder) throws AWTException, IOException {
-        BufferedImage image = new Robot()
-                .createScreenCapture(new Rectangle(Toolkit
-                        .getDefaultToolkit()
-                        .getScreenSize()));
-        ImageIO.write(image, "png", new File(screenshotFolder
-                + result.getName()
-                + "_"
-                + getTime()
-                + "_scr.png"));
-    }
-
-    private String getTime(){
-        LocalDateTime now = LocalDateTime.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy_MM_dd_HH_mm_ss");
-        return now.format(formatter);
-    }
-
-    private void createScreenshotFolder(String screenshotFolder) {
-        Path dirsPath = Paths.get(screenshotFolder);
-        try {
-            Files.createDirectories(dirsPath);
-            System.out.println("Screenshot folder created");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 }
