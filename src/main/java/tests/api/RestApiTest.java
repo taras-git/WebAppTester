@@ -15,7 +15,7 @@ import utils.JsonReader;
  */
 public class RestApiTest {
 
-    private final Logger LOG = LoggerFactory.getLogger(this.getClass());
+    private static final Logger LOG = LoggerFactory.getLogger(RestApiTest.class);
 
     protected final String homePageEn = JsonReader.getPropertyFileValue("home_page_en");
     protected final String homePageDe = JsonReader.getPropertyFileValue("home_page_de");
@@ -23,7 +23,7 @@ public class RestApiTest {
     protected final String interaBasePage = JsonReader.getPropertyFileValue("intera_base_page");
     protected final String bookingPage = interaBasePage + "find_and_book_a_vehicle#/rental-data";
     protected final String findHotspotsPage = interaBasePage + "find_hotspots_and_stations";
-    protected final String ratesPage = interaBasePage + "raates";
+    protected final String ratesPage = interaBasePage + "rates";
 
     @DataProvider
     public Object[][] urls(){
