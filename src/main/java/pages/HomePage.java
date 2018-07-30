@@ -31,6 +31,18 @@ public class HomePage extends BasePage{
     @FindBy(xpath = "//ul[@id='menu-top-navigation-en-1']//a[contains(text(), 'Company')]")
     WebElement company;
 
+    @FindBy(xpath = "//a[contains(text(), 'Apply as partner')]")
+    WebElement applyAsPartner;
+
+    @FindBy(xpath = "//a[contains(text(), 'Contact')]")
+    WebElement contact;
+
+    @FindBy(xpath = "//a[contains(text(), 'Corporate Mobility')]")
+    WebElement corporateMobility;
+
+    @FindBy(xpath = "//a[contains(text(), 'Register now')]")
+    WebElement registerNow;
+
     public HomePage(WebDriver driver) {
         super(driver);
     }
@@ -65,18 +77,18 @@ public class HomePage extends BasePage{
     }
 
     public void clickRegisterNow() {
-        //TODO create method
+        registerNow.click();
     }
 
     public void clickApplyAsPartner() {
-        //TODO create method
+        applyAsPartner.click();
     }
 
     public void clickCorporateMobility() {
-        //TODO create method
+        corporateMobility.click();
     }
 
     public void clickContact() {
-        //TODO create method
+        contact.click();
     }
 }
