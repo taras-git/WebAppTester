@@ -29,7 +29,7 @@ Install these software and libraries:
 
 ## Page Object (PO) Pattern
 
-This framework uses PO to separate page classes from tests classes.
+This framework uses PO to separate page classes from tests.web classes.
 There are 2 main base classes:
     BaserPage.java
     BaseTestCase.java
