@@ -21,19 +21,28 @@ public class RestApiTest {
     protected final String homePageDe = JsonReader.getPropertyFileValue("home_page_de");
 
     protected final String interaBasePage = JsonReader.getPropertyFileValue("intera_base_page");
-    protected final String bookingPage = interaBasePage + "find_and_book_a_vehicle#/rental-data";
-    protected final String findHotspotsPage = interaBasePage + "find_hotspots_and_stations";
-    protected final String ratesPage = interaBasePage + "rates";
+    protected final String bookingPageEn = interaBasePage + "find_and_book_a_vehicle#/rental-data";
+    protected final String findHotspotsPageEn = interaBasePage + "find_hotspots_and_stations";
+    protected final String ratesPageEn = interaBasePage + "rates";
+    protected final String contactPageEn = interaBasePage + "siteservice,contact";
+    protected final String registrationPageEn = interaBasePage + "siteservice,register";
+    protected final String loginPageEn = interaBasePage + "login";
+    protected final String corporateMobilityPageEn = interaBasePage + "more,become_a_corporate_customer?open&TYPE=CORPORATE";
+
 
     @DataProvider
     public Object[][] urls(){
         return new Object[][]{
                 {homePageEn},
                 {homePageDe},
-                {bookingPage},
-                {findHotspotsPage},
-                {findHotspotsPage},
-                {ratesPage}
+                {bookingPageEn},
+                {findHotspotsPageEn},
+                {ratesPageEn},
+                {contactPageEn},
+                {registrationPageEn},
+                {loginPageEn},
+                {corporateMobilityPageEn}
+
         };
     }
 
