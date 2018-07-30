@@ -1,4 +1,4 @@
-package tests;
+package tests.web;
 
 import baseclasses.BaseTestCase;
 import org.testng.annotations.Test;
