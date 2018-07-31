@@ -28,6 +28,16 @@ public class RestApiTest {
     protected final String registrationPageEn = interaBasePage + "siteservice,register";
     protected final String loginPageEn = interaBasePage + "login";
     protected final String corporateMobilityPageEn = interaBasePage + "more,become_a_corporate_customer?open&TYPE=CORPORATE";
+    protected final String bookingPageDe = interaBasePage + "fahrzeug_finden_und_buchen#/rental-data";
+    protected final String findHotspotsPageDe = interaBasePage + "hotspots_und_stationen_finden";
+    protected final String ratesPageDe = interaBasePage + "tarife";
+    protected final String contactPageDe = interaBasePage + "siteservice,kontakt";
+    protected final String registrationPageDe = interaBasePage + "siteservice,kunde_werden";
+    protected final String loginPageDe = interaBasePage + "login";
+
+
+
+
 
 
     @DataProvider
@@ -41,7 +51,14 @@ public class RestApiTest {
                 {contactPageEn},
                 {registrationPageEn},
                 {loginPageEn},
-                {corporateMobilityPageEn}
+                {corporateMobilityPageEn},
+                {bookingPageDe},
+                {findHotspotsPageDe},
+                {ratesPageDe},
+                {contactPageDe},
+                {registrationPageDe},
+                {loginPageDe}
+
 
         };
     }
