@@ -14,17 +14,33 @@ import static utils.Utils.sleep;
 public class BookingPage extends BasePage{
 
     @FindBy(css = "#button1")
-    WebElement findCar;
+    private WebElement findCar;
 
     @FindBy(css = "#map-location")
-    WebElement location;
+    private WebElement location;
+
+    private String meinKontoXpath = "//a[contains(text(), 'Mein Konto')]";
+
+    @FindBy(xpath = "//a[contains(text(), 'Mein Konto')]")
+    private WebElement meinKonto;
 
     public BookingPage(WebDriver driver) {
         super(driver);
     }
 
     public BookingPage verifyBookingPageDisplayed() {
-        super.verifyPageDisplayed("find_and_book_a_vehicle", "Book Vehicle");
+        super.verifyPageDisplayed("find_and_book_a_vehicle", "Book Vehicle EN ");
+        return this;
+    }
+
+    public BookingPage verifyDEBookingPageDisplayed() {
+        super.verifyPageDisplayed("fahrzeug_finden_und_buchen", "Book Vehicle DE ");
+        return this;
+    }
+
+
+    public BookingPage verifyBookingPageDisplayed(String textInUrl) {
+        super.verifyPageDisplayed(textInUrl, "Book Vehicle");
         return this;
     }
 
@@ -50,6 +66,12 @@ public class BookingPage extends BasePage{
 
     public BookingPage clickFindCar() {
         findCar.click();
+        return this;
+    }
+
+    public BookingPage clickMeinKonto() {
+        waitElementClickable(meinKontoXpath, 10);
+        meinKonto.click();
         return this;
     }
 }

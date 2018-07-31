@@ -13,6 +13,7 @@
   "home_page_en": "https://www.app2drive.com/en",
 
   "intera_base_page": "https://book.app2drive.com/app2drive/de-en/app2drive.nsf/c/",
+  "home_page_test_env": "https://app2drive.intera.de/app2drive/dev/de/index.nsf",
 
   "//": "Details to make a Booking",
   "test_user_credentials": "YXBwMmRyaXZlckB5YWhvby5jb20lcyUzMzIyMTFSdSQkTWFOTiElcyUwMTAxMTk3MA==",

@@ -34,7 +34,6 @@ public class A2DBookingTest extends BaseTestCase {
 
     @Test
     public void loggedUserCanBookVehicle(){
-
         homePage.start()
                 .clickBookVehicle();
 
@@ -52,4 +51,71 @@ public class A2DBookingTest extends BaseTestCase {
                 .login(email, password)
                 .verifyUserLogged();
     }
+
+    @Test
+    public void loggedUserCanChangeCountry(){
+        final String homePageUrl = JsonReader.getPropertyFileValue("home_page_test_env");
+
+        homePage.start(homePageUrl)
+                .login();
+
+        bookingPage.verifyDEBookingPageDisplayed()
+                .clickMeinKonto();
+
+        editAccountPage.verifyMeinKontoPageDisplayed()
+                .clickBearbeiten()
+                .verifyEditAccountPageDisplayed()
+                .changeCountryTo("BE")
+                .clickSpeichern()
+                .logoutCurrentUser();
+
+        homePage.login();
+        bookingPage.verifyDEBookingPageDisplayed()
+                .clickMeinKonto();
+
+        String currentCountry = editAccountPage.verifyMeinKontoPageDisplayed()
+                .getCurentUserCountry();
+
+        if (currentCountry.equalsIgnoreCase("Deutschland")) {
+            throw new RuntimeException("Failed to change land! Current land is still : " + currentCountry);
+        }
+    }
+
+    @Test(dependsOnMethods = { "loggedUserCanChangeCountry" })
+    public void restoreLoggedUserDefaultCountry(){
+        final String homePageUrl = JsonReader.getPropertyFileValue("home_page_test_env");
+
+        homePage.start(homePageUrl)
+                .login();
+
+        bookingPage.verifyDEBookingPageDisplayed()
+                .clickMeinKonto();
+
+        String currentCountry = editAccountPage.verifyMeinKontoPageDisplayed()
+                .getCurentUserCountry();
+
+        //current country is Deutschland, no need to change it
+        if (currentCountry.equalsIgnoreCase("Deutschland")) {
+            return;
+        }
+
+        editAccountPage.verifyMeinKontoPageDisplayed()
+                .clickBearbeiten()
+                .verifyEditAccountPageDisplayed()
+                .changeCountryTo("DE")
+                .clickSpeichern()
+                .logoutCurrentUser();
+
+        homePage.login();
+        bookingPage.verifyDEBookingPageDisplayed()
+                .clickMeinKonto();
+
+        currentCountry = editAccountPage.verifyMeinKontoPageDisplayed()
+                .getCurentUserCountry();
+
+        if (!currentCountry.equalsIgnoreCase("Deutschland")) {
+            throw new RuntimeException("Failed to restore land! Current land is still: " + currentCountry);
+        }
+    }
+
 }
