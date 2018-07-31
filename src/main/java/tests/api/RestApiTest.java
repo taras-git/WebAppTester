@@ -21,6 +21,7 @@ public class RestApiTest {
     protected final String homePageDe = JsonReader.getPropertyFileValue("home_page_de");
 
     protected final String interaBasePage = JsonReader.getPropertyFileValue("intera_base_page");
+    protected final String interaBasePageDe = JsonReader.getPropertyFileValue("intera_base_page_de");
     protected final String bookingPageEn = interaBasePage + "find_and_book_a_vehicle#/rental-data";
     protected final String findHotspotsPageEn = interaBasePage + "find_hotspots_and_stations";
     protected final String ratesPageEn = interaBasePage + "rates";
@@ -28,6 +29,17 @@ public class RestApiTest {
     protected final String registrationPageEn = interaBasePage + "siteservice,register";
     protected final String loginPageEn = interaBasePage + "login";
     protected final String corporateMobilityPageEn = interaBasePage + "more,become_a_corporate_customer?open&TYPE=CORPORATE";
+    protected final String bookingPageDe = interaBasePageDe + "fahrzeug_finden_und_buchen#/rental-data";
+    protected final String findHotspotsPageDe = interaBasePageDe + "hotspots_und_stationen_finden";
+    protected final String ratesPageDe = interaBasePageDe + "tarife";
+    protected final String contactPageDe = interaBasePageDe + "siteservice,kontakt";
+    protected final String registrationPageDe = interaBasePageDe + "siteservice,kunde_werden";
+    protected final String loginPageDe = interaBasePageDe + "login";
+    protected final String corporateMobilityPageDe = interaBasePageDe + "more,firmenkunde_werden?open&TYPE=CORPORATE";
+
+
+
+
 
 
     @DataProvider
@@ -41,8 +53,13 @@ public class RestApiTest {
                 {contactPageEn},
                 {registrationPageEn},
                 {loginPageEn},
-                {corporateMobilityPageEn}
-
+                {corporateMobilityPageEn},
+                {bookingPageDe},
+                {findHotspotsPageDe},
+                {ratesPageDe},
+                {contactPageDe},
+                {registrationPageDe},
+                {loginPageDe}
         };
     }
 
