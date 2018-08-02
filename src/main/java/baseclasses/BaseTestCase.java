@@ -34,6 +34,8 @@ public class BaseTestCase {
     protected CorporateMobilityPage corporateMobilityPage;
     protected ChooseCarPage chooseCarPage;
     protected LoginPage loginPage;
+    protected StationsPage stationsPage;
+    protected AirfieldsPage airfieldsPage;
 
     public void initPages(WebDriver driver){
         homePage = new HomePage(driver);
@@ -49,6 +51,8 @@ public class BaseTestCase {
         corporateMobilityPage = new CorporateMobilityPage(driver);
         chooseCarPage = new ChooseCarPage(driver);
         loginPage = new LoginPage(driver);
+        stationsPage = new StationsPage(driver);
+        airfieldsPage = new AirfieldsPage(driver);
     }
 
     @BeforeSuite

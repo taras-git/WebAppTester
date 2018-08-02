@@ -91,4 +91,21 @@ public class HomePage extends BasePage{
     public void clickContact() {
         contact.click();
     }
+
+    public HomePage clickLocations() {
+        //TODO implement
+        return this;
+
+    }
+
+    public HomePage clickStations() {
+        //TODO implement
+        return this;
+
+    }
+
+    public HomePage clickAirfields() {
+        //TODO implement
+        return this;
+    }
 }

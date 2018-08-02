@@ -22,6 +22,7 @@ public class RestApiTest {
 
     protected final String interaBasePage = JsonReader.getPropertyFileValue("intera_base_page");
     protected final String interaBasePageDe = JsonReader.getPropertyFileValue("intera_base_page_de");
+
     protected final String bookingPageEn = interaBasePage + "find_and_book_a_vehicle#/rental-data";
     protected final String findHotspotsPageEn = interaBasePage + "find_hotspots_and_stations";
     protected final String ratesPageEn = interaBasePage + "rates";
