@@ -11,7 +11,7 @@ import utils.JsonReader;
  */
 public class HomePage extends BasePage{
 
-    protected String homePageEn = JsonReader.getPropertyFileValue("home_page_en");
+    protected String homePageEn = JsonReader.getString("home_page_en");
 
     @FindBy(xpath = "//nav[@id=\"top-navigation\"]//*[contains(text(), 'Book Vehicle')]")
     WebElement bookVehicle;
@@ -43,6 +43,18 @@ public class HomePage extends BasePage{
     @FindBy(xpath = "//a[contains(text(), 'Register now')]")
     WebElement registerNow;
 
+    @FindBy(xpath = "//a[contains(text(), 'Login')]")
+    WebElement login;
+
+    @FindBy(xpath = "//button[contains(text(), 'Login')]")
+    WebElement loginSubmit;
+
+    @FindBy(css = "#inputEmail3")
+    WebElement loginEmail;
+
+    @FindBy(css = "#inputPassword3")
+    WebElement loginPassword;
+
     public HomePage(WebDriver driver) {
         super(driver);
     }
@@ -52,8 +64,20 @@ public class HomePage extends BasePage{
         return this;
     }
 
+    public HomePage start(String url) {
+        driver.get(url);
+        return this;
+    }
+
     public void clickBookVehicle() {
         bookVehicle.click();
+    }
+
+    public void login(){
+        login.click();
+        loginEmail.sendKeys("taras.nimets@russmann.de");
+        loginPassword.sendKeys("1234");
+        loginSubmit.click();
     }
 
     public void clickRates(){

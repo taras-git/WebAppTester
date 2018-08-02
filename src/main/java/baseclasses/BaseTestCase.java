@@ -19,7 +19,7 @@ public class BaseTestCase {
 
     protected WebDriver driver;
     String browser;
-    private final String SCREENSHOTS_FOLDER = JsonReader.getPropertyFileValue("failed_tests_screenshot_folder");
+    private final String SCREENSHOTS_FOLDER = JsonReader.getString("failed_tests_screenshot_folder");
 
     protected HomePage homePage;
     protected BookingPage bookingPage;
@@ -36,6 +36,7 @@ public class BaseTestCase {
     protected LoginPage loginPage;
     protected StationsPage stationsPage;
     protected AirfieldsPage airfieldsPage;
+    protected EditAccountPage editAccountPage;
 
     public void initPages(WebDriver driver){
         homePage = new HomePage(driver);
@@ -53,6 +54,7 @@ public class BaseTestCase {
         loginPage = new LoginPage(driver);
         stationsPage = new StationsPage(driver);
         airfieldsPage = new AirfieldsPage(driver);
+        editAccountPage = new EditAccountPage(driver);
     }
 
     @BeforeSuite
@@ -67,7 +69,7 @@ public class BaseTestCase {
 
         // or
         // get the browser from JSON property file
-        browser = JsonReader.getPropertyFileValue("browser");
+        browser = JsonReader.getString("browser");
 
         driver = new A2Driver(browser);
         driver.manage().window().maximize();

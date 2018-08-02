@@ -1,12 +1,17 @@
 {
   "//": "allowed browser names: ff, firefox, ch, chrome",
-  "browser": "ff",
+  "browser": "ch",
+  "headless_mode": false,
+
+  "//": "path to driver executables",
   "firefox_driver_linux": "artifacts/drivers/linux/geckodriver",
   "chrome_driver_linux": "artifacts/drivers/linux/chromedriver",
   "firefox_driver_macos": "artifacts/drivers/macos/geckodriver",
   "chrome_driver_macos": "artifacts/drivers/macos/chromedriver",
   "firefox_driver_windows": "artifacts/drivers/windows/geckodriver.exe",
   "chrome_driver_windows": "artifacts/drivers/windows/chromedriver.exe",
+
+  "//": "path to screenshots",
   "failed_tests_screenshot_folder": "test-output/screenshots/",
 
   "home_page_de": "https://www.app2drive.com",
@@ -14,7 +19,8 @@
 
   "intera_base_page": "https://book.app2drive.com/app2drive/de-en/app2drive.nsf/c/",
   "intera_base_page_de": "https://book.app2drive.com/app2drive/de/app2drive.nsf/c/",
-
+  "home_page_test_env": "https://app2drive.intera.de/app2drive/dev/de/index.nsf",
+  
   "//": "Details to make a Booking",
   "test_user_credentials": "YXBwMmRyaXZlckB5YWhvby5jb20lcyUzMzIyMTFSdSQkTWFOTiElcyUwMTAxMTk3MA==",
   "location": "Aschaffenburg"
