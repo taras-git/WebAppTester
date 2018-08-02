@@ -10,7 +10,7 @@ import utils.Utils;
  */
 public class A2DBookingTest extends BaseTestCase {
 
-    private final String locationName = JsonReader.getPropertyFileValue("location");
+    private final String locationName = JsonReader.getString("location");
     private final String email = Utils.getTestUserEmail();
     private final String password = Utils.getTestUserPassword();
 
@@ -54,7 +54,7 @@ public class A2DBookingTest extends BaseTestCase {
 
     @Test
     public void loggedUserCanChangeCountry(){
-        final String homePageUrl = JsonReader.getPropertyFileValue("home_page_test_env");
+        final String homePageUrl = JsonReader.getString("home_page_test_env");
 
         homePage.start(homePageUrl)
                 .login();
@@ -83,7 +83,7 @@ public class A2DBookingTest extends BaseTestCase {
 
     @Test(dependsOnMethods = { "loggedUserCanChangeCountry" })
     public void restoreLoggedUserDefaultCountry(){
-        final String homePageUrl = JsonReader.getPropertyFileValue("home_page_test_env");
+        final String homePageUrl = JsonReader.getString("home_page_test_env");
 
         homePage.start(homePageUrl)
                 .login();

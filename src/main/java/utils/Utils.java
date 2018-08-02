@@ -1,5 +1,7 @@
 package utils;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.ITestResult;
 
 import javax.imageio.ImageIO;
@@ -8,16 +10,20 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Base64;
+import java.util.Comparator;
 
 /**
  * Created by taras on 7/17/18.
  */
 public class Utils {
+
+    private static final Logger LOG = LoggerFactory.getLogger(Utils.class);
 
     public static void sleep(double seconds){
         try {
@@ -35,9 +41,25 @@ public class Utils {
 
     public static void createFolder(String folderName) {
         Path dirsPath = Paths.get(folderName);
+
+        deleteOldScreenshots(dirsPath);
+
         try {
             Files.createDirectories(dirsPath);
             System.out.println("Screenshot folder created");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void deleteOldScreenshots(Path path) {
+        try {
+            Files.walk(path)
+                    .sorted(Comparator.reverseOrder())
+                    .map(Path::toFile)
+                    .forEach(File::delete);
+        } catch (NoSuchFileException nsfe) {
+            LOG.info("Path << " + path + " >> not found");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -81,11 +103,11 @@ public class Utils {
     }
 
     public static String getTestUserEmail(){
-        return getEmail(JsonReader.getPropertyFileValue("test_user_credentials"));
+        return getEmail(JsonReader.getString("test_user_credentials"));
     }
 
     public static String getTestUserPassword(){
-        return getPassword(JsonReader.getPropertyFileValue("test_user_credentials"));
+        return getPassword(JsonReader.getString("test_user_credentials"));
     }
 
 }
