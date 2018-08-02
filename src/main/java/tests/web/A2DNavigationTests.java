@@ -6,7 +6,7 @@ import org.testng.annotations.Test;
 /**
  * Created by taras on 7/30/18.
  */
-public class A2DNavigationTests extends BaseTestCase{
+public class A2DNavigationTests extends BaseTestCase {
     @Test
     public void navigateToBookingPage() {
         homePage.start()
@@ -81,4 +81,21 @@ public class A2DNavigationTests extends BaseTestCase{
         contactPage.verifyContactPageDisplayed();
     }
 
+    @Test
+    public void navigateToStationsPage() {
+        homePage.start()
+                .clickLocations()
+                .clickStations();
+
+        stationsPage.verifyStationsPageDisplayed();
+    }
+
+    @Test
+    public void navigateToAirfieldsPage() {
+        homePage.start()
+                .clickLocations()
+                .clickAirfields();
+
+        airfieldsPage.verifyAirfieldsPageDisplayed();
+    }
 }
