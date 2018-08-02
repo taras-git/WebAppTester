@@ -37,7 +37,14 @@ public class RestApiTest {
     protected final String registrationPageDe = interaBasePageDe + "siteservice,kunde_werden";
     protected final String loginPageDe = interaBasePageDe + "login";
     protected final String corporateMobilityPageDe = interaBasePageDe + "more,firmenkunde_werden?open&TYPE=CORPORATE";
-
+    protected final String fleetPageEn = homePageEn + "fleet";
+    protected final String fleetPageDe = homePageDe + "fahrzeugflotte";
+    protected final String howItWorksPageEn = homePageEn + "how-it-works";
+    protected final String howItWorksPageDe = homePageDe + "so-funktioniert-es";
+    protected final String companyPageEn = homePageEn + "company";
+    protected final String companyPageDe = homePageDe + "unternehmen";
+    protected final String blogPageEn = homePageEn + "category/news-en";
+    protected final String blogPageDe = homePageDe + "category/news";
 
 
 
@@ -60,7 +67,17 @@ public class RestApiTest {
                 {ratesPageDe},
                 {contactPageDe},
                 {registrationPageDe},
-                {loginPageDe}
+                {loginPageDe},
+                {corporateMobilityPageDe},
+                {fleetPageEn},
+                {fleetPageDe},
+                {howItWorksPageEn},
+                {howItWorksPageDe},
+                {companyPageEn},
+                {companyPageDe},
+                {blogPageEn},
+                {blogPageDe}
+
         };
     }
 
