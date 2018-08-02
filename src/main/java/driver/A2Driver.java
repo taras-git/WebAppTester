@@ -3,6 +3,7 @@ package driver;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.firefox.FirefoxBinary;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.firefox.FirefoxProfile;
@@ -27,12 +28,14 @@ public class A2Driver implements WebDriver{
     private String chromeDriverPath;
     private String firefoxDriverPath;
 
-    private final String chromeDriverPathLinux = JsonReader.getPropertyFileValue("chrome_driver_linux");
-    private final String firefoxDriverPathLinux =JsonReader.getPropertyFileValue("firefox_driver_linux");
-    private final String chromeDriverPathMacos = JsonReader.getPropertyFileValue("chrome_driver_macos");
-    private final String firefoxDriverPathMacos = JsonReader.getPropertyFileValue("firefox_driver_macos");
-    private final String chromeDriverPathWindows = JsonReader.getPropertyFileValue("chrome_driver_windows");
-    private final String firefoxDriverPathWindows = JsonReader.getPropertyFileValue("firefox_driver_windows");
+    private final String chromeDriverPathLinux = JsonReader.getString("chrome_driver_linux");
+    private final String firefoxDriverPathLinux =JsonReader.getString("firefox_driver_linux");
+    private final String chromeDriverPathMacos = JsonReader.getString("chrome_driver_macos");
+    private final String firefoxDriverPathMacos = JsonReader.getString("firefox_driver_macos");
+    private final String chromeDriverPathWindows = JsonReader.getString("chrome_driver_windows");
+    private final String firefoxDriverPathWindows = JsonReader.getString("firefox_driver_windows");
+
+    private boolean headlessMode = JsonReader.getBoolean("headless_mode");
 
     public A2Driver(String browserName) {
         this.browserName = browserName;
@@ -87,7 +90,13 @@ public class A2Driver implements WebDriver{
             ChromeOptions options = new ChromeOptions();
             options.addArguments("--start-maximised");
             options.addArguments("--disable-local-storage");
-            return new ChromeDriver();
+
+            if (headlessMode) {
+                options.setHeadless(true);
+                options.addArguments("window-size=1920x1080");
+            }
+
+            return new ChromeDriver(options);
         } catch (Exception ex) {
             throw new RuntimeException
                     ("couldn't create chrome driver");
@@ -108,15 +117,21 @@ public class A2Driver implements WebDriver{
 
         try {
             System.setProperty("webdriver.gecko.driver", firefoxDriverPath);
-            FirefoxProfile ffprofile = new FirefoxProfile();
-            ffprofile.setPreference("network.cookie.cookieBehavior", 0);
+            FirefoxProfile firefoxProfile = new FirefoxProfile();
+            firefoxProfile.setPreference("network.cookie.cookieBehavior", 0);
             // disable push notifications
-            ffprofile.setPreference("dom.webnotifications.enabled", false);
-            ffprofile.setPreference("geo.prompt.testing", false);
-            ffprofile.setPreference("geo.prompt.testing.allow", false);
-            ffprofile.setPreference("geo.enabled", false);
+            firefoxProfile.setPreference("dom.webnotifications.enabled", false);
+            firefoxProfile.setPreference("geo.prompt.testing", false);
+            firefoxProfile.setPreference("geo.prompt.testing.allow", false);
+            firefoxProfile.setPreference("geo.enabled", false);
             FirefoxOptions options = new FirefoxOptions();
-            options.setProfile(ffprofile);
+            options.setProfile(firefoxProfile);
+
+            if (headlessMode) {
+                FirefoxBinary firefoxBinary = new FirefoxBinary();
+                firefoxBinary.addCommandLineOptions("--headless");
+                options.setBinary(firefoxBinary);
+            }
 
             return new FirefoxDriver(options);
 

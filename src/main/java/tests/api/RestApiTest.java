@@ -17,11 +17,11 @@ public class RestApiTest {
 
     private static final Logger LOG = LoggerFactory.getLogger(RestApiTest.class);
 
-    protected final String homePageEn = JsonReader.getPropertyFileValue("home_page_en");
-    protected final String homePageDe = JsonReader.getPropertyFileValue("home_page_de");
+    protected final String homePageEn = JsonReader.getString("home_page_en");
+    protected final String homePageDe = JsonReader.getString("home_page_de");
 
-    protected final String interaBasePage = JsonReader.getPropertyFileValue("intera_base_page");
-    protected final String interaBasePageDe = JsonReader.getPropertyFileValue("intera_base_page_de");
+    protected final String interaBasePage = JsonReader.getString("intera_base_page");
+    protected final String interaBasePageDe = JsonReader.getString("intera_base_page_de");
     protected final String bookingPageEn = interaBasePage + "find_and_book_a_vehicle#/rental-data";
     protected final String findHotspotsPageEn = interaBasePage + "find_hotspots_and_stations";
     protected final String ratesPageEn = interaBasePage + "rates";
