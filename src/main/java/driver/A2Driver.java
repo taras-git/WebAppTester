@@ -116,6 +116,7 @@ public class A2Driver {
             }
 
             options.setBinary(firefoxBinary);
+            options.setCapability("marionette", false);
 
             return new FirefoxDriver(options);
 
