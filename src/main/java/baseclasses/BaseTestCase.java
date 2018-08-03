@@ -4,7 +4,9 @@ import driver.A2Driver;
 import org.openqa.selenium.WebDriver;
 import org.testng.ITestContext;
 import org.testng.ITestResult;
-import org.testng.annotations.*;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeSuite;
 import pages.*;
 import utils.JsonReader;
 
@@ -18,7 +20,6 @@ import static utils.Utils.takeScreenshot;
 public class BaseTestCase {
 
     protected WebDriver driver;
-    String browser;
     private final String SCREENSHOTS_FOLDER = JsonReader.getString("failed_tests_screenshot_folder");
 
     protected HomePage homePage;
@@ -64,22 +65,34 @@ public class BaseTestCase {
 
     @BeforeMethod
     public void getDriver(ITestContext context) throws Exception {
+        String browser;
         // get the browser from XML testng file
         //browser = context.getCurrentXmlTest().getParameter("browser");
 
         // or
         // get the browser from JSON property file
         browser = JsonReader.getString("browser");
-
-        driver = new A2Driver(browser);
+        driver = new BaseTestCase().createDriver(browser);
         driver.manage().window().maximize();
         initPages(driver);
     }
 
     @AfterMethod(alwaysRun = true)
     public void closeBrowser(ITestResult result) {
-        takeScreenshot(result, SCREENSHOTS_FOLDER);
+        takeScreenshot(result, SCREENSHOTS_FOLDER, driver);
         driver.quit();
+    }
+
+    private WebDriver createDriver(String browserName) {
+        if (browserName.equalsIgnoreCase("firefox") ||
+                browserName.equalsIgnoreCase("ff"))
+            return new A2Driver().firefoxDriver(browserName);
+
+        if (browserName.equalsIgnoreCase("chrome") ||
+                browserName.equalsIgnoreCase("ch"))
+            return new A2Driver().chromeDriver(browserName);
+
+        throw new RuntimeException ("invalid browser name, please check out property json file");
     }
 
 }
