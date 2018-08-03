@@ -116,6 +116,7 @@ public class A2Driver {
             return new FirefoxDriver(options);
 
         } catch (Exception ex) {
+            ex.printStackTrace();
             throw new RuntimeException
                     ("could not create firefox driver");
         }
