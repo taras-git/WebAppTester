@@ -1,7 +1,7 @@
 {
   "//": "allowed browser names: ff, firefox, ch, chrome",
-  "browser": "ch",
-  "headless_mode": false,
+  "browser": "ff",
+  "headless_mode": true,
 
   "//": "path to driver executables",
   "firefox_driver_linux": "artifacts/drivers/linux/geckodriver",
@@ -14,8 +14,8 @@
   "//": "path to screenshots",
   "failed_tests_screenshot_folder": "test-output/screenshots/",
 
-  "home_page_de": "https://www.app2drive.com",
-  "home_page_en": "https://www.app2drive.com/en",
+  "home_page_de": "https://staging.app2drive.com/",
+  "home_page_en": "https://staging.app2drive.com/en/",
 
   "intera_base_page": "https://book.app2drive.com/app2drive/de-en/app2drive.nsf/c/",
   "intera_base_page_de": "https://book.app2drive.com/app2drive/de/app2drive.nsf/c/",
