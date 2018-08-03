@@ -96,6 +96,7 @@ public class A2Driver {
 
         try {
             System.setProperty("webdriver.gecko.driver", firefoxDriverPath);
+            System.out.println(">>>>>>>>>>>>> FIREFOX PATH >> " + firefoxDriverPath);
             FirefoxProfile firefoxProfile = new FirefoxProfile();
             firefoxProfile.setPreference("network.cookie.cookieBehavior", 0);
             // disable push notifications
