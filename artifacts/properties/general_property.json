@@ -1,7 +1,7 @@
 {
   "//": "allowed browser names: ff, firefox, ch, chrome",
   "browser": "ff",
-  "headless_mode": true,
+  "headless_mode": false,
 
   "//": "path to driver executables",
   "firefox_driver_linux": "artifacts/drivers/linux/geckodriver",
