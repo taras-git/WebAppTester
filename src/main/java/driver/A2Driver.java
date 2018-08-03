@@ -109,7 +109,7 @@ public class A2Driver {
             FirefoxOptions options = new FirefoxOptions();
             options.setProfile(firefoxProfile);
 
-            FirefoxBinary firefoxBinary = new FirefoxBinary(new File("artifacts/binaries/linux/"));
+            FirefoxBinary firefoxBinary = new FirefoxBinary(new File("artifacts/binaries/linux/firefox"));
 
             if (headlessMode) {
                 firefoxBinary.addCommandLineOptions("--headless");
