@@ -1,13 +1,13 @@
 package tests.api;
 
+import io.restassured.http.ContentType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+import utils.JsonReader;
 
 import static io.restassured.RestAssured.get;
-import io.restassured.http.ContentType;
-import utils.JsonReader;
 
 
 /**
@@ -84,17 +84,16 @@ public class RestApiTest {
         try {
             siteIsUp(url);
         } catch (java.lang.NoSuchMethodError nsme) {
-            LOG.info("ERROR opening site: " + url + " :: " + nsme.getMessage());
-            throw new RuntimeException();
+            LOG.error("ERROR opening site: " + url + " :: " + nsme.getMessage());
         }
     }
 
     private void siteIsUp(String url) {
         get(url)
-                .then()
-                .contentType(ContentType.HTML)
-                .and()
-                .assertThat()
-                .statusCode(200);
+            .then()
+            .contentType(ContentType.HTML)
+            .and()
+            .assertThat()
+            .statusCode(200);
     }
 }
