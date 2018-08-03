@@ -95,6 +95,8 @@ public class A2Driver {
                     ("firefox executable file does not exist!");
 
         try {
+            System.setProperty("webdriver.firefox.bin",
+                    "С:\\Program Files (x64)\\Mozilla Firefox\\firefox.exe");
             System.setProperty("webdriver.gecko.driver", firefoxDriverPath);
             System.out.println(">>>>>>>>>>>>> FIREFOX PATH >> " + firefoxDriverPath);
             FirefoxProfile firefoxProfile = new FirefoxProfile();
@@ -107,11 +109,13 @@ public class A2Driver {
             FirefoxOptions options = new FirefoxOptions();
             options.setProfile(firefoxProfile);
 
+            FirefoxBinary firefoxBinary = new FirefoxBinary(new File("artifacts/binaries/linux/"));
+
             if (headlessMode) {
-                FirefoxBinary firefoxBinary = new FirefoxBinary();
                 firefoxBinary.addCommandLineOptions("--headless");
-                options.setBinary(firefoxBinary);
             }
+
+            options.setBinary(firefoxBinary);
 
             return new FirefoxDriver(options);
 
