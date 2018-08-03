@@ -1,5 +1,9 @@
 package utils;
 
+import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.WebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.ITestResult;
@@ -65,11 +69,11 @@ public class Utils {
         }
     }
 
-    public static void takeScreenshot(ITestResult result, String folderName) {
+    public static void takeScreenshot(ITestResult result, String folderName, WebDriver d) {
         if(result.getStatus() == ITestResult.FAILURE ||
                 result.getStatus() == ITestResult.SKIP) {
             try {
-                takeScreenshotWithRobot(result, folderName);
+                takeScreenshotWithWebdriver(result, folderName, d);
                 System.out.println("Screenshot taken");
             } catch (Exception e) {
                 System.out.println("Exception while taking screenshot!");
@@ -83,12 +87,22 @@ public class Utils {
                 .createScreenCapture(new Rectangle(Toolkit
                         .getDefaultToolkit()
                         .getScreenSize()));
-        ImageIO.write(image, "png", new File(folderName
+        ImageIO.write(image, "png", getScreenshotName(result, folderName));
+    }
+
+    private static void takeScreenshotWithWebdriver(ITestResult result, String folderName, WebDriver d) throws IOException {
+        File scrFile = ((TakesScreenshot)d).getScreenshotAs(OutputType.FILE);
+        FileUtils.copyFile(scrFile, getScreenshotName(result, folderName));
+    }
+
+    private static File getScreenshotName(ITestResult result, String folderName) {
+        return new File(folderName
                 + result.getName()
                 + "_"
                 + getTime()
-                + "_scr.png"));
+                + "_scr.png");
     }
+
 
     private static String hashPassword(String email, String pass, String secret){
         return new String(Base64.getEncoder().encode((email + "%s%" + pass + "%s%" + secret).getBytes()));

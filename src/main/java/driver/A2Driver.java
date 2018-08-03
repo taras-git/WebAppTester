@@ -10,8 +10,6 @@ import org.openqa.selenium.firefox.FirefoxProfile;
 import utils.JsonReader;
 
 import java.io.File;
-import java.util.List;
-import java.util.Set;
 
 import static utils.OsName.isMac;
 import static utils.OsName.isUnix;
@@ -20,39 +18,20 @@ import static utils.OsName.isWindows;
 /**
  * Created by taras on 7/18/18.
  */
-public class A2Driver implements WebDriver{
-
-    private WebDriver driver;
-    private final String browserName;
+public class A2Driver {
 
     private String chromeDriverPath;
     private String firefoxDriverPath;
 
     private final String chromeDriverPathLinux = JsonReader.getString("chrome_driver_linux");
-    private final String firefoxDriverPathLinux =JsonReader.getString("firefox_driver_linux");
     private final String chromeDriverPathMacos = JsonReader.getString("chrome_driver_macos");
-    private final String firefoxDriverPathMacos = JsonReader.getString("firefox_driver_macos");
     private final String chromeDriverPathWindows = JsonReader.getString("chrome_driver_windows");
+
+    private final String firefoxDriverPathLinux = JsonReader.getString("firefox_driver_linux");
+    private final String firefoxDriverPathMacos = JsonReader.getString("firefox_driver_macos");
     private final String firefoxDriverPathWindows = JsonReader.getString("firefox_driver_windows");
 
     private boolean headlessMode = JsonReader.getBoolean("headless_mode");
-
-    public A2Driver(String browserName) {
-        this.browserName = browserName;
-        this.driver = createDriver(browserName);
-    }
-
-    private WebDriver createDriver(String browserName) {
-        if (browserName.equalsIgnoreCase("firefox") ||
-                browserName.equalsIgnoreCase("ff"))
-        return firefoxDriver();
-
-        if (browserName.equalsIgnoreCase("chrome") ||
-                browserName.equalsIgnoreCase("ch"))
-        return chromeDriver();
-
-        throw new RuntimeException ("invalid browser name, please check out property json file");
-    }
 
     private String getDriverPath(String browserName) {
         if (browserName.equalsIgnoreCase("firefox") ||
@@ -72,10 +51,10 @@ public class A2Driver implements WebDriver{
         return null;
     }
 
-    private WebDriver chromeDriver() {
-        chromeDriverPath = getDriverPath(this.browserName);
+    public WebDriver chromeDriver(String browserName) {
+        chromeDriverPath = getDriverPath(browserName);
 
-        if (chromeDriverPath == null){
+        if (chromeDriverPath == null) {
             throw new RuntimeException
                     ("chromeDriverPath is not correctly set, please check the property file");
         }
@@ -103,10 +82,10 @@ public class A2Driver implements WebDriver{
         }
     }
 
-    private WebDriver firefoxDriver() {
-        firefoxDriverPath = getDriverPath(this.browserName);
+    public WebDriver firefoxDriver(String browserName) {
+        firefoxDriverPath = getDriverPath(browserName);
 
-        if (firefoxDriverPath == null){
+        if (firefoxDriverPath == null) {
             throw new RuntimeException
                     ("firefoxDriverPath is not correctly set, please check the property file");
         }
@@ -139,80 +118,5 @@ public class A2Driver implements WebDriver{
             throw new RuntimeException
                     ("could not create firefox driver");
         }
-    }
-
-    public WebDriver driver() {
-        return this.driver;
-    }
-
-    @Override
-    public String toString() {
-        return this.browserName;
-    }
-
-    @Override
-    public void close() {
-        driver().close();
-    }
-
-    @Override
-    public WebElement findElement(By locator) {
-        return driver().findElement(locator);
-    }
-
-    @Override
-    public List findElements(By arg0) {
-        return driver().findElements(arg0);
-    }
-
-    @Override
-    public void get(String arg0) {
-        driver().get(arg0);
-    }
-
-    @Override
-    public String getCurrentUrl() {
-        return driver().getCurrentUrl();
-    }
-
-    @Override
-
-    public String getPageSource() {
-        return driver().getPageSource();
-    }
-
-    @Override
-    public String getTitle() {
-        return driver().getTitle();
-    }
-
-    @Override
-    public String getWindowHandle() {
-        return driver().getWindowHandle();
-    }
-
-    @Override
-    public Set getWindowHandles() {
-        return driver().getWindowHandles();
-    }
-
-    @Override
-    public Options manage() {
-        return driver().manage();
-    }
-
-    @Override
-    public Navigation navigate() {
-        return driver().navigate();
-    }
-
-    @Override
-    public void quit() {
-        driver().quit();
-    }
-
-    @Override
-    public TargetLocator switchTo() {
-        return driver().switchTo();
     }
 }
