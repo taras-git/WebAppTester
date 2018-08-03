@@ -75,7 +75,7 @@
                 </configuration>
             </plugin>
 
-            <plugin>
+            <!-- plugin>
                 <groupId>ch.fortysix</groupId>
                 <artifactId>maven-postman-plugin</artifactId>
                 <version>0.1.6</version>
@@ -122,7 +122,7 @@
                         </configuration>
                     </execution>
                 </executions>
-            </plugin>
+            </plugin -->
 
         </plugins>
     </build>
