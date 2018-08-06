@@ -32,6 +32,7 @@ public class A2Driver {
     private final String firefoxDriverPathWindows = JsonReader.getString("firefox_driver_windows");
 
     private boolean headlessMode = JsonReader.getBoolean("headless_mode");
+    private boolean useBrowserBinary = JsonReader.getBoolean("use_browser_binary");
 
     private String getDriverPath(String browserName) {
         if (browserName.equalsIgnoreCase("firefox") ||
@@ -70,6 +71,9 @@ public class A2Driver {
             options.addArguments("--start-maximised");
             options.addArguments("--disable-local-storage");
 
+            if (useBrowserBinary) {
+                options.setBinary(JsonReader.getString("chrome_binary"));
+            }
             if (headlessMode) {
                 options.setHeadless(true);
                 options.addArguments("window-size=1920x1080");
@@ -95,10 +99,7 @@ public class A2Driver {
                     ("firefox executable file does not exist!");
 
         try {
-            System.setProperty("webdriver.firefox.bin",
-                    "С:\\Program Files (x64)\\Mozilla Firefox\\firefox.exe");
             System.setProperty("webdriver.gecko.driver", firefoxDriverPath);
-            System.out.println(">>>>>>>>>>>>> FIREFOX PATH >> " + firefoxDriverPath);
             FirefoxProfile firefoxProfile = new FirefoxProfile();
             firefoxProfile.setPreference("network.cookie.cookieBehavior", 0);
             // disable push notifications
@@ -109,14 +110,17 @@ public class A2Driver {
             FirefoxOptions options = new FirefoxOptions();
             options.setProfile(firefoxProfile);
 
-            FirefoxBinary firefoxBinary = new FirefoxBinary(new File("artifacts/binaries/linux/firefox"));
+            FirefoxBinary firefoxBinary = new FirefoxBinary();
+
+            if (useBrowserBinary) {
+                firefoxBinary = new FirefoxBinary(new File(JsonReader.getString("firefox_binary")));
+            }
 
             if (headlessMode) {
                 firefoxBinary.addCommandLineOptions("--headless");
             }
 
             options.setBinary(firefoxBinary);
-            options.setCapability("marionette", false);
 
             return new FirefoxDriver(options);
 
