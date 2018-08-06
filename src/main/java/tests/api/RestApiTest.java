@@ -17,17 +17,17 @@ public class RestApiTest {
 
     private static final Logger LOG = LoggerFactory.getLogger(RestApiTest.class);
 
-    protected final String homePageEn = JsonReader.getString("home_page_en");
-    protected final String homePageDe = JsonReader.getString("home_page_de");
-    protected final String interaBasePage = JsonReader.getString("intera_base_page");
+    protected final String homePageEnProduction = JsonReader.getString("home_page_en_production");
+    protected final String homePageDeProduction = JsonReader.getString("home_page_de_production");
+    protected final String interaBasePageEn = JsonReader.getString("intera_base_page_en");
     protected final String interaBasePageDe = JsonReader.getString("intera_base_page_de");
-    protected final String bookingPageEn = interaBasePage + "find_and_book_a_vehicle#/rental-data";
-    protected final String findHotspotsPageEn = interaBasePage + "find_hotspots_and_stations";
-    protected final String ratesPageEn = interaBasePage + "rates";
-    protected final String contactPageEn = interaBasePage + "siteservice,contact";
-    protected final String registrationPageEn = interaBasePage + "siteservice,register";
-    protected final String loginPageEn = interaBasePage + "login";
-    protected final String corporateMobilityPageEn = interaBasePage + "more,become_a_corporate_customer?open&TYPE=CORPORATE";
+    protected final String bookingPageEn = interaBasePageEn + "find_and_book_a_vehicle#/rental-data";
+    protected final String findHotspotsPageEn = interaBasePageEn + "find_hotspots_and_stations";
+    protected final String ratesPageEn = interaBasePageEn + "rates";
+    protected final String contactPageEn = interaBasePageEn + "siteservice,contact";
+    protected final String registrationPageEn = interaBasePageEn + "siteservice,register";
+    protected final String loginPageEn = interaBasePageEn + "login";
+    protected final String corporateMobilityPageEn = interaBasePageEn + "more,become_a_corporate_customer?open&TYPE=CORPORATE";
     protected final String bookingPageDe = interaBasePageDe + "fahrzeug_finden_und_buchen#/rental-data";
     protected final String findHotspotsPageDe = interaBasePageDe + "hotspots_und_stationen_finden";
     protected final String ratesPageDe = interaBasePageDe + "tarife";
@@ -35,14 +35,14 @@ public class RestApiTest {
     protected final String registrationPageDe = interaBasePageDe + "siteservice,kunde_werden";
     protected final String loginPageDe = interaBasePageDe + "login";
     protected final String corporateMobilityPageDe = interaBasePageDe + "more,firmenkunde_werden?open&TYPE=CORPORATE";
-    protected final String fleetPageEn = homePageEn + "fleet";
-    protected final String fleetPageDe = homePageDe + "fahrzeugflotte";
-    protected final String howItWorksPageEn = homePageEn + "how-it-works";
-    protected final String howItWorksPageDe = homePageDe + "so-funktioniert-es";
-    protected final String companyPageEn = homePageEn + "company";
-    protected final String companyPageDe = homePageDe + "unternehmen";
-    protected final String blogPageEn = homePageEn + "category/news-en";
-    protected final String blogPageDe = homePageDe + "category/news";
+    protected final String fleetPageEn = homePageEnProduction + "fleet";
+    protected final String fleetPageDe = homePageDeProduction + "fahrzeugflotte";
+    protected final String howItWorksPageEn = homePageEnProduction + "how-it-works";
+    protected final String howItWorksPageDe = homePageDeProduction + "so-funktioniert-es";
+    protected final String companyPageEn = homePageEnProduction + "company";
+    protected final String companyPageDe = homePageDeProduction + "unternehmen";
+    protected final String blogPageEn = homePageEnProduction + "category/news-en";
+    protected final String blogPageDe = homePageDeProduction + "category/news";
 
 
 
@@ -51,8 +51,8 @@ public class RestApiTest {
     @DataProvider
     public Object[][] urls(){
         return new Object[][]{
-                {homePageEn},
-                {homePageDe},
+                {homePageEnProduction},
+                {homePageDeProduction},
                 {bookingPageEn},
                 {findHotspotsPageEn},
                 {ratesPageEn},
