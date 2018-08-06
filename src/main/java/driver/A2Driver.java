@@ -32,6 +32,7 @@ public class A2Driver {
     private final String firefoxDriverPathWindows = JsonReader.getString("firefox_driver_windows");
 
     private boolean headlessMode = JsonReader.getBoolean("headless_mode");
+    private boolean useBrowserBinary = JsonReader.getBoolean("use_browser_binary");
 
     private String getDriverPath(String browserName) {
         if (browserName.equalsIgnoreCase("firefox") ||
@@ -70,6 +71,9 @@ public class A2Driver {
             options.addArguments("--start-maximised");
             options.addArguments("--disable-local-storage");
 
+            if (useBrowserBinary) {
+                options.setBinary(JsonReader.getString("chrome_binary"));
+            }
             if (headlessMode) {
                 options.setHeadless(true);
                 options.addArguments("window-size=1920x1080");
@@ -106,15 +110,22 @@ public class A2Driver {
             FirefoxOptions options = new FirefoxOptions();
             options.setProfile(firefoxProfile);
 
-            if (headlessMode) {
-                FirefoxBinary firefoxBinary = new FirefoxBinary();
-                firefoxBinary.addCommandLineOptions("--headless");
-                options.setBinary(firefoxBinary);
+            FirefoxBinary firefoxBinary = new FirefoxBinary();
+
+            if (useBrowserBinary) {
+                firefoxBinary = new FirefoxBinary(new File(JsonReader.getString("firefox_binary")));
             }
+
+            if (headlessMode) {
+                firefoxBinary.addCommandLineOptions("--headless");
+            }
+
+            options.setBinary(firefoxBinary);
 
             return new FirefoxDriver(options);
 
         } catch (Exception ex) {
+            ex.printStackTrace();
             throw new RuntimeException
                     ("could not create firefox driver");
         }
