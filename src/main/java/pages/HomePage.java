@@ -73,10 +73,10 @@ public class HomePage extends BasePage{
         bookVehicle.click();
     }
 
-    public void login(){
+    public void login(String email, String password){
         login.click();
-        loginEmail.sendKeys("taras.nimets@russmann.de");
-        loginPassword.sendKeys("1234");
+        loginEmail.sendKeys(email);
+        loginPassword.sendKeys(password);
         loginSubmit.click();
     }
 

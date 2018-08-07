@@ -11,8 +11,11 @@ import utils.Utils;
 public class A2DBookingTest extends BaseTestCase {
 
     private final String locationName = JsonReader.getString("location");
-    private final String email = Utils.getTestUserEmail();
-    private final String password = Utils.getTestUserPassword();
+    private final String a2dEmail = Utils.getUserEmail(JsonReader.getUser("app2_driver"));
+    private final String a2dPassword = Utils.getUserPassword(JsonReader.getUser("app2_driver"));
+    private final String tarNimetsEmail = Utils.getUserEmail(JsonReader.getUser("tar_nimets"));
+    private final String tarNimetsPassword = Utils.getUserPassword(JsonReader.getUser("tar_nimets"));
+
 
     @Test
     public void bookVehicleUserNotLogged(){
@@ -48,7 +51,7 @@ public class A2DBookingTest extends BaseTestCase {
                 .clickChooseCar();
 
         loginPage.verifyLoginWarningDisplayed()
-                .login(email, password)
+                .login(a2dEmail, a2dPassword)
                 .verifyUserLogged();
     }
 
@@ -57,7 +60,7 @@ public class A2DBookingTest extends BaseTestCase {
         final String homePageUrl = JsonReader.getString("home_page_test_env");
 
         homePage.start(homePageUrl)
-                .login();
+                .login(tarNimetsEmail, tarNimetsPassword);
 
         bookingPage.verifyDEBookingPageDisplayed()
                 .clickMeinKonto();
@@ -69,14 +72,15 @@ public class A2DBookingTest extends BaseTestCase {
                 .clickSpeichern()
                 .logoutCurrentUser();
 
-        homePage.login();
+        homePage.login(tarNimetsEmail, tarNimetsPassword);
         bookingPage.verifyDEBookingPageDisplayed()
                 .clickMeinKonto();
 
         String currentCountry = editAccountPage.verifyMeinKontoPageDisplayed()
                 .getCurentUserCountry();
 
-        if (currentCountry.equalsIgnoreCase("Deutschland")) {
+        //
+        if (!currentCountry.equalsIgnoreCase("BELGIEN")) {
             throw new RuntimeException("Failed to change land! Current land is still : " + currentCountry);
         }
     }
@@ -86,7 +90,7 @@ public class A2DBookingTest extends BaseTestCase {
         final String homePageUrl = JsonReader.getString("home_page_test_env");
 
         homePage.start(homePageUrl)
-                .login();
+                .login(tarNimetsEmail, tarNimetsPassword);
 
         bookingPage.verifyDEBookingPageDisplayed()
                 .clickMeinKonto();
@@ -106,7 +110,7 @@ public class A2DBookingTest extends BaseTestCase {
                 .clickSpeichern()
                 .logoutCurrentUser();
 
-        homePage.login();
+        homePage.login(tarNimetsEmail, tarNimetsPassword);
         bookingPage.verifyDEBookingPageDisplayed()
                 .clickMeinKonto();
 
