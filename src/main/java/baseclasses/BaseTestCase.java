@@ -2,6 +2,8 @@ package baseclasses;
 
 import driver.A2Driver;
 import org.openqa.selenium.WebDriver;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.ITestContext;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
@@ -9,6 +11,8 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 import pages.*;
 import utils.JsonReader;
+
+import java.lang.reflect.Method;
 
 import static utils.Utils.createFolder;
 import static utils.Utils.takeScreenshot;
@@ -21,6 +25,7 @@ public class BaseTestCase {
 
     protected WebDriver driver;
     private final String SCREENSHOTS_FOLDER = JsonReader.getString("failed_tests_screenshot_folder");
+    private static final Logger LOG = LoggerFactory.getLogger(BaseTestCase.class);
 
     protected HomePage homePage;
     protected BookingPage bookingPage;
@@ -64,6 +69,11 @@ public class BaseTestCase {
     }
 
     @BeforeMethod
+    public void nameBefore(Method method) {
+        LOG.info(">>>>> STARTING TEST CASE : <<<" + method.getName() + ">>>");
+    }
+
+    @BeforeMethod
     public void getDriver(ITestContext context) throws Exception {
         String browser;
         // get the browser from XML testng file
@@ -79,6 +89,7 @@ public class BaseTestCase {
 
     @AfterMethod(alwaysRun = true)
     public void closeBrowser(ITestResult result) {
+        LOG.info(">>>>> FINISHING TEST CASE : <<<" + result.getName() + ">>>");
         takeScreenshot(result, SCREENSHOTS_FOLDER, driver);
         driver.quit();
     }
