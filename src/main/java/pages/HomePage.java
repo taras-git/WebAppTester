@@ -11,7 +11,7 @@ import utils.JsonReader;
  */
 public class HomePage extends BasePage{
 
-    protected String homePageEn = JsonReader.getString("home_page_en");
+    protected String homePageEnProduction = JsonReader.getString("home_page_en_production");
 
     @FindBy(xpath = "//nav[@id=\"top-navigation\"]//*[contains(text(), 'Book Vehicle')]")
     WebElement bookVehicle;
@@ -60,7 +60,7 @@ public class HomePage extends BasePage{
     }
 
     public HomePage start() {
-        driver.get(homePageEn);
+        driver.get(homePageEnProduction);
         return this;
     }
 
