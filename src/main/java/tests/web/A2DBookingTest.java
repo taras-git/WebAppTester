@@ -10,7 +10,7 @@ import utils.Utils;
  */
 public class A2DBookingTest extends BaseTestCase {
 
-    private final String locationName = JsonReader.getString("location");
+    private final String locationName = JsonReader.getLocation("location1");
     private final String a2dEmail = Utils.getUserEmail(JsonReader.getUser("app2_driver"));
     private final String a2dPassword = Utils.getUserPassword(JsonReader.getUser("app2_driver"));
     private final String tarNimetsEmail = Utils.getUserEmail(JsonReader.getUser("tar_nimets"));
