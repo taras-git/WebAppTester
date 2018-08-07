@@ -87,9 +87,22 @@ public class BaseTestCase {
         initPages(driver);
     }
 
+    private String getResultDescription(int statusCode){
+        switch (statusCode){
+            case -1: return "CREATED";
+            case 1: return "SUCCESS";
+            case 2: return "FAILURE";
+            case 3: return "SKIP";
+            case 4: return "SUCCESS_PERCENTAGE_FAILURE";
+            case 16: return "STARTED";
+        }
+        return "N/A";
+    }
+
     @AfterMethod(alwaysRun = true)
     public void closeBrowser(ITestResult result) {
-        LOG.info("===== FINISHED TEST CASE : <<<" + result.getName() + ">>> with RESULT: "+ result.getStatus()+ " =====");
+        LOG.info("===== FINISHED TEST CASE : <<<" + result.getName() + ">>> =====");
+        LOG.info("===== with RESULT: <<<"+ getResultDescription(result.getStatus()) + ">>>");
 
         takeScreenshot(result, SCREENSHOTS_FOLDER, driver);
         driver.quit();
