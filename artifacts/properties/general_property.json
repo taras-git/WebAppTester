@@ -1,7 +1,7 @@
 {
   "//": "allowed browser names: ff, firefox, ch, chrome",
   "browser": "ff",
-  "headless_mode": false,
+  "headless_mode": true,
   "use_browser_binary": false,
   "chrome_binary": "artifacts/binaries/linux/chrome/chrome",
   "firefox_binary": "artifacts/binaries/linux/firefox/firefox",
