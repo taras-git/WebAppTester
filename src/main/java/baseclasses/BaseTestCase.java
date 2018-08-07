@@ -70,7 +70,7 @@ public class BaseTestCase {
 
     @BeforeMethod
     public void nameBefore(Method method) {
-        LOG.info("+++++ STARTING TEST CASE : <<<" + method.getName() + ">>> +++++");
+        LOG.info("+++++ STARTED TEST CASE : <<<" + method.getName() + ">>> +++++");
     }
 
     @BeforeMethod
@@ -89,7 +89,8 @@ public class BaseTestCase {
 
     @AfterMethod(alwaysRun = true)
     public void closeBrowser(ITestResult result) {
-        LOG.info("===== FINISHING TEST CASE : <<<" + result.getName() + ">>> =====");
+        LOG.info("===== FINISHED TEST CASE : <<<" + result.getName() + ">>> with RESULT: "+ result.getStatus()+ " =====");
+
         takeScreenshot(result, SCREENSHOTS_FOLDER, driver);
         driver.quit();
     }
