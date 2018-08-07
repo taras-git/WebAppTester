@@ -3,7 +3,6 @@ package tests.web;
 import baseclasses.BaseTestCase;
 import org.testng.annotations.Test;
 import utils.JsonReader;
-import utils.Utils;
 
 /**
  * Created by taras on 7/17/18.
@@ -11,10 +10,10 @@ import utils.Utils;
 public class A2DBookingTest extends BaseTestCase {
 
     private final String locationName = JsonReader.getLocation("location1");
-    private final String a2dEmail = Utils.getUserEmail(JsonReader.getUser("app2_driver"));
-    private final String a2dPassword = Utils.getUserPassword(JsonReader.getUser("app2_driver"));
-    private final String tarNimetsEmail = Utils.getUserEmail(JsonReader.getUser("tar_nimets"));
-    private final String tarNimetsPassword = Utils.getUserPassword(JsonReader.getUser("tar_nimets"));
+    private final String a2dEmail = JsonReader.getUserEmail("app2_driver");
+    private final String a2dPassword = JsonReader.getUserPassword("app2_driver");
+    private final String tarNimetsEmail = JsonReader.getUserEmail("tar_nimets");
+    private final String tarNimetsPassword = JsonReader.getUserPassword("tar_nimets");
 
 
     @Test
@@ -57,7 +56,7 @@ public class A2DBookingTest extends BaseTestCase {
 
     @Test
     public void loggedUserCanChangeCountry(){
-        final String homePageUrl = JsonReader.getString("home_page_test_env");
+        final String homePageUrl = JsonReader.getUrl("home_page_test_env");
 
         homePage.start(homePageUrl)
                 .login(tarNimetsEmail, tarNimetsPassword);

@@ -11,7 +11,7 @@ import utils.JsonReader;
  */
 public class HomePage extends BasePage{
 
-    protected String homePageEnProduction = JsonReader.getString("home_page_en_production");
+    protected String homePageEnProduction = JsonReader.getUrl("home_page_en_production");
 
     @FindBy(xpath = "//nav[@id=\"top-navigation\"]//*[contains(text(), 'Book Vehicle')]")
     WebElement bookVehicle;
