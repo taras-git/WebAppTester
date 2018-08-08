@@ -57,13 +57,13 @@ public class HomePage extends BasePage{
     @FindBy(css = "#inputPassword3")
     WebElement loginPassword;
 
-    @FindBy(xpath = "//a[contains(text(), 'Locations')]")
+    @FindBy(xpath = "(//a[contains(text(), 'Locations')])[2]")
     WebElement locations;
 
-    @FindBy(xpath = "//a[contains(text(), 'Stations')]")
+    @FindBy(xpath = "(//a[contains(text(), 'Stations')])[2]")
     WebElement stations;
 
-    @FindBy(xpath = "//a[contains(text(), 'Airfields')]")
+    @FindBy(xpath = "(//a[contains(text(), 'Airfields')])[2]")
     WebElement airfields;
 
     public HomePage(WebDriver driver) {
@@ -129,7 +129,6 @@ public class HomePage extends BasePage{
 
     public HomePage clickLocations() {
         locations.click();
-//        sleep(1);
     return this;}
 
     public void clickStations() { stations.click(); }
