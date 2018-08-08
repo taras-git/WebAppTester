@@ -63,7 +63,7 @@ public class HomePage extends BasePage{
     @FindBy(xpath = "(//a[contains(text(), 'Stations')])[2]")
     WebElement stations;
 
-    @FindBy(xpath = "(//a[contains(text(), 'Airfields')])[2]")
+    @FindBy(xpath = "//a[contains(text(), 'Airfields')]")
     WebElement airfields;
 
     public HomePage(WebDriver driver) {
