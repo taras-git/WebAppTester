@@ -17,10 +17,10 @@ public class RestApiTest {
 
     private static final Logger LOG = LoggerFactory.getLogger(RestApiTest.class);
 
-    protected final String homePageEnProduction = JsonReader.getString("home_page_en_production");
-    protected final String homePageDeProduction = JsonReader.getString("home_page_de_production");
-    protected final String interaBasePageEn = JsonReader.getString("intera_base_page_en");
-    protected final String interaBasePageDe = JsonReader.getString("intera_base_page_de");
+    protected final String homePageEnProduction = JsonReader.getUrl("home_page_en_production");
+    protected final String homePageDeProduction = JsonReader.getUrl("home_page_de_production");
+    protected final String interaBasePageEn = JsonReader.getUrl("intera_base_page_en");
+    protected final String interaBasePageDe = JsonReader.getUrl("intera_base_page_de");
     protected final String bookingPageEn = interaBasePageEn + "find_and_book_a_vehicle#/rental-data";
     protected final String findHotspotsPageEn = interaBasePageEn + "find_hotspots_and_stations";
     protected final String ratesPageEn = interaBasePageEn + "rates";
@@ -43,9 +43,6 @@ public class RestApiTest {
     protected final String companyPageDe = homePageDeProduction + "unternehmen";
     protected final String blogPageEn = homePageEnProduction + "category/news-en";
     protected final String blogPageDe = homePageDeProduction + "category/news";
-
-
-
 
 
     @DataProvider
@@ -75,7 +72,6 @@ public class RestApiTest {
                 {companyPageDe},
                 {blogPageEn},
                 {blogPageDe}
-
         };
     }
 

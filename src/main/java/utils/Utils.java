@@ -103,7 +103,6 @@ public class Utils {
                 + "_scr.png");
     }
 
-
     private static String hashPassword(String email, String pass, String secret){
         return new String(Base64.getEncoder().encode((email + "%s%" + pass + "%s%" + secret).getBytes()));
     }
@@ -116,12 +115,12 @@ public class Utils {
         return new String(Base64.getDecoder().decode(hash.getBytes())).split("%s%")[0];
     }
 
-    public static String getTestUserEmail(){
-        return getEmail(JsonReader.getString("test_user_credentials"));
+    public static String getUserEmail(String credentials){
+        return getEmail(credentials);
     }
 
-    public static String getTestUserPassword(){
-        return getPassword(JsonReader.getString("test_user_credentials"));
+    public static String getUserPassword(String credentials){
+        return getPassword(credentials);
     }
 
 }

@@ -2,6 +2,8 @@ package baseclasses;
 
 import driver.A2Driver;
 import org.openqa.selenium.WebDriver;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.ITestContext;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
@@ -9,6 +11,8 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 import pages.*;
 import utils.JsonReader;
+
+import java.lang.reflect.Method;
 
 import static utils.Utils.createFolder;
 import static utils.Utils.takeScreenshot;
@@ -21,6 +25,7 @@ public class BaseTestCase {
 
     protected WebDriver driver;
     private final String SCREENSHOTS_FOLDER = JsonReader.getString("failed_tests_screenshot_folder");
+    private static final Logger LOG = LoggerFactory.getLogger(BaseTestCase.class);
 
     protected HomePage homePage;
     protected BookingPage bookingPage;
@@ -64,6 +69,11 @@ public class BaseTestCase {
     }
 
     @BeforeMethod
+    public void nameBefore(Method method) {
+        LOG.info("+++++ STARTED : <<<" + method.getName() + ">>> +++++");
+    }
+
+    @BeforeMethod
     public void getDriver(ITestContext context) throws Exception {
         String browser;
         // get the browser from XML testng file
@@ -77,8 +87,24 @@ public class BaseTestCase {
         initPages(driver);
     }
 
+    private String getResultDescription(int statusCode){
+        switch (statusCode){
+            case -1: return "CREATED";
+            case 1: return "SUCCESS";
+            case 2: return "FAILURE";
+            case 3: return "SKIP";
+            case 4: return "SUCCESS_PERCENTAGE_FAILURE";
+            case 16: return "STARTED";
+        }
+        return "N/A";
+    }
+
     @AfterMethod(alwaysRun = true)
     public void closeBrowser(ITestResult result) {
+        long time = result.getEndMillis() - result.getStartMillis();
+        LOG.info("=== FINISHED : <<<" + result.getName() + ">>>  RESULT: <<<"+ getResultDescription(result.getStatus()) + ">>> ===");
+        LOG.info("=== TIME SPENT: " + time / 1000.0 + " seconds");
+
         takeScreenshot(result, SCREENSHOTS_FOLDER, driver);
         driver.quit();
     }
