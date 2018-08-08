@@ -77,6 +77,7 @@ public class RestApiTest {
 
     @Test(dataProvider = "urls")
     public void a2dSiteIsUp(String url) {
+        LOG.info(">>> Start new test: <<<" + url + ">>> is up");
         try {
             siteIsUp(url);
         } catch (java.lang.NoSuchMethodError nsme) {
