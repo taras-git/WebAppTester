@@ -55,6 +55,15 @@ public class HomePage extends BasePage{
     @FindBy(css = "#inputPassword3")
     WebElement loginPassword;
 
+    @FindBy(xpath = "//a[contains(text(), 'Locations')]")
+    WebElement locations;
+
+    @FindBy(xpath = "//a[contains(text(), 'Stations')]")
+    WebElement stations;
+
+    @FindBy(xpath = "//a[contains(text(), 'Airfields')]")
+    WebElement airfields;
+
     public HomePage(WebDriver driver) {
         super(driver);
     }
@@ -116,20 +125,9 @@ public class HomePage extends BasePage{
         contact.click();
     }
 
-    public HomePage clickLocations() {
-        //TODO implement
-        return this;
+    public void clickLocations() { locations.click(); }
 
-    }
+    public void clickStations() { stations.click(); }
 
-    public HomePage clickStations() {
-        //TODO implement
-        return this;
-
-    }
-
-    public HomePage clickAirfields() {
-        //TODO implement
-        return this;
-    }
+    public void clickAirfields() { airfields.click(); }
 }
