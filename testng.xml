@@ -7,9 +7,9 @@
 
     <test name="Test">
         <classes>
-            <class name="tests.web.A2DBookingTest" />
-            <class name="tests.web.A2DNavigationTests" />
-            <!--class name="tests.api.RestApiTest" /-->
+            <!--class name="tests.web.A2DBookingTest" />
+            <class name="tests.web.A2DNavigationTests" /-->
+            <class name="tests.api.RestApiTest" />
         </classes>
     </test>
 </suite>
