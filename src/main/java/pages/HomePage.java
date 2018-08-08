@@ -6,6 +6,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import utils.JsonReader;
 
+import static utils.Utils.sleep;
+
 /**
  * Created by taras on 7/19/18.
  */
@@ -125,7 +127,10 @@ public class HomePage extends BasePage{
         contact.click();
     }
 
-    public void clickLocations() { locations.click(); }
+    public HomePage clickLocations() {
+        locations.click();
+//        sleep(1);
+    return this;}
 
     public void clickStations() { stations.click(); }
 
