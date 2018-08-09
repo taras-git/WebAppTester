@@ -6,6 +6,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import utils.JsonReader;
 
+import static utils.Utils.sleep;
+
 /**
  * Created by taras on 7/19/18.
  */
@@ -54,6 +56,15 @@ public class HomePage extends BasePage{
 
     @FindBy(css = "#inputPassword3")
     WebElement loginPassword;
+
+    @FindBy(xpath = "(//a[contains(text(), 'Locations')])[2]")
+    WebElement locations;
+
+    @FindBy(xpath = "(//a[contains(text(), 'Stations')])[2]")
+    WebElement stations;
+
+    @FindBy(xpath = "(//a[contains(text(), 'Airfields')])[2]")
+    WebElement airfields;
 
     public HomePage(WebDriver driver) {
         super(driver);
@@ -117,19 +128,10 @@ public class HomePage extends BasePage{
     }
 
     public HomePage clickLocations() {
-        //TODO implement
-        return this;
+        locations.click();
+    return this;}
 
-    }
+    public void clickStations() { stations.click(); }
 
-    public HomePage clickStations() {
-        //TODO implement
-        return this;
-
-    }
-
-    public HomePage clickAirfields() {
-        //TODO implement
-        return this;
-    }
+    public void clickAirfields() { airfields.click(); }
 }
