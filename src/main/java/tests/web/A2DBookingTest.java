@@ -29,12 +29,12 @@ public class A2DBookingTest extends BaseTestCase {
         bookingPage.clickFindCar();
 
         chooseCarPage.waitChooseCarDisplayed()
-                .clickChooseCar();
+                .chooseFirstCarDisplayed();
 
         loginPage.verifyLoginWarningDisplayed();
     }
 
-    @Test
+    @Test(groups="Booking")
     public void loggedUserCanBookVehicle(){
         homePage.start()
                 .clickBookVehicle();
@@ -47,54 +47,88 @@ public class A2DBookingTest extends BaseTestCase {
         bookingPage.clickFindCar();
 
         chooseCarPage.waitChooseCarDisplayed()
-                .clickChooseCar();
+                .chooseFirstCarDisplayed();
 
         loginPage.verifyLoginWarningDisplayed()
                 .login(a2dEmail, a2dPassword)
                 .verifyUserLogged();
+
+        confirmBookingPage.bookCar()
+                .verifyCarBooked();
+    }
+
+
+    @Test(groups="Booking", dependsOnMethods = "loggedUserCanBookVehicle")
+    public void loggedUserCanCancelBooking(){
+        loginToMyAccount();
+
+        accountPage.verifyMyAccountPageDisplayed()
+                .clickBookings()
+                .verifyMyBookingsDisplayed()
+                .verifyCarIsReserved()
+                .clickDetails()
+                .cancelBooking();
+    }
+
+    @Test(dependsOnGroups = "Booking")
+    public void verifyBookingCanceled(){
+        loginToMyAccount();
+
+        accountPage.verifyMyAccountPageDisplayed()
+                .clickBookings()
+                .verifyMyBookingsDisplayed()
+                .verifyNoCarsReserved();
+    }
+
+    private void loginToMyAccount() {
+        homePage.start()
+                .clickLogin();
+
+        loginPage.verifyLoginPageDisplayed()
+                .waitLoginFieldDisplayed()
+                .login(a2dEmail, a2dPassword)
+                .verifyUserLogged();
+
+        bookingPage.verifyBookingPageDisplayed()
+                .clickMyAccount();
     }
 
     @Test
     public void loggedUserCanChangeCountry(){
-        final String homePageUrl = JsonReader.getUrl("home_page_test_env");
-
-        homePage.start(homePageUrl)
+        homePageIntera.start()
                 .login(tarNimetsEmail, tarNimetsPassword);
 
         bookingPage.verifyDEBookingPageDisplayed()
                 .clickMeinKonto();
 
-        editAccountPage.verifyMeinKontoPageDisplayed()
+        accountPage.verifyMeinKontoPageDisplayed()
                 .clickBearbeiten()
-                .verifyEditAccountPageDisplayed()
+                .verifyEditAccountDisplayed()
                 .changeCountryTo("BE")
                 .clickSpeichern()
                 .logoutCurrentUser();
 
-        homePage.login(tarNimetsEmail, tarNimetsPassword);
+        homePageIntera.login(tarNimetsEmail, tarNimetsPassword);
         bookingPage.verifyDEBookingPageDisplayed()
                 .clickMeinKonto();
 
-        String currentCountry = editAccountPage.verifyMeinKontoPageDisplayed()
+        String currentCountry = accountPage.verifyMeinKontoPageDisplayed()
                 .getCurentUserCountry();
 
-        //
         if (!currentCountry.equalsIgnoreCase("BELGIEN")) {
             throw new RuntimeException("Failed to change land! Current land is still : " + currentCountry);
         }
     }
 
     @Test(dependsOnMethods = { "loggedUserCanChangeCountry" })
-    public void restoreLoggedUserDefaultCountry(){
-        final String homePageUrl = JsonReader.getString("home_page_test_env");
-
-        homePage.start(homePageUrl)
+    public void loggedUserCenRestoreDefaultCountry(){
+        homePageIntera.start()
                 .login(tarNimetsEmail, tarNimetsPassword);
 
         bookingPage.verifyDEBookingPageDisplayed()
                 .clickMeinKonto();
 
-        String currentCountry = editAccountPage.verifyMeinKontoPageDisplayed()
+        String currentCountry = accountPage.verifyMeinKontoPageDisplayed()
                 .getCurentUserCountry();
 
         //current country is Deutschland, no need to change it
@@ -102,18 +136,18 @@ public class A2DBookingTest extends BaseTestCase {
             return;
         }
 
-        editAccountPage.verifyMeinKontoPageDisplayed()
+        accountPage.verifyMeinKontoPageDisplayed()
                 .clickBearbeiten()
-                .verifyEditAccountPageDisplayed()
+                .verifyEditAccountDisplayed()
                 .changeCountryTo("DE")
                 .clickSpeichern()
                 .logoutCurrentUser();
 
-        homePage.login(tarNimetsEmail, tarNimetsPassword);
+        homePageIntera.login(tarNimetsEmail, tarNimetsPassword);
         bookingPage.verifyDEBookingPageDisplayed()
                 .clickMeinKonto();
 
-        currentCountry = editAccountPage.verifyMeinKontoPageDisplayed()
+        currentCountry = accountPage.verifyMeinKontoPageDisplayed()
                 .getCurentUserCountry();
 
         if (!currentCountry.equalsIgnoreCase("Deutschland")) {

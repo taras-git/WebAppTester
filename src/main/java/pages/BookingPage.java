@@ -20,21 +20,24 @@ public class BookingPage extends BasePage{
     private WebElement location;
 
     private String meinKontoXpath = "//a[contains(text(), 'Mein Konto')]";
-
     @FindBy(xpath = "//a[contains(text(), 'Mein Konto')]")
     private WebElement meinKonto;
+
+    private String myAccountXpath = "//a[contains(text(), 'My account')]";
+    @FindBy(xpath = "//a[contains(text(), 'My account')]")
+    private WebElement myAccount;
 
     public BookingPage(WebDriver driver) {
         super(driver);
     }
 
     public BookingPage verifyBookingPageDisplayed() {
-        super.verifyPageDisplayed("find_and_book_a_vehicle", "Book Vehicle EN ");
+        super.verifyPageDisplayed("ind_and_book_a_vehicle", "Book Vehicle EN ");
         return this;
     }
 
     public BookingPage verifyDEBookingPageDisplayed() {
-        super.verifyPageDisplayed("fahrzeug_finden_und_buchen", "Book Vehicle DE ");
+        super.verifyPageDisplayed("ahrzeug_finden_und_buchen", "Book Vehicle DE ");
         return this;
     }
 
@@ -72,6 +75,12 @@ public class BookingPage extends BasePage{
     public BookingPage clickMeinKonto() {
         waitElementClickable(meinKontoXpath, 10);
         meinKonto.click();
+        return this;
+    }
+
+    public BookingPage clickMyAccount() {
+        waitElementClickable(myAccountXpath, 10);
+        myAccount.click();
         return this;
     }
 }

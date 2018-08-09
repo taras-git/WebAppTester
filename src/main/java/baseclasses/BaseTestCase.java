@@ -28,6 +28,7 @@ public class BaseTestCase {
     private static final Logger LOG = LoggerFactory.getLogger(BaseTestCase.class);
 
     protected HomePage homePage;
+    protected HomePageIntera homePageIntera;
     protected BookingPage bookingPage;
     protected RatesPage ratesPage;
     protected FleetPage fleetPage;
@@ -42,10 +43,12 @@ public class BaseTestCase {
     protected LoginPage loginPage;
     protected StationsPage stationsPage;
     protected AirfieldsPage airfieldsPage;
-    protected EditAccountPage editAccountPage;
+    protected AccountPage accountPage;
+    protected ConfirmBookingPage confirmBookingPage;
 
     public void initPages(WebDriver driver){
         homePage = new HomePage(driver);
+        homePageIntera = new HomePageIntera(driver);
         bookingPage = new BookingPage(driver);
         ratesPage = new RatesPage(driver);
         fleetPage = new FleetPage(driver);
@@ -60,7 +63,8 @@ public class BaseTestCase {
         loginPage = new LoginPage(driver);
         stationsPage = new StationsPage(driver);
         airfieldsPage = new AirfieldsPage(driver);
-        editAccountPage = new EditAccountPage(driver);
+        accountPage = new AccountPage(driver);
+        confirmBookingPage = new ConfirmBookingPage(driver);
     }
 
     @BeforeSuite

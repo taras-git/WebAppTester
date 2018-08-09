@@ -28,9 +28,8 @@ public class ChooseCarPage extends BasePage {
         return this;
     }
 
-    public void clickChooseCar(){
-//        scrollToElement(choosefirstCar);
-        scrollPageDown();
+    public void chooseFirstCarDisplayed(){
+        scrollOnePageDown();
         waitElementClickable(chooseFirstCarXpath, 10);
         choosefirstCar.click();
     }
