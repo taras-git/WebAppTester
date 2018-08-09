@@ -62,13 +62,11 @@ public class BasePage {
         wait.until(ExpectedConditions.visibilityOfElementLocated(by));
     }
 
-    public void waitElementPresent(By by, int timeout)
-    {
+    public void waitElementPresent(By by, int timeout){
         WebDriverWait wait = new WebDriverWait(driver, timeout);
         wait
                 .withMessage("Cannot find element: " + by.toString())
-                .until(ExpectedConditions.presenceOfElementLocated(by)
-                );
+                .until(ExpectedConditions.presenceOfElementLocated(by));
     }
 
     public WebElement waitElementFound(By by, int timeout){
