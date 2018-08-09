@@ -1,0 +1,41 @@
+package pages;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import utils.JsonReader;
+
+public class HomePageIntera extends HomePage {
+
+    final String homePageInteraUrl = JsonReader.getUrl("home_page_test_env");
+
+    @FindBy(xpath = "//a[contains(text(), 'Login')]")
+    WebElement login;
+
+    @FindBy(css = "#inputEmail3")
+    WebElement loginEmail;
+
+    @FindBy(css = "#inputPassword3")
+    WebElement loginPassword;
+
+    @FindBy(xpath = "//button[contains(text(), 'Login')]")
+    WebElement loginSubmit;
+
+
+    public HomePageIntera(WebDriver driver) {
+        super(driver);
+    }
+
+    public HomePageIntera start() {
+        driver.get(homePageInteraUrl);
+        return this;
+    }
+
+    public void login(String email, String password){
+        login.click();
+        loginEmail.sendKeys(email);
+        loginPassword.sendKeys(password);
+        loginSubmit.click();
+    }
+
+}

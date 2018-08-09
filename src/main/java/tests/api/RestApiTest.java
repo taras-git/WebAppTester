@@ -81,8 +81,9 @@ public class RestApiTest {
         try {
             siteIsUp(url);
             LOG.info("<<<" + url + ">>> is up!");
-        } catch (java.lang.NoSuchMethodError nsme) {
-            LOG.error("ERROR opening site: " + url + " :: " + nsme.getMessage());
+        } catch (Exception e) {
+            LOG.error("Can't opening site: " + url + " :: " + e.getMessage());
+            throw new RuntimeException("ERROR opening site: " + url + " :: " + e.getStackTrace());
         }
     }
 

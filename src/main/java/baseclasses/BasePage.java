@@ -30,6 +30,7 @@ public class BasePage {
             wait.until(ExpectedConditions.urlContains(textInUrl));
         } catch (TimeoutException e) {
             LOG.error(pageName + " page is not displayed");
+            throw new RuntimeException("ERROR opening: " + pageName + " :: " + e.getStackTrace());
         }
     }
 
@@ -38,6 +39,7 @@ public class BasePage {
             wait.until(ExpectedConditions.urlContains(textInTitle));
         } catch (TimeoutException e) {
             LOG.error(pageName + " page has not title << " + textInTitle + " >> in it");
+            throw new RuntimeException("ERROR opening: " + pageName + " :: " + e.getStackTrace());
         }
 
     }
@@ -60,6 +62,13 @@ public class BasePage {
         wait.until(ExpectedConditions.visibilityOfElementLocated(by));
     }
 
+    public void waitElementPresent(By by, int timeout){
+        WebDriverWait wait = new WebDriverWait(driver, timeout);
+        wait
+                .withMessage("Cannot find element: " + by.toString())
+                .until(ExpectedConditions.presenceOfElementLocated(by));
+    }
+
     public WebElement waitElementFound(By by, int timeout){
         WebElement element;
         element = (new WebDriverWait(driver, timeout))
@@ -75,7 +84,7 @@ public class BasePage {
         actions.perform();
     }
 
-    public void scrollPageDown(){
+    public void scrollOnePageDown(){
         WebElement root = driver.findElement(By.xpath("(//*)[1]"));
         root.sendKeys(Keys.PAGE_DOWN);
     }

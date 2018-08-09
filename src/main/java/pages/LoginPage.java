@@ -23,7 +23,7 @@ public class LoginPage extends BasePage{
     @FindBy(id = "loginPW")
     WebElement passwordInput;
 
-    @FindBy(xpath = "(//button[@type='submit'])[2]")
+    @FindBy(xpath = "//button[contains(text(), 'submit ')]")
     WebElement submitButton;
 
     private final String logoutXpath = "//a[contains(text(), 'Logout ')]";
@@ -34,6 +34,11 @@ public class LoginPage extends BasePage{
         super(driver);
     }
 
+    public LoginPage verifyLoginPageDisplayed() {
+        super.verifyPageDisplayed("login", "Login");
+        return this;
+    }
+
     public LoginPage verifyLoginWarningDisplayed(){
         WebDriverWait wait = new WebDriverWait(driver, 30);
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(loginWarningXpath)));
@@ -41,7 +46,6 @@ public class LoginPage extends BasePage{
     }
 
     public LoginPage login(String email, String password){
-        scrollPageDown();
         emailInput.sendKeys(email);
         passwordInput.sendKeys(password);
         submitButton.click();
@@ -53,4 +57,8 @@ public class LoginPage extends BasePage{
         return this;
     }
 
+    public LoginPage waitLoginFieldDisplayed() {
+        waitElementPresent(By.cssSelector("#loginID"), 5);
+        return this;
+    }
 }

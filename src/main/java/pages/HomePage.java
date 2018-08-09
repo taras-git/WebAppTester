@@ -45,17 +45,9 @@ public class HomePage extends BasePage{
     @FindBy(xpath = "//a[contains(text(), 'Register now')]")
     WebElement registerNow;
 
-    @FindBy(xpath = "//a[contains(text(), 'Login')]")
+    @FindBy(xpath = "//span[contains(text(), 'Login')]")
     WebElement login;
 
-    @FindBy(xpath = "//button[contains(text(), 'Login')]")
-    WebElement loginSubmit;
-
-    @FindBy(css = "#inputEmail3")
-    WebElement loginEmail;
-
-    @FindBy(css = "#inputPassword3")
-    WebElement loginPassword;
 
     @FindBy(xpath = "(//a[contains(text(), 'Locations')])[2]")
     WebElement locations;
@@ -84,11 +76,8 @@ public class HomePage extends BasePage{
         bookVehicle.click();
     }
 
-    public void login(String email, String password){
+    public void clickLogin(){
         login.click();
-        loginEmail.sendKeys(email);
-        loginPassword.sendKeys(password);
-        loginSubmit.click();
     }
 
     public void clickRates(){
