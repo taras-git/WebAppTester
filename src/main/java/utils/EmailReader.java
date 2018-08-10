@@ -21,29 +21,20 @@ public class EmailReader {
         try {
             Folder inbox = getFolder(props);
             deleteMails(inbox);
-        } catch (NoSuchProviderException e) {
-            System.out.println(e.toString());
-            System.exit(1);
-        } catch (MessagingException e) {
-            System.out.println(e.toString());
-            System.exit(2);
+        } catch (Exception e) {
+            LOG.error("Failed to get Inbox folder", e);
         }
     }
 
     private static void deleteMails(Folder inbox){
         try {
             Message messages[] = inbox.getMessages();
-            try {
-                inbox.setFlags(messages, new Flags(DELETED), true);
-                LOG.info("Marked DELETE for ALL messages" );
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            // expunges the folder to remove messages which are marked deleted
+            inbox.setFlags(messages, new Flags(DELETED), true);
+            LOG.info("Marked DELETE for ALL messages" );
             inbox.close(true);
             LOG.info("Messages DELETED ");
-        } catch (MessagingException e) {
-            System.out.println(e.toString());
+        } catch (Exception e) {
+            LOG.error("Failed to delete all messages", e);
         }
     }
 
@@ -82,12 +73,12 @@ public class EmailReader {
                         return true;
                     }
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    LOG.error("Failed to get message", e);
                 }
             }
 
-        } catch (MessagingException e) {
-            System.out.println(e.toString());
+        } catch (Exception e) {
+            LOG.error("Failed to get messages", e);
         }
 
         return false;
@@ -100,12 +91,8 @@ public class EmailReader {
             Folder inbox = getFolder(props);
             return emailWithSubjectExists(inbox, JsonReader.getConfirmationSubject());
 
-        } catch (NoSuchProviderException e) {
-            System.out.println(e.toString());
-            System.exit(1);
-        } catch (MessagingException e) {
-            System.out.println(e.toString());
-            System.exit(2);
+        } catch (Exception e) {
+            LOG.error("Failed to check message subject", e);
         }
 
         return false;
@@ -113,14 +100,14 @@ public class EmailReader {
 
     public static void checkConfirmationEmailReceived(){
         //check for confirmation email every 1 second during 3 minutes
-        System.out.println("Waiting for confirmation email > ");
+        LOG.info("Waiting for confirmation email > ");
         for(int i = 0; i < 180; i++) {
             if (getBookingConfirmation()){
                 LOG.info("CONFIRMATION EMAIL FOUND!!!");
                 return;
             }
             sleep(1);
-            System.out.println(" . ");
+            LOG.info(" . ");
         }
         throw new RuntimeException("CONFIRMATION EMAIL NOT FOUND!!!");
     }
@@ -132,15 +119,10 @@ public class EmailReader {
             System.out.println("MAILS: " + messages.length);
 
             for(Message message:messages) {
-                try {
-                    getMessageInfo(message);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    System.out.println("No Information");
-                }
+                getMessageInfo(message);
             }
-        } catch (MessagingException e) {
-            System.out.println(e.toString());
+        } catch (Exception e) {
+            LOG.error("Failed to show messages", e);
         }
     }
 
@@ -153,10 +135,10 @@ public class EmailReader {
     }
 
     private static void getMessageInfo(Message message) throws MessagingException, IOException {
-        System.out.println("DATE: " + message.getSentDate().toString());
-        System.out.println("FROM: " + message.getFrom()[0].toString());
-        System.out.println("SUBJECT: " + message.getSubject());
-        System.out.println("CONTENT: " + message.getContent().toString());
-        System.out.println("******************************************");
+        LOG.info("DATE: " + message.getSentDate().toString());
+        LOG.info("FROM: " + message.getFrom()[0].toString());
+        LOG.info("SUBJECT: " + message.getSubject());
+        LOG.info("CONTENT: " + message.getContent().toString());
+        LOG.info("******************************************");
     }
 }
