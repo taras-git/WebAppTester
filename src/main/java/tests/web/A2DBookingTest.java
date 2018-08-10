@@ -1,7 +1,10 @@
 package tests.web;
 
 import baseclasses.BaseTestCase;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.annotations.Test;
+import utils.EmailReader;
 import utils.JsonReader;
 
 /**
@@ -9,6 +12,7 @@ import utils.JsonReader;
  */
 public class A2DBookingTest extends BaseTestCase {
 
+    private static final Logger LOG = LoggerFactory.getLogger(A2DBookingTest.class);
     private final String locationName = JsonReader.getLocation("location1");
     private final String a2dEmail = JsonReader.getUserEmail("app2_driver");
     private final String a2dPassword = JsonReader.getUserPassword("app2_driver");
@@ -55,6 +59,12 @@ public class A2DBookingTest extends BaseTestCase {
 
         confirmBookingPage.bookCar()
                 .verifyCarBooked();
+
+        try {
+            EmailReader.checkConfirmationEmailReceived();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 

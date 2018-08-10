@@ -50,7 +50,7 @@ public class Utils {
 
         try {
             Files.createDirectories(dirsPath);
-            System.out.println("Screenshot folder created");
+            LOG.info("Screenshot folder created");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -74,9 +74,9 @@ public class Utils {
                 result.getStatus() == ITestResult.SKIP) {
             try {
                 takeScreenshotWithWebdriver(result, folderName, d);
-                System.out.println("Screenshot taken");
+                LOG.info("Screenshot taken");
             } catch (Exception e) {
-                System.out.println("Exception while taking screenshot!");
+                LOG.info("Exception while taking screenshot!");
                 e.printStackTrace();
             }
         }
@@ -103,7 +103,7 @@ public class Utils {
                 + "_scr.png");
     }
 
-    private static String hashPassword(String email, String pass, String secret){
+    public static String hashPassword(String email, String pass, String secret){
         return new String(Base64.getEncoder().encode((email + "%s%" + pass + "%s%" + secret).getBytes()));
     }
 

@@ -14,6 +14,7 @@ public class JsonReader {
     static String urlsFile = "artifacts/properties/urls.json";
     static String usersFile = "artifacts/properties/users.json";
     static String locationsFile = "artifacts/properties/locations.json";
+    static String emailsFile = "artifacts/properties/emails.json";
 
     public static Boolean getBoolean(String key) {
         return (Boolean) getValue(key, propertyFile);
@@ -34,6 +35,15 @@ public class JsonReader {
     public static String getUserPassword(String key) {
         return Utils.getUserPassword((String) getValue(key, usersFile));
     }
+
+    public static String getUserImap(String key) {
+        return (String) getValue(key, usersFile);
+    }
+
+    public static String getConfirmationSubject() {
+        return (String) getValue("confirmation_subject", emailsFile);
+    }
+
 
     public static String getLocation(String key) {
         return (String) getValue(key, locationsFile);
