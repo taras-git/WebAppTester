@@ -1,4 +1,7 @@
 {
   "tar_nimets": "dGFyLm5pbWV0c0BnbWFpbC5jb20lcyVxd2VydHkxMjMlcyUxMTIyMzM=",
-  "app2_driver": "YXBwMmRyaXZlckB5YWhvby5jb20lcyUzMzIyMTFSdSQkTWFOTiElcyUwMTAxMTk3MA=="
+
+  "app2_driver": "YXBwMmRyaXZlckB5YWhvby5jb20lcyUzMzIyMTFSdSQkTWFOTiElcyUwMTAxMTk3MA==",
+  "app2_driver_mail": "YXBwMmRyaXZlckB5YWhvby5jb20lcyUxMTIyMzNSdSQkTWFOTiElcyUxMTIyMzM=",
+  "app2_driver_mail_imap": "imap.mail.yahoo.com"
 }

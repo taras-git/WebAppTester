@@ -10,6 +10,7 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 import pages.*;
+import utils.EmailReader;
 import utils.JsonReader;
 
 import java.lang.reflect.Method;
@@ -69,6 +70,7 @@ public class BaseTestCase {
 
     @BeforeSuite
     public void setup(){
+        EmailReader.deleteAllMails();
         createFolder(SCREENSHOTS_FOLDER);
     }
 

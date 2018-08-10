@@ -103,7 +103,7 @@ public class Utils {
                 + "_scr.png");
     }
 
-    private static String hashPassword(String email, String pass, String secret){
+    public static String hashPassword(String email, String pass, String secret){
         return new String(Base64.getEncoder().encode((email + "%s%" + pass + "%s%" + secret).getBytes()));
     }
 
