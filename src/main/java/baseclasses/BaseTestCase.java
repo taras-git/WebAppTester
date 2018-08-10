@@ -70,7 +70,12 @@ public class BaseTestCase {
 
     @BeforeSuite
     public void setup(){
-        EmailReader.deleteAllMails();
+        try {
+            EmailReader.deleteAllMails();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
         createFolder(SCREENSHOTS_FOLDER);
     }
 

@@ -15,27 +15,19 @@ public class EmailReader {
 
     private static final Logger LOG = LoggerFactory.getLogger(EmailReader.class);
 
-    public static void deleteAllMails() {
+    public static void deleteAllMails() throws MessagingException {
         Properties props = setImapProps();
+        Folder inbox = getFolder(props);
 
-        try {
-            Folder inbox = getFolder(props);
-            deleteMails(inbox);
-        } catch (Exception e) {
-            LOG.error("Failed to get Inbox folder", e);
-        }
+        deleteMails(inbox);
     }
 
-    private static void deleteMails(Folder inbox){
-        try {
-            Message messages[] = inbox.getMessages();
-            inbox.setFlags(messages, new Flags(DELETED), true);
-            LOG.info("Marked DELETE for ALL messages" );
-            inbox.close(true);
-            LOG.info("Messages DELETED ");
-        } catch (Exception e) {
-            LOG.error("Failed to delete all messages", e);
-        }
+    private static void deleteMails(Folder inbox) throws MessagingException {
+        Message messages[] = inbox.getMessages();
+        inbox.setFlags(messages, new Flags(DELETED), true);
+        LOG.info("Marked DELETE for ALL messages" );
+        inbox.close(true);
+        LOG.info("Messages DELETED ");
     }
 
     private static Folder getFolder(Properties props) throws MessagingException {
@@ -48,6 +40,7 @@ public class EmailReader {
 
         Folder inbox = store.getFolder("Inbox");
         inbox.open(Folder.READ_WRITE);
+
         return inbox;
     }
 
@@ -62,75 +55,54 @@ public class EmailReader {
         return props;
     }
 
-    private static boolean emailWithSubjectExists(Folder inbox, String subject){
-        try {
-            Message messages[] = inbox.getMessages();
+    private static boolean emailWithSubjectExists(Folder inbox, String subject) throws MessagingException {
+        Message messages[] = inbox.getMessages();
 
-            for(Message message:messages) {
-
-                try {
-                    if (message.getSubject().equalsIgnoreCase(subject)){
-                        return true;
-                    }
-                } catch (Exception e) {
-                    LOG.error("Failed to get message", e);
-                }
+        for(Message message:messages) {
+            if (message.getSubject().equalsIgnoreCase(subject)){
+                return true;
             }
-
-        } catch (Exception e) {
-            LOG.error("Failed to get messages", e);
         }
 
         return false;
     }
 
-    public static boolean getBookingConfirmation() {
+    public static boolean getBookingConfirmation() throws MessagingException {
         Properties props = setImapProps();
+        Folder inbox = getFolder(props);
 
-        try {
-            Folder inbox = getFolder(props);
-            return emailWithSubjectExists(inbox, JsonReader.getConfirmationSubject());
-
-        } catch (Exception e) {
-            LOG.error("Failed to check message subject", e);
-        }
-
-        return false;
+        return emailWithSubjectExists(inbox, JsonReader.getConfirmationSubject());
     }
 
-    public static void checkConfirmationEmailReceived(){
+    public static void checkConfirmationEmailReceived() throws MessagingException {
         //check for confirmation email every 1 second during 3 minutes
         LOG.info("Waiting for confirmation email > ");
+
         for(int i = 0; i < 180; i++) {
             if (getBookingConfirmation()){
-                LOG.info("CONFIRMATION EMAIL FOUND!!!");
+                LOG.info("CONFIRMATION EMAIL FOUND!");
                 return;
             }
             sleep(1);
-            LOG.info(" . ");
         }
-        throw new RuntimeException("CONFIRMATION EMAIL NOT FOUND!!!");
+        throw new RuntimeException("CONFIRMATION EMAIL NOT FOUND!");
     }
 
-    private static void showMails(Folder inbox, boolean showAll){
-        try {
-            FlagTerm ft = new FlagTerm(new Flags(Flags.Flag.SEEN), false);
-            Message messages[] = showAll ? inbox.getMessages() : inbox.search(ft);
-            System.out.println("MAILS: " + messages.length);
+    private static void showMails(Folder inbox, boolean showAll) throws IOException, MessagingException {
+        FlagTerm ft = new FlagTerm(new Flags(Flags.Flag.SEEN), false);
+        Message messages[] = showAll ? inbox.getMessages() : inbox.search(ft);
+        LOG.info("MAILS: " + messages.length);
 
-            for(Message message:messages) {
-                getMessageInfo(message);
-            }
-        } catch (Exception e) {
-            LOG.error("Failed to show messages", e);
+        for(Message message:messages) {
+            getMessageInfo(message);
         }
     }
 
-    private static void showUnreadMails(Folder inbox){
+    private static void showUnreadMails(Folder inbox) throws IOException, MessagingException {
         showMails(inbox, false);
     }
 
-    private static void showAllMails(Folder inbox){
+    private static void showAllMails(Folder inbox) throws IOException, MessagingException {
         showMails(inbox, true);
     }
 
