@@ -15,18 +15,21 @@ public class HtmlUtils {
         return doc.select("a[href]");
     }
 
-    public static int getResponseCode(String link) throws IOException {
+    public static int getResponseCode(String link) {
         URL url;
         HttpURLConnection con = null;
         int responseCode = 0;
 
-        url = new URL(link);
-        con = (HttpURLConnection) url.openConnection();
-        responseCode = con.getResponseCode();
-
-        if (null != con)
-            con.disconnect();
-
+        try {
+            url = new URL(link);
+            con = (HttpURLConnection) url.openConnection();
+            responseCode = con.getResponseCode();
+        } catch (Exception e) {
+            // skip
+        } finally {
+            if (null != con)
+                con.disconnect();
+        }
         return responseCode;
     }
 
