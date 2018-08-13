@@ -1,11 +1,17 @@
 package tests.api;
 
 import io.restassured.http.ContentType;
+import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import utils.JsonReader;
+import utils.HtmlUtils;
+
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import static io.restassured.RestAssured.get;
 
@@ -94,5 +100,31 @@ public class RestApiTest {
             .and()
             .assertThat()
             .statusCode(200);
+    }
+
+    @Test
+    public void verifyLinksOnPage(){
+        Map<Boolean, List<String>> linksMap = null;
+
+        try{
+            Elements elementsWithHref = HtmlUtils.getElements(homePageEnProduction);
+
+            linksMap = elementsWithHref
+                    .stream()
+                    .map(el -> el.attr("href"))  // get the "href" value of the element
+                    .map(String::trim)  // trim the text
+                    .filter(el -> el.contains("http"))  // get absolute links only
+                    .distinct()// there could be duplicate links , so find unique
+                    .collect(Collectors.partitioningBy(l -> HtmlUtils.getResponseCode(l) == 200)); // group the links based on the "200" response code
+
+        } catch (Exception e) {
+            LOG.info("Parsing exception: ", e);
+        }
+
+        if(!linksMap.get(false).isEmpty()){
+            linksMap.get(false).forEach((v) -> {
+                LOG.error("FOUND URL WITH CODE != 200 : " + v);
+            });
+        }
     }
 }
