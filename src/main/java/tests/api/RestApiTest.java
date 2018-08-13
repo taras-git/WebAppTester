@@ -104,11 +104,10 @@ public class RestApiTest {
 
     @Test
     public void verifyLinksOnPage(){
-        String startUrl = "https://www.app2drive.com/en/";
         Map<Boolean, List<String>> linksMap = null;
 
         try{
-            Elements elementsWithHref = HtmlUtils.getElements(startUrl);
+            Elements elementsWithHref = HtmlUtils.getElements(homePageEnProduction);
 
             linksMap = elementsWithHref
                     .stream()
