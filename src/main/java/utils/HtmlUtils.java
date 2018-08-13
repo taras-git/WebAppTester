@@ -18,7 +18,7 @@ public class HtmlUtils {
     public static int getResponseCode(String link) throws IOException {
         URL url;
         HttpURLConnection con = null;
-        Integer responseCode = 0;
+        int responseCode = 0;
 
         url = new URL(link);
         con = (HttpURLConnection) url.openConnection();
