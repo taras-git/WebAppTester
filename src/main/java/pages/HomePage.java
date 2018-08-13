@@ -6,8 +6,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import utils.JsonReader;
 
-import static utils.Utils.sleep;
-
 /**
  * Created by taras on 7/19/18.
  */
@@ -52,9 +50,11 @@ public class HomePage extends BasePage{
     @FindBy(xpath = "(//a[contains(text(), 'Locations')])[2]")
     WebElement locations;
 
+    String stationsXpath = "(//a[contains(text(), 'Stations')])[2]";
     @FindBy(xpath = "(//a[contains(text(), 'Stations')])[2]")
     WebElement stations;
 
+    String airfieldsXpath = "(//a[contains(text(), 'Airfields')])[2]";
     @FindBy(xpath = "(//a[contains(text(), 'Airfields')])[2]")
     WebElement airfields;
 
@@ -118,9 +118,17 @@ public class HomePage extends BasePage{
 
     public HomePage clickLocations() {
         locations.click();
-    return this;}
-
-    public void clickStations() { stations.click(); }
+        return this;
+    }
 
     public void clickAirfields() { airfields.click(); }
+
+    public void moveToLocationsAndClickStations(){
+        moveToAndClick(locations, stationsXpath);
+    }
+
+    public void moveToLocationsAndClickAirfields(){
+        moveToAndClick(locations, airfieldsXpath);
+    }
+
 }

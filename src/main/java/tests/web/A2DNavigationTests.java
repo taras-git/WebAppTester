@@ -84,8 +84,7 @@ public class A2DNavigationTests extends BaseTestCase {
     @Test
     public void navigateToStationsPage() {
         homePage.start()
-                .clickLocations()
-                .clickStations();
+                .moveToLocationsAndClickStations();
 
         stationsPage.verifyStationsPageDisplayed();
     }
@@ -93,8 +92,7 @@ public class A2DNavigationTests extends BaseTestCase {
     @Test
     public void navigateToAirfieldsPage() {
         homePage.start()
-                .clickLocations()
-                .clickAirfields();
+                .moveToLocationsAndClickAirfields();
 
         airfieldsPage.verifyAirfieldsPageDisplayed();
     }
