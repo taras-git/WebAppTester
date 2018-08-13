@@ -1,18 +1,14 @@
 package tests.api;
 
 import io.restassured.http.ContentType;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import utils.JsonReader;
+import utils.HtmlUtils;
 
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -109,50 +105,27 @@ public class RestApiTest {
     @Test
     public void verifyLinksOnPage(){
         String startUrl = "https://www.app2drive.com/en/";
-        Map<Boolean, List<String>> map = null;
+        Map<Boolean, List<String>> linksMap = null;
 
         try{
-            Elements elementsWithHref = getElements(startUrl);
+            Elements elementsWithHref = HtmlUtils.getElements(startUrl);
 
-            map = elementsWithHref
+            linksMap = elementsWithHref
                     .stream()
                     .map(el -> el.attr("href"))  // get the "href" value of the element
                     .map(String::trim)  // trim the text
                     .filter(el -> el.contains("http"))  // get absolute links only
                     .distinct()// there could be duplicate links , so find unique
-                    .collect(Collectors.partitioningBy(l -> RestApiTest.getResponseCode(l) == 200)); // group the links based on the "200" response code
+                    .collect(Collectors.partitioningBy(l -> HtmlUtils.getResponseCode(l) == 200)); // group the links based on the "200" response code
 
         } catch (Exception e) {
             LOG.info("Parsing exception: ", e);
         }
 
-        if(!map.get(false).isEmpty()){
-            map.get(false).forEach((v) -> {
+        if(!linksMap.get(false).isEmpty()){
+            linksMap.get(false).forEach((v) -> {
                 LOG.error("FOUND URL WITH CODE != 200 : " + v);
             });
         }
-    }
-
-    private Elements getElements(String startUrl) throws IOException {
-        Document doc = Jsoup.connect(startUrl).get();
-        return doc.select("a[href]");
-    }
-
-    public static int getResponseCode(String link) {
-        URL url;
-        HttpURLConnection con = null;
-        Integer responseCode = 0;
-
-        try {
-            url = new URL(link);
-            con = (HttpURLConnection) url.openConnection();
-            responseCode = con.getResponseCode();
-        } catch (Exception e) {
-            // skip
-        } finally {
-            if (null != con)
-                con.disconnect();
-        }
-        return responseCode;
     }
 }
