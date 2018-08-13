@@ -88,4 +88,24 @@ public class BasePage {
         WebElement root = driver.findElement(By.xpath("(//*)[1]"));
         root.sendKeys(Keys.PAGE_DOWN);
     }
+
+    protected void moveToAndClick(WebElement moveTo, String clickOn){
+        WebElement el = driver.findElement(By.xpath(clickOn));
+        Actions builder = new Actions(driver);
+
+        // Workaround - perform move to 2 times instead of 1
+        // this way the click always executes
+        builder.moveToElement(moveTo)
+                .moveToElement(el)
+                .moveToElement(moveTo)
+                .moveToElement(el)
+                .click()
+                .build()
+                .perform();
+    }
+
+    protected void hoverOver(WebElement hoverOver){
+        Actions builder = new Actions(driver);
+        builder.moveToElement(hoverOver).perform();
+    }
 }
