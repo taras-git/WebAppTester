@@ -147,13 +147,16 @@ public class A2DBookingTest extends BaseTestCase {
 
 
     private void login() {
-        String env;
+        String env = null;
         try {
+            LOG.info("Setting ENV variable");
             env = System.getProperty("env");
-            LOG.info(">>> ENV variable is set by Jenkins parameter: " + env);
+
+            if (env == null) throw new RuntimeException("ENV variable is not set by Jenkins, using JSON file");
+            LOG.info("ENV variable is set by Jenkins choice parameter: " + env);
         } catch (Exception e){
             env = JsonReader.getString("env").toLowerCase();
-            LOG.info(">>> ENV variable is set by Json property file: " + env);
+            LOG.info("ENV variable is set by Json property file: " + env);
         }
 
         switch(env){
