@@ -2,13 +2,8 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 
 <suite name="A2D_Test" verbose="1">
-
-    <parameter name="browser" value="chrome" />
-
-    <test name="Test">
+    <test name="RestApi">
         <classes>
-            <class name="tests.web.A2DBookingTest" />
-            <class name="tests.web.A2DNavigationTests" />
             <class name="tests.api.RestApiTest" />
         </classes>
     </test>

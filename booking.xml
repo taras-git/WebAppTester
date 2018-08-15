@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="A2D_Test" verbose="1">
+
+    <test name="Booking">
+        <classes>
+            <class name="tests.web.A2DBookingTest" />
+        </classes>
+    </test>
+
+</suite>
