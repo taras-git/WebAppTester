@@ -10,7 +10,7 @@ import utils.JsonReader;
 /**
  * Created by taras on 7/17/18.
  */
-public class A2DBookingTest extends BaseTestCase {
+public class A2DBookingTest2 extends BaseTestCase {
 
     private static final Logger LOG = LoggerFactory.getLogger(A2DBookingTest2.class);
     private final String locationName = JsonReader.getLocation("location1");

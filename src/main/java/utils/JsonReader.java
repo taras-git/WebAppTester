@@ -40,10 +40,13 @@ public class JsonReader {
         return (String) getValue(key, usersFile);
     }
 
-    public static String getConfirmationSubject() {
-        return (String) getValue("confirmation_subject", emailsFile);
+    public static String getConfirmationSubjectEN() {
+        return (String) getValue("confirmation_subject_en", emailsFile);
     }
 
+    public static String getConfirmationSubjectDE() {
+        return (String) getValue("confirmation_subject_de", emailsFile);
+    }
 
     public static String getLocation(String key) {
         return (String) getValue(key, locationsFile);

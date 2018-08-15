@@ -18,13 +18,12 @@ public class AccountPage extends BasePage {
 
     private static final Logger LOG = LoggerFactory.getLogger(AccountPage.class);
 
-    private String bearbeitenXpath = "(//a[contains(text(), 'Bearbeiten')])[1]";
+    private String editAccountXpath = "(//a[contains(@href,'editaccount')])[1]";
+    @FindBy(xpath = "(//a[contains(@href,'editaccount')])[1]")
+    private WebElement editAccount;
 
-    @FindBy(xpath = "(//a[contains(text(), 'Bearbeiten')])[1]")
-    private WebElement bearbeiten;
-
-    @FindBy(xpath = "(//button[contains(text(), 'Speichern')])[1]")
-    private WebElement speichern;
+    @FindBy(xpath = "(//button[@class='btn btn-primary'])[1]")
+    private WebElement submitAccountChanges;
 
     @FindBy(css = "#regLand")
     private WebElement land;
@@ -50,14 +49,14 @@ public class AccountPage extends BasePage {
         super(driver);
     }
 
-    public AccountPage clickBearbeiten(){
-        waitElementClickable(bearbeitenXpath, 10);
-        bearbeiten.click();
+    public AccountPage clickEditAccount(){
+        waitElementClickable(editAccountXpath, 10);
+        editAccount.click();
         return this;
     }
 
-    public AccountPage clickSpeichern(){
-        speichern.click();
+    public AccountPage submitAccountChanges(){
+        submitAccountChanges.click();
         return this;
     }
 
