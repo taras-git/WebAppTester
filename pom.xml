@@ -67,7 +67,7 @@
                     <workingDirectory>${project.basedir}</workingDirectory>
 
                     <suiteXmlFiles>
-                        <suiteXmlFile>testng.xml</suiteXmlFile>
+                        <suiteXmlFile>${suiteXmlFile}</suiteXmlFile>
                     </suiteXmlFiles>
 
                     <testFailureIgnore>true</testFailureIgnore>
