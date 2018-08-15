@@ -7,7 +7,7 @@ import utils.JsonReader;
 
 public class HomePageIntera extends HomePage {
 
-    final String homePageInteraUrl = JsonReader.getUrl("home_page_test_env");
+    final String homePageInteraUrl = JsonReader.getUrl("booking_page_intera_en");
 
     @FindBy(xpath = "//a[contains(text(), 'Login')]")
     WebElement login;
@@ -18,7 +18,7 @@ public class HomePageIntera extends HomePage {
     @FindBy(css = "#inputPassword3")
     WebElement loginPassword;
 
-    @FindBy(xpath = "//button[contains(text(), 'Login')]")
+    @FindBy(xpath = "(//button[@type='submit'])[1]")
     WebElement loginSubmit;
 
 

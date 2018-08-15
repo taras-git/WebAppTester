@@ -58,20 +58,30 @@ public class EmailReader {
     private static boolean emailWithSubjectExists(Folder inbox, String subject) throws MessagingException {
         Message messages[] = inbox.getMessages();
 
-        for(Message message:messages) {
-            if (message.getSubject().equalsIgnoreCase(subject)){
-                return true;
-            }
-        }
+        for(Message message:messages)
+            if (message.getSubject().equalsIgnoreCase(subject)) return true;
 
         return false;
     }
+
+    private static boolean emailWithSubjectExists(Folder inbox, String... subjects) throws MessagingException {
+        Message messages[] = inbox.getMessages();
+
+        for(Message message:messages)
+            for (String subject : subjects)
+                if (message.getSubject().equalsIgnoreCase(subject)) return true;
+
+        return false;
+    }
+
 
     public static boolean getBookingConfirmation() throws MessagingException {
         Properties props = setImapProps();
         Folder inbox = getFolder(props);
 
-        return emailWithSubjectExists(inbox, JsonReader.getConfirmationSubject());
+        return emailWithSubjectExists(inbox,
+                JsonReader.getConfirmationSubjectEN(),
+                JsonReader.getConfirmationSubjectDE());
     }
 
     public static void checkConfirmationEmailReceived() throws MessagingException {

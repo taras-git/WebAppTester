@@ -1,4 +1,7 @@
 {
+  "//":"allowed values: prod, intera",
+  "env": "intera",
+
   "//": "allowed browser names: ff, firefox, ch, chrome",
   "browser": "ff",
   "headless_mode": false,

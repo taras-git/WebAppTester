@@ -21,7 +21,7 @@ public class ConfirmBookingPage extends BasePage {
     }
 
     public void verifyCarBooked(){
-        waitElementDisplayed(By.cssSelector("div.alert.alert-success"), 10);
+        waitElementDisplayed(By.cssSelector("div.alert.alert-success"), 20);
     }
 
 }

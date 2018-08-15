@@ -1,6 +1,7 @@
 package pages;
 
 import baseclasses.BasePage;
+import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -31,19 +32,13 @@ public class BookingPage extends BasePage{
         super(driver);
     }
 
-    public BookingPage verifyBookingPageDisplayed() {
+    public BookingPage verifyENBookingPageDisplayed() {
         super.verifyPageDisplayed("ind_and_book_a_vehicle", "Book Vehicle EN ");
         return this;
     }
 
     public BookingPage verifyDEBookingPageDisplayed() {
         super.verifyPageDisplayed("ahrzeug_finden_und_buchen", "Book Vehicle DE ");
-        return this;
-    }
-
-
-    public BookingPage verifyBookingPageDisplayed(String textInUrl) {
-        super.verifyPageDisplayed(textInUrl, "Book Vehicle");
         return this;
     }
 
@@ -58,6 +53,7 @@ public class BookingPage extends BasePage{
     }
 
     public BookingPage chooseLocation(String locationName) {
+        waitElementPresent(By.id("map-location"), 5);
         location.sendKeys(locationName);
         sleep(0.2);
         location.sendKeys(Keys.DOWN);
