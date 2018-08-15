@@ -12,7 +12,7 @@ import utils.JsonReader;
  */
 public class A2DBookingTest extends BaseTestCase {
 
-    private static final Logger LOG = LoggerFactory.getLogger(A2DBookingTest2.class);
+    private static final Logger LOG = LoggerFactory.getLogger(A2DBookingTest.class);
     private final String locationName = JsonReader.getLocation("location1");
     private final String a2dEmail = JsonReader.getUserEmail("app2_driver");
     private final String a2dPassword = JsonReader.getUserPassword("app2_driver");
