@@ -147,7 +147,12 @@ public class A2DBookingTest extends BaseTestCase {
 
 
     private void login() {
-        String env = JsonReader.getString("env").toLowerCase();
+        String env;
+        try {
+            env = System.getProperty("env");
+        } catch (Exception e){
+            env = JsonReader.getString("env").toLowerCase();
+        }
 
         switch(env){
             case "prod": {
