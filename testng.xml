@@ -5,10 +5,20 @@
 
     <parameter name="browser" value="chrome" />
 
-    <test name="Test">
+    <test name="Navigation">
+        <classes>
+            <class name="tests.web.A2DNavigationTests" />
+        </classes>
+    </test>
+
+    <test name="Booking">
         <classes>
             <class name="tests.web.A2DBookingTest" />
-            <class name="tests.web.A2DNavigationTests" />
+        </classes>
+    </test>
+
+    <test name="RestApi">
+        <classes>
             <class name="tests.api.RestApiTest" />
         </classes>
     </test>
