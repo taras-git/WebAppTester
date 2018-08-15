@@ -32,6 +32,13 @@
     </reporting>
 
     <build>
+
+        <resources>
+            <resource>
+                <directory>${project.basedir}</directory>
+            </resource>
+        </resources>
+
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 
-<suite name="A2D_Test" verbose="1">
+<suite name="RestApi_Test" verbose="1">
     <test name="RestApi">
         <classes>
             <class name="tests.api.RestApiTest" />
