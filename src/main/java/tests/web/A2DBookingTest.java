@@ -7,6 +7,8 @@ import org.testng.annotations.Test;
 import utils.EmailReader;
 import utils.JsonReader;
 
+import java.util.Date;
+
 /**
  * Created by taras on 7/17/18.
  */
@@ -34,11 +36,13 @@ public class A2DBookingTest extends BaseTestCase {
         chooseCarPage.waitChooseCarDisplayed()
                 .chooseFirstCarDisplayed();
 
+        Date withBookingDate = new Date();
+
         confirmBookingPage.bookCar()
                 .verifyCarBooked();
 
         try {
-            EmailReader.checkConfirmationEmailReceived();
+            EmailReader.checkConfirmationEmailReceived(withBookingDate);
         } catch (Exception e) {
             e.printStackTrace();
         }
