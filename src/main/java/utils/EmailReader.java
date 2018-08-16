@@ -78,20 +78,6 @@ public class EmailReader {
         return false;
     }
 
-    public static Date getEmailTime() throws MessagingException {
-        Properties props = setImapProps();
-        Folder inbox = getFolder(props);
-
-        Message messages[] = inbox.getMessages();
-
-        for(Message message:messages){
-                System.out.println(">>> TIME : " + message.getSentDate());
-                    return message.getSentDate();
-        }
-        return null;
-    }
-
-
     public static boolean getBookingConfirmation(Date bookingDate) throws MessagingException {
         Properties props = setImapProps();
         Folder inbox = getFolder(props);
