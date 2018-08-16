@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import javax.mail.*;
 import javax.mail.search.FlagTerm;
 import java.io.IOException;
+import java.util.Date;
 import java.util.Properties;
 
 import static javax.mail.Flags.Flag.DELETED;
@@ -64,32 +65,49 @@ public class EmailReader {
         return false;
     }
 
-    private static boolean emailWithSubjectExists(Folder inbox, String... subjects) throws MessagingException {
+    private static boolean emailWithSubjectExists(Folder inbox, Date bookingDate, String... subjects) throws MessagingException {
         Message messages[] = inbox.getMessages();
 
         for(Message message:messages)
             for (String subject : subjects)
-                if (message.getSubject().equalsIgnoreCase(subject)) return true;
+                // if the subject is OK and the booking date is before message date
+                if (message.getSubject().equalsIgnoreCase(subject) &&
+                        (bookingDate.compareTo(message.getSentDate()) < 0))
+                    return true;
 
         return false;
     }
 
+    public static Date getEmailTime() throws MessagingException {
+        Properties props = setImapProps();
+        Folder inbox = getFolder(props);
 
-    public static boolean getBookingConfirmation() throws MessagingException {
+        Message messages[] = inbox.getMessages();
+
+        for(Message message:messages){
+                System.out.println(">>> TIME : " + message.getSentDate());
+                    return message.getSentDate();
+        }
+        return null;
+    }
+
+
+    public static boolean getBookingConfirmation(Date bookingDate) throws MessagingException {
         Properties props = setImapProps();
         Folder inbox = getFolder(props);
 
         return emailWithSubjectExists(inbox,
+                bookingDate,
                 JsonReader.getConfirmationSubjectEN(),
                 JsonReader.getConfirmationSubjectDE());
     }
 
-    public static void checkConfirmationEmailReceived() throws MessagingException {
+    public static void checkConfirmationEmailReceived(Date bookingDate) throws MessagingException {
         //check for confirmation email every 1 second during 3 minutes
         LOG.info("Waiting for confirmation email > ");
 
         for(int i = 0; i < 180; i++) {
-            if (getBookingConfirmation()){
+            if (getBookingConfirmation(bookingDate)){
                 LOG.info("CONFIRMATION EMAIL FOUND!");
                 return;
             }
