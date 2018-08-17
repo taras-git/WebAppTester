@@ -5,9 +5,13 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.concurrent.TimeUnit;
+import java.util.function.Function;
 
 /**
  * Created by taras on 7/19/18.
@@ -41,7 +45,6 @@ public class BasePage {
             LOG.error(pageName + " page has not title << " + textInTitle + " >> in it");
             throw new RuntimeException("ERROR opening: " + pageName + " :: " + e.getStackTrace());
         }
-
     }
 
     public void waitElementClickable(String xpath, int timeout){
@@ -69,12 +72,34 @@ public class BasePage {
                 .until(ExpectedConditions.presenceOfElementLocated(by));
     }
 
-    public WebElement waitElementFound(By by, int timeout){
+    public WebElement getElementWaitFound(By by, int timeout){
         WebElement element;
         element = (new WebDriverWait(driver, timeout))
                 .until((ExpectedCondition<WebElement>) d -> d.findElement(by));
 
         return element;
+    }
+
+    public WebElement getElementFluentWait(By by, int timeout){
+        FluentWait<WebDriver> wait = new FluentWait<WebDriver>(driver)
+            .pollingEvery(250,  TimeUnit.MILLISECONDS)
+            .withTimeout(timeout, TimeUnit.SECONDS)
+            .ignoring(NoSuchElementException.class);
+
+        Function<WebDriver, WebElement> waitFunction = new Function<WebDriver, WebElement>(){
+            public WebElement apply(WebDriver d) {
+                LOG.info("Checking for the element: " + by);
+                WebElement element = d.findElement(by);
+
+                if(element != null) {
+                    LOG.info("Target element found");
+                }
+
+                return element;
+            }
+        };
+
+        return wait.until(waitFunction);
     }
 
 

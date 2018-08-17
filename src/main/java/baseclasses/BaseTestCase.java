@@ -26,6 +26,7 @@ public class BaseTestCase {
 
     protected WebDriver driver;
     private final String SCREENSHOTS_FOLDER = JsonReader.getString("failed_tests_screenshot_folder");
+    private final String VIDEO_FOLDER = JsonReader.getString("failed_tests_video_folder");
     private static final Logger LOG = LoggerFactory.getLogger(BaseTestCase.class);
 
     protected HomePage homePage;
@@ -77,6 +78,7 @@ public class BaseTestCase {
         }
 
         createFolder(SCREENSHOTS_FOLDER);
+        createFolder(VIDEO_FOLDER);
     }
 
     @BeforeMethod

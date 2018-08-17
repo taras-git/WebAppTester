@@ -1,17 +1,22 @@
 package tests.web;
 
 import baseclasses.BaseTestCase;
+import com.automation.remarks.testng.VideoListener;
+import com.automation.remarks.video.annotations.Video;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import utils.EmailReader;
 import utils.JsonReader;
 
 import java.util.Date;
 
+
 /**
  * Created by taras on 7/17/18.
  */
+@Listeners(VideoListener.class)
 public class A2DBookingTest extends BaseTestCase {
 
     private static final Logger LOG = LoggerFactory.getLogger(A2DBookingTest.class);
@@ -23,6 +28,7 @@ public class A2DBookingTest extends BaseTestCase {
     private final String homePageDeProduction = JsonReader.getUrl("home_page_de_production");
     private final String bookingPageIntera = JsonReader.getUrl("booking_page_intera_en");
 
+    @Video
     @Test(groups="Booking")
     public void loggedUserCanBookVehicle(){
         login();
@@ -48,7 +54,7 @@ public class A2DBookingTest extends BaseTestCase {
         }
     }
 
-
+    @Video
     @Test(groups="Booking", dependsOnMethods = "loggedUserCanBookVehicle")
     public void loggedUserCanCancelBooking(){
         login();
@@ -64,6 +70,7 @@ public class A2DBookingTest extends BaseTestCase {
                 .cancelBooking();
     }
 
+    @Video
     @Test(dependsOnGroups = "Booking")
     public void verifyBookingCanceled(){
         login();
@@ -87,6 +94,7 @@ public class A2DBookingTest extends BaseTestCase {
                 .verifyUserLogged();
     }
 
+    @Video
     @Test
     public void loggedUserCanChangeCountry(){
         login();
@@ -114,6 +122,7 @@ public class A2DBookingTest extends BaseTestCase {
         }
     }
 
+    @Video
     @Test(dependsOnMethods = { "loggedUserCanChangeCountry" })
     public void loggedUserCenRestoreDefaultCountry(){
         login();
@@ -175,7 +184,6 @@ public class A2DBookingTest extends BaseTestCase {
         }
 
         throw new RuntimeException("Environment is not properly set, please check the property.json file!!!");
-
     }
 
 }
