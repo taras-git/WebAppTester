@@ -18,5 +18,6 @@
   "chrome_driver_windows": "artifacts/drivers/windows/chromedriver.exe",
 
   "//": "path to screenshots",
-  "failed_tests_screenshot_folder": "test-output/screenshots/"
+  "failed_tests_screenshot_folder": "test-output/screenshots/",
+  "failed_tests_video_folder": "video/"
 }

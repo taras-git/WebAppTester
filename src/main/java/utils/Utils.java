@@ -50,7 +50,7 @@ public class Utils {
 
         try {
             Files.createDirectories(dirsPath);
-            LOG.info("Screenshot folder created");
+            LOG.info(folderName + " folder created");
         } catch (IOException e) {
             e.printStackTrace();
         }
