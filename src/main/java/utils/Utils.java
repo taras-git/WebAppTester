@@ -28,6 +28,8 @@ import java.util.Comparator;
 public class Utils {
 
     private static final Logger LOG = LoggerFactory.getLogger(Utils.class);
+    public static final String DE = "DE";
+    public static final String EN = "EN";
 
     public static void sleep(double seconds){
         try {
@@ -121,6 +123,28 @@ public class Utils {
 
     public static String getUserPassword(String credentials){
         return getPassword(credentials);
+    }
+
+    public static  String getEnvironment() {
+        String env;
+        try {
+            LOG.info("Setting ENV variable");
+            env = System.getProperty("ENVIRONMENT");
+
+            if (env == null) throw new RuntimeException("ENV variable is not set by Jenkins, using JSON file");
+            LOG.info("ENV variable is set by Jenkins choice parameter: " + env);
+        } catch (Exception e){
+            env = JsonReader.getString("env").toLowerCase();
+            LOG.info("ENV variable is set by Json property file: " + env);
+        }
+        return env;
+    }
+
+    public static String getLanguage() {
+        if(getEnvironment().toLowerCase().contains("_de")) return DE;
+        if(getEnvironment().toLowerCase().contains("_en")) return EN;
+
+        throw new RuntimeException("Language is not set in property file!!!");
     }
 
 }

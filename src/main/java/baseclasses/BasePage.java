@@ -9,6 +9,7 @@ import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import utils.Utils;
 
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
@@ -20,6 +21,8 @@ public class BasePage {
 
     protected WebDriver driver;
     public WebDriverWait wait;
+    public final static String ENVIRONMENT = Utils.getEnvironment();
+    public final static String LANGUAGE = Utils.getLanguage();
 
     private static final Logger LOG = LoggerFactory.getLogger(BasePage.class);
 

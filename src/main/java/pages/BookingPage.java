@@ -1,12 +1,15 @@
 package pages;
 
 import baseclasses.BasePage;
+import exceptions.PropertyMisconfigureException;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
+import static utils.Utils.DE;
+import static utils.Utils.EN;
 import static utils.Utils.sleep;
 
 /**
@@ -20,16 +23,24 @@ public class BookingPage extends BasePage{
     @FindBy(css = "#map-location")
     private WebElement location;
 
-    private String meinKontoXpath = "//a[contains(text(), 'Mein Konto')]";
+    private String myAccountXpathDe = "//a[contains(text(), 'Mein Konto')]";
     @FindBy(xpath = "//a[contains(text(), 'Mein Konto')]")
-    private WebElement meinKonto;
+    private WebElement myAccountDe;
 
-    private String myAccountXpath = "//a[contains(text(), 'My account')]";
+    private String myAccountXpathEn = "//a[contains(text(), 'My account')]";
     @FindBy(xpath = "//a[contains(text(), 'My account')]")
-    private WebElement myAccount;
+    private WebElement myAccountEn;
 
     public BookingPage(WebDriver driver) {
         super(driver);
+    }
+
+    public BookingPage verifyBookingPageDisplayed() {
+        switch (LANGUAGE){
+            case DE : return verifyDEBookingPageDisplayed();
+            case EN : return verifyENBookingPageDisplayed();
+        }
+        throw new RuntimeException("Language is not properly set, please check config files!!!");
     }
 
     public BookingPage verifyENBookingPageDisplayed() {
@@ -54,7 +65,10 @@ public class BookingPage extends BasePage{
 
     public BookingPage chooseLocation(String locationName) {
         waitElementPresent(By.id("map-location"), 5);
-        location.sendKeys(locationName);
+        location.sendKeys("A");
+        location.sendKeys("s");
+        location.sendKeys("c");
+
         sleep(0.2);
         location.sendKeys(Keys.DOWN);
         sleep(0.2);
@@ -68,15 +82,24 @@ public class BookingPage extends BasePage{
         return this;
     }
 
-    public BookingPage clickMeinKonto() {
-        waitElementClickable(meinKontoXpath, 10);
-        meinKonto.click();
+    public BookingPage clickMyAccount() {
+        switch (LANGUAGE) {
+            case DE : return clickMyAccountDe();
+            case EN : return clickMyAccountEn();
+        }
+        throw new PropertyMisconfigureException();
+    }
+
+    public BookingPage clickMyAccountDe() {
+        waitElementClickable(myAccountXpathDe, 10);
+        myAccountDe.click();
         return this;
     }
 
-    public BookingPage clickMyAccount() {
-        waitElementClickable(myAccountXpath, 10);
-        myAccount.click();
+    public BookingPage clickMyAccountEn() {
+        waitElementClickable(myAccountXpathEn, 10);
+        myAccountEn.click();
         return this;
     }
+
 }

@@ -8,6 +8,9 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import static utils.Utils.DE;
+import static utils.Utils.EN;
+
 /**
  * Created by taras on 7/27/18.
  */
@@ -25,6 +28,9 @@ public class LoginPage extends BasePage{
 
     @FindBy(xpath = "//button[contains(text(), 'submit ')]")
     WebElement submitButton;
+
+    @FindBy(xpath = "//button[contains(text(), 'Login ')]")
+    WebElement loginButton;
 
     private final String logoutXpath = "//a[contains(text(), 'Logout ')]";
     @FindBy(xpath = "//a[contains(text(), 'Logout ')]")
@@ -48,7 +54,18 @@ public class LoginPage extends BasePage{
     public LoginPage login(String email, String password){
         emailInput.sendKeys(email);
         passwordInput.sendKeys(password);
-        submitButton.click();
+
+        switch (LANGUAGE){
+            case DE : {
+                loginButton.click();
+                break;
+            }
+            case EN : {
+                submitButton.click();
+                break;
+            }
+        }
+
         return this;
     }
 

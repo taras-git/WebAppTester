@@ -1,18 +1,27 @@
 package pages;
 
 import baseclasses.BasePage;
+import exceptions.PropertyMisconfigureException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+
+import static utils.Utils.DE;
+import static utils.Utils.EN;
 
 /**
  * Created by taras on 7/26/18.
  */
 public class ChooseCarPage extends BasePage {
 
-    private final String chooseFirstCarXpath = "(//button[contains(text(), ' Choose car ')])[1]";
+    private final String chooseFirstCarXpathEn = "(//button[contains(text(), ' Choose car ')])[1]";
+    private final String chooseFirstCarXpathDe = "(//button[contains(text(), ' Fahrzeug wählen ')])[1]";
+
     @FindBy(xpath = "(//button[contains(text(), ' Choose car ')])[1]")
-    WebElement choosefirstCar;
+    WebElement choosefirstCarEn;
+
+    @FindBy(xpath = "(//button[contains(text(), ' Fahrzeug wählen ')])[1]")
+    WebElement choosefirstCarDe;
 
     public ChooseCarPage(WebDriver driver) {
         super(driver);
@@ -24,14 +33,47 @@ public class ChooseCarPage extends BasePage {
     }
 
     public ChooseCarPage waitChooseCarDisplayed(){
-        waitElementDisplayed(chooseFirstCarXpath, 30);
+        switch (LANGUAGE){
+            case DE : return waitChooseCarDisplayedDe();
+            case EN : return waitChooseCarDisplayedEn();
+        }
+
+        throw new PropertyMisconfigureException();
+    }
+
+    public ChooseCarPage waitChooseCarDisplayedEn(){
+        waitElementDisplayed(chooseFirstCarXpathEn, 30);
+        return this;
+    }
+
+    public ChooseCarPage waitChooseCarDisplayedDe(){
+        waitElementDisplayed(chooseFirstCarXpathDe, 30);
         return this;
     }
 
     public void chooseFirstCarDisplayed(){
+        switch (LANGUAGE){
+            case DE : {
+                chooseFirstCarDisplayedDe();
+                break;
+            }
+            case EN : {
+                chooseFirstCarDisplayedEn();
+                break;
+            }
+        }
+    }
+
+    public void chooseFirstCarDisplayedEn(){
         scrollOnePageDown();
-        waitElementClickable(chooseFirstCarXpath, 10);
-        choosefirstCar.click();
+        waitElementClickable(chooseFirstCarXpathEn, 10);
+        choosefirstCarEn.click();
+    }
+
+    public void chooseFirstCarDisplayedDe(){
+        scrollOnePageDown();
+        waitElementClickable(chooseFirstCarXpathDe, 10);
+        choosefirstCarDe.click();
     }
 
 
