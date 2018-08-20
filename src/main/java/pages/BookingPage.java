@@ -37,20 +37,16 @@ public class BookingPage extends BasePage{
 
     public BookingPage verifyBookingPageDisplayed() {
         switch (LANGUAGE){
-            case DE : return verifyDEBookingPageDisplayed();
-            case EN : return verifyENBookingPageDisplayed();
+            case DE : {
+                super.verifyPageDisplayed("ahrzeug_finden_und_buchen", "Book Vehicle DE ");
+                return this;
+            }
+            case EN : {
+                super.verifyPageDisplayed("ind_and_book_a_vehicle", "Book Vehicle EN ");
+                return this;
+            }
         }
         throw new RuntimeException("Language is not properly set, please check config files!!!");
-    }
-
-    public BookingPage verifyENBookingPageDisplayed() {
-        super.verifyPageDisplayed("ind_and_book_a_vehicle", "Book Vehicle EN ");
-        return this;
-    }
-
-    public BookingPage verifyDEBookingPageDisplayed() {
-        super.verifyPageDisplayed("ahrzeug_finden_und_buchen", "Book Vehicle DE ");
-        return this;
     }
 
     public BookingPage fillCheckOut() {

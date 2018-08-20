@@ -107,7 +107,7 @@ public class A2DBookingTest extends BaseTestCase {
     public void loggedUserCanChangeCountry(){
         login();
 
-        bookingPage.verifyENBookingPageDisplayed()
+        bookingPage.verifyBookingPageDisplayed()
                 .clickMyAccount();
 
         accountPage.verifyMyAccountPageDisplayed()
@@ -119,7 +119,7 @@ public class A2DBookingTest extends BaseTestCase {
 
         login();
 
-        bookingPage.verifyENBookingPageDisplayed()
+        bookingPage.verifyBookingPageDisplayed()
                 .clickMyAccount();
 
         String currentCountry = accountPage.verifyMyAccountPageDisplayed()
@@ -135,7 +135,7 @@ public class A2DBookingTest extends BaseTestCase {
     public void loggedUserCenRestoreDefaultCountry(){
         login();
 
-        bookingPage.verifyENBookingPageDisplayed()
+        bookingPage.verifyBookingPageDisplayed()
                 .clickMyAccount();
 
         String currentCountry = accountPage.verifyMyAccountPageDisplayed()
@@ -155,7 +155,7 @@ public class A2DBookingTest extends BaseTestCase {
 
         login();
 
-        bookingPage.verifyENBookingPageDisplayed()
+        bookingPage.verifyBookingPageDisplayed()
                 .clickMyAccount();
 
         currentCountry = accountPage.verifyMyAccountPageDisplayed()

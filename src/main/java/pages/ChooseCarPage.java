@@ -1,7 +1,6 @@
 package pages;
 
 import baseclasses.BasePage;
-import exceptions.PropertyMisconfigureException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -34,20 +33,16 @@ public class ChooseCarPage extends BasePage {
 
     public ChooseCarPage waitChooseCarDisplayed(){
         switch (LANGUAGE){
-            case DE : return waitChooseCarDisplayedDe();
-            case EN : return waitChooseCarDisplayedEn();
+            case DE : {
+                waitElementDisplayed(chooseFirstCarXpathDe, 30);
+                break;
+            }
+            case EN : {
+                waitElementDisplayed(chooseFirstCarXpathEn, 30);
+                break;
+            }
         }
 
-        throw new PropertyMisconfigureException();
-    }
-
-    public ChooseCarPage waitChooseCarDisplayedEn(){
-        waitElementDisplayed(chooseFirstCarXpathEn, 30);
-        return this;
-    }
-
-    public ChooseCarPage waitChooseCarDisplayedDe(){
-        waitElementDisplayed(chooseFirstCarXpathDe, 30);
         return this;
     }
 

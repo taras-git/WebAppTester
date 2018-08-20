@@ -84,40 +84,31 @@ public class AccountPage extends BasePage {
 
     public AccountPage verifyMyAccountPageDisplayed() {
         switch (LANGUAGE){
-            case DE : return verifyMyAccountPageDisplayedDe();
-            case EN : return verifyMyAccountPageDisplayedEn();
+            case DE : {
+                super.verifyPageDisplayed("mein_konto", "Mein Konto");
+                return this;
+            }
+            case EN : {
+                super.verifyPageDisplayed("my_account", "My Account");
+                return this;
+            }
         }
         throw new PropertyMisconfigureException();
-    }
-
-    public AccountPage verifyMyAccountPageDisplayedEn() {
-        super.verifyPageDisplayed("my_account", "My Account");
-        return this;
-    }
-
-    public AccountPage verifyMyAccountPageDisplayedDe() {
-        super.verifyPageDisplayed("mein_konto", "Mein Konto");
-        return this;
     }
 
     public AccountPage verifyMyBookingsDisplayed() {
         switch (LANGUAGE) {
-            case DE : return verifyMyBookingsDisplayedDe();
-            case EN : return verifyMyBookingsDisplayedEn();
+            case DE : {
+                super.verifyPageDisplayed("mein_konto,buchungen", "My Buchungen");
+                return this;
+            }
+            case EN : {
+                super.verifyPageDisplayed("my_account,bookings", "My Bookings");
+                return this;
+            }
         }
         throw new PropertyMisconfigureException();
     }
-
-    public AccountPage verifyMyBookingsDisplayedEn() {
-        super.verifyPageDisplayed("my_account,bookings", "My Bookings");
-        return this;
-    }
-
-    public AccountPage verifyMyBookingsDisplayedDe() {
-        super.verifyPageDisplayed("mein_konto,buchungen", "My Buchungen");
-        return this;
-    }
-
 
     public String getCurentUserCountry(){
         Select select = new Select(driver.findElement(By.cssSelector("#regLand")));
@@ -133,40 +124,31 @@ public class AccountPage extends BasePage {
 
     public AccountPage clickBookings() {
         switch (LANGUAGE){
-            case EN : return clickBookingsEn();
-            case DE : return clickBookingsDe();
+            case EN : {
+                bookingsEn.click();
+                return this;
+            }
+            case DE : {
+                bookingsDe.click();
+                return this;
+            }
         }
         throw new PropertyMisconfigureException();
-    }
-
-    public AccountPage clickBookingsEn() {
-        bookingsEn.click();
-        return this;
-    }
-
-    public AccountPage clickBookingsDe() {
-        bookingsDe.click();
-        return this;
     }
 
     public AccountPage verifyCarIsReserved() {
         switch (LANGUAGE){
-            case DE: return verifyCarIsReservedDe();
-            case EN: return verifyCarIsReservedEn();
+            case DE: {
+                waitElementDisplayed(reservedDe, 10);
+                break;
+            }
+            case EN: {
+                waitElementDisplayed(reservedEn, 10);
+                break;
+            }
         }
-        throw new PropertyMisconfigureException();
-    }
-
-    public AccountPage verifyCarIsReservedEn() {
-        waitElementDisplayed(reservedEn, 10);
         return this;
     }
-
-    public AccountPage verifyCarIsReservedDe() {
-        waitElementDisplayed(reservedDe, 10);
-        return this;
-    }
-
 
     public void verifyNoCarsReserved() {
         switch (LANGUAGE){
@@ -197,20 +179,16 @@ public class AccountPage extends BasePage {
 
     public AccountPage clickDetails(){
         switch (LANGUAGE) {
-            case EN : return clickDetailsEn();
-            case DE : return clickDetailsDe();
+            case EN : {
+                reservedDetailsEn.click();
+                break;
+            }
+            case DE : {
+                reservedDetailsDe.click();
+                break;
+            }
         }
-        throw new PropertyMisconfigureException();
-    }
-
-    public AccountPage clickDetailsEn(){
-        reservedDetailsEn.click();
-        return  this;
-    }
-
-    public AccountPage clickDetailsDe(){
-        reservedDetailsDe.click();
-        return  this;
+        return this;
     }
 
     public AccountPage cancelBooking(){
