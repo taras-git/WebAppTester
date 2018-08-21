@@ -5,6 +5,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
+import static utils.Timeouts.MIDDLE_TIMEOUT;
+import static utils.Timeouts.SHORT_TIMEOUT;
 import static utils.Utils.DE;
 import static utils.Utils.EN;
 
@@ -34,11 +36,11 @@ public class ChooseCarPage extends BasePage {
     public ChooseCarPage waitChooseCarDisplayed(){
         switch (LANGUAGE){
             case DE : {
-                waitElementDisplayed(chooseFirstCarXpathDe, 30);
+                waitElementDisplayed(chooseFirstCarXpathDe, MIDDLE_TIMEOUT);
                 break;
             }
             case EN : {
-                waitElementDisplayed(chooseFirstCarXpathEn, 30);
+                waitElementDisplayed(chooseFirstCarXpathEn, MIDDLE_TIMEOUT);
                 break;
             }
         }
@@ -61,13 +63,13 @@ public class ChooseCarPage extends BasePage {
 
     public void chooseFirstCarDisplayedEn(){
         scrollOnePageDown();
-        waitElementClickable(chooseFirstCarXpathEn, 10);
+        waitElementClickable(chooseFirstCarXpathEn, SHORT_TIMEOUT);
         choosefirstCarEn.click();
     }
 
     public void chooseFirstCarDisplayedDe(){
         scrollOnePageDown();
-        waitElementClickable(chooseFirstCarXpathDe, 10);
+        waitElementClickable(chooseFirstCarXpathDe, SHORT_TIMEOUT);
         choosefirstCarDe.click();
     }
 

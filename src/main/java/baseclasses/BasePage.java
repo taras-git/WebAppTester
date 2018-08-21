@@ -14,6 +14,8 @@ import utils.Utils;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 
+import static utils.Timeouts.MIDDLE_TIMEOUT;
+
 /**
  * Created by taras on 7/19/18.
  */
@@ -29,7 +31,8 @@ public class BasePage {
     protected BasePage(WebDriver driver){
         this.driver = driver;
         PageFactory.initElements(driver, this);
-        this.wait = new WebDriverWait(driver, 10);
+        this.wait = new WebDriverWait(driver, MIDDLE_TIMEOUT);
+        driver.manage().window().setSize(new Dimension(1920, 1080));
     }
 
     public void verifyPageDisplayed(String textInUrl, String pageName) {

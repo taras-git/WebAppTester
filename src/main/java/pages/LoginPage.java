@@ -8,6 +8,8 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import static utils.Timeouts.MIDDLE_TIMEOUT;
+import static utils.Timeouts.SHORTER_TIMEOUT;
 import static utils.Utils.DE;
 import static utils.Utils.EN;
 
@@ -46,7 +48,7 @@ public class LoginPage extends BasePage{
     }
 
     public LoginPage verifyLoginWarningDisplayed(){
-        WebDriverWait wait = new WebDriverWait(driver, 30);
+        WebDriverWait wait = new WebDriverWait(driver, MIDDLE_TIMEOUT);
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(loginWarningXpath)));
         return this;
     }
@@ -70,12 +72,12 @@ public class LoginPage extends BasePage{
     }
 
     public LoginPage verifyUserLogged(){
-        waitElementDisplayed(logoutXpath, 20);
+        waitElementDisplayed(logoutXpath, MIDDLE_TIMEOUT);
         return this;
     }
 
     public LoginPage waitLoginFieldDisplayed() {
-        waitElementPresent(By.cssSelector("#loginID"), 5);
+        waitElementPresent(By.cssSelector("#loginID"), SHORTER_TIMEOUT);
         return this;
     }
 }

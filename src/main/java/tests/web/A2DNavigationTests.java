@@ -11,7 +11,7 @@ public class A2DNavigationTests extends BaseTestCase {
     public void navigateToBookingPage() {
         homePage.start()
                 .clickBookVehicle();
-        bookingPage.verifyENBookingPageDisplayed();
+        bookingPage.verifyBookingPageDisplayed();
     }
 
     @Test

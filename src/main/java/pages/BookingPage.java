@@ -8,6 +8,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
+import static utils.Timeouts.SHORT_TIMEOUT;
 import static utils.Utils.DE;
 import static utils.Utils.EN;
 import static utils.Utils.sleep;
@@ -60,7 +61,7 @@ public class BookingPage extends BasePage{
     }
 
     public BookingPage chooseLocation(String locationName) {
-        waitElementPresent(By.id("map-location"), 5);
+        waitElementPresent(By.id("map-location"), SHORT_TIMEOUT);
         location.sendKeys("A");
         location.sendKeys("s");
         location.sendKeys("c");
@@ -87,13 +88,13 @@ public class BookingPage extends BasePage{
     }
 
     public BookingPage clickMyAccountDe() {
-        waitElementClickable(myAccountXpathDe, 10);
+        waitElementClickable(myAccountXpathDe, SHORT_TIMEOUT);
         myAccountDe.click();
         return this;
     }
 
     public BookingPage clickMyAccountEn() {
-        waitElementClickable(myAccountXpathEn, 10);
+        waitElementClickable(myAccountXpathEn, SHORT_TIMEOUT);
         myAccountEn.click();
         return this;
     }

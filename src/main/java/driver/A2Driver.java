@@ -69,8 +69,9 @@ public class A2Driver {
             System.setProperty("webdriver.chrome.driver", chromeDriverPath);
             System.setProperty("webdriver.chrome.logfile", "test-output/ChromeTestLog.txt");
             ChromeOptions options = new ChromeOptions();
-            options.addArguments("--start-maximised");
+//            options.addArguments("--start-maximised");
             options.addArguments("--disable-local-storage");
+            options.addArguments("window-size=1920x1080");
 
             if (useBrowserBinary) {
                 options.setBinary(JsonReader.getString("chrome_binary"));
