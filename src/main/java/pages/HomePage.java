@@ -1,10 +1,14 @@
 package pages;
 
 import baseclasses.BasePage;
+import exceptions.PropertyMisconfigureException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import utils.JsonReader;
+
+import static utils.Utils.DE;
+import static utils.Utils.EN;
 
 /**
  * Created by taras on 7/19/18.
@@ -12,12 +16,19 @@ import utils.JsonReader;
 public class HomePage extends BasePage{
 
     protected String homePageEnProduction = JsonReader.getUrl("home_page_en_production");
+    protected String homePageDeProduction = JsonReader.getUrl("home_page_de_production");
 
     @FindBy(xpath = "//nav[@id=\"top-navigation\"]//*[contains(text(), 'Book Vehicle')]")
-    WebElement bookVehicle;
+    WebElement bookVehicleEn;
+
+    @FindBy(xpath = "//nav[@id=\"top-navigation\"]//*[contains(text(), 'Fahrzeug buchen')]")
+    WebElement bookVehicleDe;
 
     @FindBy(xpath = "//ul[@id='menu-top-navigation-en-1']//a[contains(text(), 'Rates')]")
-    WebElement rates;
+    WebElement ratesEn;
+
+    @FindBy(xpath = "//ul[@id='menu-top-navigation-1']//a[contains(text(), 'Tarife')]")
+    WebElement ratesDe;
 
     @FindBy(xpath = "//ul[@id='menu-top-navigation-en-1']//a[contains(text(), 'Fleet')]")
     WebElement fleet;
@@ -62,8 +73,17 @@ public class HomePage extends BasePage{
     }
 
     public HomePage start() {
-        driver.get(homePageEnProduction);
-        return this;
+        switch (LANGUAGE){
+            case DE : {
+                driver.get(homePageDeProduction);
+                return this;
+            }
+            case EN : {
+                driver.get(homePageEnProduction);
+                return this;
+            }
+        }
+        throw new PropertyMisconfigureException();
     }
 
     public HomePage start(String url) {
@@ -72,7 +92,16 @@ public class HomePage extends BasePage{
     }
 
     public void clickBookVehicle() {
-        bookVehicle.click();
+        switch (LANGUAGE){
+            case DE : {
+                bookVehicleDe.click();
+                return;
+            }
+            case EN : {
+                bookVehicleEn.click();
+                return;
+            }
+        }
     }
 
     public void clickLogin(){
@@ -80,7 +109,16 @@ public class HomePage extends BasePage{
     }
 
     public void clickRates(){
-        rates.click();
+        switch(LANGUAGE){
+            case DE : {
+                ratesDe.click();
+                return;
+            }
+            case EN : {
+                ratesEn.click();
+                return;
+            }
+        }
     }
 
     public void clickFleet() {
