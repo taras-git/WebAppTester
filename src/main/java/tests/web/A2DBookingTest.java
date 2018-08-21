@@ -12,6 +12,9 @@ import utils.JsonReader;
 
 import java.util.Date;
 
+import static utils.Utils.DE;
+import static utils.Utils.EN;
+
 
 /**
  * Created by taras on 7/17/18.
@@ -125,8 +128,15 @@ public class A2DBookingTest extends BaseTestCase {
         String currentCountry = accountPage.verifyMyAccountPageDisplayed()
                 .getCurentUserCountry();
 
+        String expexctedCountry = null;
+        switch (LANGUAGE){
+            case DE : expexctedCountry = "BELGIEN";
+                    break;
+            case EN : expexctedCountry = "BELGIUM";
+                    break;
+        }
 
-        if (!currentCountry.equalsIgnoreCase("BELGIEN")) {
+        if (!currentCountry.equalsIgnoreCase(expexctedCountry)) {
             throw new RuntimeException("Failed to change land! Current land is still : " + currentCountry);
         }
     }
@@ -162,7 +172,14 @@ public class A2DBookingTest extends BaseTestCase {
         currentCountry = accountPage.verifyMyAccountPageDisplayed()
                 .getCurentUserCountry();
 
-        if (!currentCountry.equalsIgnoreCase("Deutschland")) {
+        String expexctedCountry = null;
+        switch (LANGUAGE){
+            case DE : expexctedCountry = "Deutschland";
+                break;
+            case EN : expexctedCountry = "GERMANY";
+                break;
+        }
+        if (!currentCountry.equalsIgnoreCase(expexctedCountry)) {
             throw new RuntimeException("Failed to restore land! Current land is still: " + currentCountry);
         }
     }
