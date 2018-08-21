@@ -8,6 +8,7 @@ import org.openqa.selenium.support.FindBy;
 
 public class ConfirmBookingPage extends BasePage {
 
+    By bookCarXpath = By.xpath("//button[@type='submit']");
     @FindBy(xpath = "//button[@type='submit']")
     private WebElement bookCar;
 
@@ -16,6 +17,7 @@ public class ConfirmBookingPage extends BasePage {
     }
 
     public ConfirmBookingPage bookCar(){
+        waitElementDisplayed(bookCarXpath, 20);
         bookCar.click();
         return this;
     }

@@ -1,6 +1,7 @@
 package pages;
 
 import baseclasses.BasePage;
+import exceptions.PropertyMisconfigureException;
 import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
@@ -10,6 +11,8 @@ import org.openqa.selenium.support.ui.Select;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import static utils.Utils.DE;
+import static utils.Utils.EN;
 
 /**
  * Created by taras on 7/30/18.
@@ -32,12 +35,20 @@ public class AccountPage extends BasePage {
     private WebElement logout;
 
     @FindBy(xpath = "//a[contains(text(), 'Bookings')]")
-    private WebElement bookings;
+    private WebElement bookingsEn;
 
-    By reserved = By.xpath("//td[contains(text(), 'reserved')]");
+    @FindBy(xpath = "//a[contains(text(), 'Buchungen')]")
+    private WebElement bookingsDe;
+
+
+    By reservedEn = By.xpath("//td[contains(text(), 'reserved')]");
+    By reservedDe = By.xpath("//td[contains(text(), 'Reserviert')]");
 
     @FindBy(xpath = "//td[contains(text(), 'reserved')]/following-sibling::td/a")
-    private WebElement reservedDetails;
+    private WebElement reservedDetailsEn;
+
+    @FindBy(xpath = "//td[contains(text(), 'Reserviert')]/following-sibling::td/a")
+    private WebElement reservedDetailsDe;
 
     @FindBy(css = "a#btn-cancelbooking")
     private WebElement cancelBooking;
@@ -71,19 +82,32 @@ public class AccountPage extends BasePage {
         return this;
     }
 
-    public AccountPage verifyMeinKontoPageDisplayed() {
-        super.verifyPageDisplayed("mein_konto", "Mein Konto");
-        return this;
-    }
-
     public AccountPage verifyMyAccountPageDisplayed() {
-        super.verifyPageDisplayed("my_account", "My Account");
-        return this;
+        switch (LANGUAGE){
+            case DE : {
+                super.verifyPageDisplayed("mein_konto", "Mein Konto");
+                return this;
+            }
+            case EN : {
+                super.verifyPageDisplayed("my_account", "My Account");
+                return this;
+            }
+        }
+        throw new PropertyMisconfigureException();
     }
 
     public AccountPage verifyMyBookingsDisplayed() {
-        super.verifyPageDisplayed("my_account,bookings", "My Bookings");
-        return this;
+        switch (LANGUAGE) {
+            case DE : {
+                super.verifyPageDisplayed("mein_konto,buchungen", "My Buchungen");
+                return this;
+            }
+            case EN : {
+                super.verifyPageDisplayed("my_account,bookings", "My Bookings");
+                return this;
+            }
+        }
+        throw new PropertyMisconfigureException();
     }
 
     public String getCurentUserCountry(){
@@ -99,18 +123,53 @@ public class AccountPage extends BasePage {
     }
 
     public AccountPage clickBookings() {
-        bookings.click();
-        return this;
+        switch (LANGUAGE){
+            case EN : {
+                bookingsEn.click();
+                return this;
+            }
+            case DE : {
+                bookingsDe.click();
+                return this;
+            }
+        }
+        throw new PropertyMisconfigureException();
     }
 
     public AccountPage verifyCarIsReserved() {
-        waitElementDisplayed(reserved, 10);
+        switch (LANGUAGE){
+            case DE: {
+                waitElementDisplayed(reservedDe, 10);
+                break;
+            }
+            case EN: {
+                waitElementDisplayed(reservedEn, 10);
+                break;
+            }
+        }
         return this;
     }
 
     public void verifyNoCarsReserved() {
+        switch (LANGUAGE){
+            case DE : verifyNoCarsReservedDe();
+            case EN : verifyNoCarsReservedEn();
+        }
+    }
+
+    public void verifyNoCarsReservedEn() {
         try {
-            waitElementDisplayed(reserved, 5);
+            waitElementDisplayed(reservedEn, 5);
+        } catch (TimeoutException to) {
+            LOG.info(">>> Booking is cancelled");
+            return;
+        }
+        throw new RuntimeException(">>> BOOKING IS NOT CANCELLED! <<<");
+    }
+
+    public void verifyNoCarsReservedDe() {
+        try {
+            waitElementDisplayed(reservedDe, 5);
         } catch (TimeoutException to) {
             LOG.info(">>> Booking is cancelled");
             return;
@@ -119,8 +178,17 @@ public class AccountPage extends BasePage {
     }
 
     public AccountPage clickDetails(){
-        reservedDetails.click();
-        return  this;
+        switch (LANGUAGE) {
+            case EN : {
+                reservedDetailsEn.click();
+                break;
+            }
+            case DE : {
+                reservedDetailsDe.click();
+                break;
+            }
+        }
+        return this;
     }
 
     public AccountPage cancelBooking(){

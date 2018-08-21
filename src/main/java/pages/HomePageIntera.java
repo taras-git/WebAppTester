@@ -27,7 +27,12 @@ public class HomePageIntera extends HomePage {
     }
 
     public HomePageIntera start() {
-        driver.get(homePageInteraUrl);
+        start(homePageInteraUrl);
+        return this;
+    }
+
+    public HomePageIntera start(String url) {
+        driver.get(url);
         return this;
     }
 

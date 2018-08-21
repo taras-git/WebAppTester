@@ -12,6 +12,7 @@ import org.testng.annotations.BeforeSuite;
 import pages.*;
 import utils.EmailReader;
 import utils.JsonReader;
+import utils.Utils;
 
 import java.lang.reflect.Method;
 
@@ -25,6 +26,8 @@ import static utils.Utils.takeScreenshot;
 public class BaseTestCase {
 
     protected WebDriver driver;
+    public final static String ENVIRONMENT = Utils.getEnvironment();
+    public final static String LANGUAGE = Utils.getLanguage();
     private final String SCREENSHOTS_FOLDER = JsonReader.getString("failed_tests_screenshot_folder");
     private final String VIDEO_FOLDER = JsonReader.getString("failed_tests_video_folder");
     private static final Logger LOG = LoggerFactory.getLogger(BaseTestCase.class);

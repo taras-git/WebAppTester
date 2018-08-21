@@ -24,16 +24,17 @@ public class A2DBookingTest extends BaseTestCase {
     private final String a2dEmail = JsonReader.getUserEmail("app2_driver");
     private final String a2dPassword = JsonReader.getUserPassword("app2_driver");
 
-    private final String homePageEnProduction = JsonReader.getUrl("home_page_en_production");
-    private final String homePageDeProduction = JsonReader.getUrl("home_page_de_production");
-    private final String bookingPageIntera = JsonReader.getUrl("booking_page_intera_en");
+    private final String homePageProductionEn = JsonReader.getUrl("home_page_en_production");
+    private final String homePageProductionDe = JsonReader.getUrl("home_page_de_production");
+    private final String bookingPageInteraEn = JsonReader.getUrl("booking_page_intera_en");
+    private final String bookingPageInteraDe = JsonReader.getUrl("booking_page_intera_de");
 
     @Video
     @Test(groups="Booking")
     public void loggedUserCanBookVehicle(){
         login();
 
-        bookingPage.verifyENBookingPageDisplayed()
+        bookingPage.verifyBookingPageDisplayed()
                 .fillCheckOut()
                 .fillCheckIn()
                 .chooseLocation(locationName)
@@ -59,7 +60,7 @@ public class A2DBookingTest extends BaseTestCase {
     public void loggedUserCanCancelBooking(){
         login();
 
-        bookingPage.verifyENBookingPageDisplayed()
+        bookingPage.verifyBookingPageDisplayed()
                 .clickMyAccount();
 
         accountPage.verifyMyAccountPageDisplayed()
@@ -75,7 +76,7 @@ public class A2DBookingTest extends BaseTestCase {
     public void verifyBookingCanceled(){
         login();
 
-        bookingPage.verifyENBookingPageDisplayed()
+        bookingPage.verifyBookingPageDisplayed()
                 .clickMyAccount();
 
         accountPage.verifyMyAccountPageDisplayed()
@@ -84,7 +85,7 @@ public class A2DBookingTest extends BaseTestCase {
                 .verifyNoCarsReserved();
     }
 
-    private void loginUser(String email, String password, String url) {
+    private void loginUserProd(String email, String password, String url) {
         homePage.start(url)
                 .clickLogin();
 
@@ -94,12 +95,19 @@ public class A2DBookingTest extends BaseTestCase {
                 .verifyUserLogged();
     }
 
+    private void loginUserIntera(String email, String password, String url) {
+        homePageIntera.start(url)
+                .login(email, password);
+
+        loginPage.verifyUserLogged();
+    }
+
     @Video
     @Test
     public void loggedUserCanChangeCountry(){
         login();
 
-        bookingPage.verifyENBookingPageDisplayed()
+        bookingPage.verifyBookingPageDisplayed()
                 .clickMyAccount();
 
         accountPage.verifyMyAccountPageDisplayed()
@@ -111,7 +119,7 @@ public class A2DBookingTest extends BaseTestCase {
 
         login();
 
-        bookingPage.verifyENBookingPageDisplayed()
+        bookingPage.verifyBookingPageDisplayed()
                 .clickMyAccount();
 
         String currentCountry = accountPage.verifyMyAccountPageDisplayed()
@@ -127,7 +135,7 @@ public class A2DBookingTest extends BaseTestCase {
     public void loggedUserCenRestoreDefaultCountry(){
         login();
 
-        bookingPage.verifyENBookingPageDisplayed()
+        bookingPage.verifyBookingPageDisplayed()
                 .clickMyAccount();
 
         String currentCountry = accountPage.verifyMyAccountPageDisplayed()
@@ -147,7 +155,7 @@ public class A2DBookingTest extends BaseTestCase {
 
         login();
 
-        bookingPage.verifyENBookingPageDisplayed()
+        bookingPage.verifyBookingPageDisplayed()
                 .clickMyAccount();
 
         currentCountry = accountPage.verifyMyAccountPageDisplayed()
@@ -160,30 +168,30 @@ public class A2DBookingTest extends BaseTestCase {
 
 
     private void login() {
-        String env = null;
-        try {
-            LOG.info("Setting ENV variable");
-            env = System.getProperty("env");
-
-            if (env == null) throw new RuntimeException("ENV variable is not set by Jenkins, using JSON file");
-            LOG.info("ENV variable is set by Jenkins choice parameter: " + env);
-        } catch (Exception e){
-            env = JsonReader.getString("env").toLowerCase();
-            LOG.info("ENV variable is set by Json property file: " + env);
-        }
-
-        switch(env){
-            case "prod": {
-                loginUser(a2dEmail, a2dPassword, homePageEnProduction);
+        switch(ENVIRONMENT){
+            case "prod_en": {
+                loginUserProd(a2dEmail, a2dPassword, homePageProductionEn);
                 return;
             }
-            case "intera": {
-                homePageIntera.start().login(a2dEmail, a2dPassword);
+
+            case "prod_de": {
+                loginUserProd(a2dEmail, a2dPassword, homePageProductionDe);
                 return;
             }
+
+            case "intera_en": {
+                loginUserIntera(a2dEmail, a2dPassword, bookingPageInteraEn);
+                return;
+            }
+
+            case "intera_de": {
+                loginUserIntera(a2dEmail, a2dPassword, bookingPageInteraDe);
+                return;
+            }
+
         }
 
-        throw new RuntimeException("Environment is not properly set, please check the property.json file!!!");
+        throw new RuntimeException("Environment is not properly set, please check the property.json/urls.json files!!!");
     }
 
 }

@@ -67,6 +67,7 @@ public class A2Driver {
 
         try {
             System.setProperty("webdriver.chrome.driver", chromeDriverPath);
+            System.setProperty("webdriver.chrome.logfile", "test-output/ChromeTestLog.txt");
             ChromeOptions options = new ChromeOptions();
             options.addArguments("--start-maximised");
             options.addArguments("--disable-local-storage");
@@ -100,6 +101,8 @@ public class A2Driver {
 
         try {
             System.setProperty("webdriver.gecko.driver", firefoxDriverPath);
+            System.setProperty("webdriver.firefox.logfile", "test-output/FirefoxTestLog.txt");
+
             FirefoxProfile firefoxProfile = new FirefoxProfile();
             firefoxProfile.setPreference("network.cookie.cookieBehavior", 0);
             // disable push notifications
@@ -108,6 +111,7 @@ public class A2Driver {
             firefoxProfile.setPreference("geo.prompt.testing.allow", false);
             firefoxProfile.setPreference("geo.enabled", false);
             FirefoxOptions options = new FirefoxOptions();
+
             options.setProfile(firefoxProfile);
 
             FirefoxBinary firefoxBinary = new FirefoxBinary();
