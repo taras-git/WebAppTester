@@ -31,42 +31,80 @@ public class HomePage extends BasePage{
     WebElement ratesDe;
 
     @FindBy(xpath = "//ul[@id='menu-top-navigation-en-1']//a[contains(text(), 'Fleet')]")
-    WebElement fleet;
+    WebElement fleetEn;
+
+    @FindBy(xpath = "//ul[@id='menu-top-navigation-1']//a[contains(text(), 'Fahrzeugflotte')]")
+    WebElement fleetDe;
 
     @FindBy(xpath = "//ul[@id='menu-top-navigation-en-1']//a[contains(text(), 'How it Works')]")
-    WebElement howItWorks;
+    WebElement howItWorksEn;
+
+    @FindBy(xpath = "//ul[@id='menu-top-navigation-1']//a[contains(text(), 'So geht's')]")
+    WebElement howItWorksDe;
 
     @FindBy(xpath = "//ul[@id='menu-top-navigation-en-1']//a[contains(text(), 'Blog')]")
-    WebElement blog;
+    WebElement blogEn;
+
+    @FindBy(xpath = "//ul[@id='menu-top-navigation-1']//a[contains(text(), 'Blog')]")
+    WebElement blogDe;
 
     @FindBy(xpath = "//ul[@id='menu-top-navigation-en-1']//a[contains(text(), 'Company')]")
-    WebElement company;
+    WebElement companyEn;
+
+    @FindBy(xpath = "//ul[@id='menu-top-navigation-1']//a[contains(text(), 'Unternehmen')]")
+    WebElement companyDe;
 
     @FindBy(xpath = "//a[contains(text(), 'Apply as partner')]")
-    WebElement applyAsPartner;
+    WebElement applyAsPartnerEn;
+
+    @FindBy(xpath = "//a[contains(text(), 'Partner werden')]")
+    WebElement applyAsPartnerDe;
 
     @FindBy(xpath = "//a[contains(text(), 'Contact')]")
-    WebElement contact;
+    WebElement contactEn;
+
+    @FindBy(xpath = "//a[contains(text(), 'Kontakt')]")
+    WebElement contactDe;
 
     @FindBy(xpath = "//a[contains(text(), 'Corporate Mobility')]")
-    WebElement corporateMobility;
+    WebElement corporateMobilityEn;
+
+    @FindBy(xpath = "//a[contains(text(), 'Corporate Mobility')]")
+    WebElement corporateMobilityDe;
 
     @FindBy(xpath = "//a[contains(text(), 'Register now')]")
-    WebElement registerNow;
+    WebElement registerNowEn;
+
+    @FindBy(xpath = "//a[contains(text(), 'Jetzt registrieren')]")
+    WebElement registerNowDe;
 
     @FindBy(xpath = "//span[contains(text(), 'Login')]")
-    WebElement login;
+    WebElement loginEn;
+
+    @FindBy(xpath = "//span[contains(text(), 'Login')]")
+    WebElement loginDe;
 
     @FindBy(xpath = "(//a[contains(text(), 'Locations')])[2]")
-    WebElement locations;
+    WebElement locationsEn;
 
-    String stationsXpath = "(//a[contains(text(), 'Stations')])[2]";
+    @FindBy(xpath = "(//a[contains(text(), 'Stationen')])[2]")
+    WebElement locationsDe;
+
+    String stationsXpathEn = "(//a[contains(text(), 'Stations')])[2]";
     @FindBy(xpath = "(//a[contains(text(), 'Stations')])[2]")
-    WebElement stations;
+    WebElement stationsEn;
 
-    String airfieldsXpath = "(//a[contains(text(), 'Airfields')])[2]";
+    String stationsXpathDe = "(//a[contains(text(), 'Standorte')])[2]";
+    @FindBy(xpath = "(//a[contains(text(), 'Standorte')])[2]")
+    WebElement stationsDe;
+
+    String airfieldsXpathEn = "(//a[contains(text(), 'Airfields')])[2]";
     @FindBy(xpath = "(//a[contains(text(), 'Airfields')])[2]")
-    WebElement airfields;
+    WebElement airfieldsEn;
+
+    String airfieldsXpathDe = "(//a[contains(text(), 'Verkehrslandeplätze')])[2]";
+    @FindBy(xpath = "(//a[contains(text(), 'Verkehrslandeplätze')])[2]")
+    WebElement airfieldsDe;
 
     public HomePage(WebDriver driver) {
         super(driver);
@@ -105,7 +143,16 @@ public class HomePage extends BasePage{
     }
 
     public void clickLogin(){
-        login.click();
+        switch(LANGUAGE){
+            case DE : {
+                loginDe.click();
+                return;
+            }
+            case EN : {
+                loginEn.click();
+                return;
+            }
+        }
     }
 
     public void clickRates(){
@@ -122,50 +169,131 @@ public class HomePage extends BasePage{
     }
 
     public void clickFleet() {
-        fleet.click();
+        switch(LANGUAGE){
+            case DE : {
+                fleetDe.click();
+                return;
+            }
+            case EN : {
+                fleetEn.click();
+                return;
+            }
+        }
     }
 
     public void clickHowItWorks() {
-        howItWorks.click();
+        switch(LANGUAGE){
+            case DE : {
+                howItWorksDe.click();
+                return;
+            }
+            case EN : {
+                howItWorksEn.click();
+                return;
+            }
+        }
     }
 
     public void clickCompany() {
-        company.click();
+        switch(LANGUAGE){
+            case DE : {
+                companyDe.click ();
+                return;
+            }
+            case EN : {
+                companyEn.click();
+                return;
+            }
+        }
     }
 
     public void clickBlog() {
-        blog.click();
+        switch(LANGUAGE){
+            case DE : {
+                blogDe.click();
+                return;
+            }
+            case EN : {
+                blogEn.click();
+                return;
+            }
+        }
     }
 
     public void clickRegisterNow() {
-        registerNow.click();
+        switch(LANGUAGE){
+            case DE : {
+                registerNowDe.click();
+                return;
+            }
+            case EN : {
+                registerNowEn.click();
+                return;
+            }
+        }
     }
 
     public void clickApplyAsPartner() {
-        applyAsPartner.click();
+        switch(LANGUAGE){
+            case DE : {
+                applyAsPartnerDe.click();
+                return;
+            }
+            case EN : {
+                applyAsPartnerEn.click();
+                return;
+            }
+        }
     }
 
     public void clickCorporateMobility() {
-        corporateMobility.click();
+        switch(LANGUAGE){
+            case DE : {
+                corporateMobilityDe.click();
+                return;
+            }
+            case EN : {
+                corporateMobilityEn.click();
+                return;
+            }
+        }
     }
 
     public void clickContact() {
-        contact.click();
+        switch(LANGUAGE){
+            case DE : {
+                contactDe.click();
+                return;
+            }
+            case EN : {
+                contactEn.click();
+                return;
+            }
+        }
     }
 
     public HomePage clickLocations() {
-        locations.click();
-        return this;
+        switch (LANGUAGE) {
+            case DE: {
+                locationsDe.click();
+                return this;
+            }
+            case EN: {
+                locationsEn.click();
+                return this;
+            }
+        }
+        throw new PropertyMisconfigureException();
     }
 
-    public void clickAirfields() { airfields.click(); }
+    public void clickAirfields() { airfieldsEn.click(); }
 
     public void moveToLocationsAndClickStations(){
-        moveToAndClick(locations, stationsXpath);
+        moveToAndClick(locationsEn, stationsXpathEn);
     }
 
     public void moveToLocationsAndClickAirfields(){
-        moveToAndClick(locations, airfieldsXpath);
+        moveToAndClick(locationsEn, airfieldsXpathEn);
     }
 
 }
