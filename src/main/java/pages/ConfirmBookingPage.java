@@ -6,6 +6,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
+import static utils.Timeouts.MIDDLE_TIMEOUT;
+
 public class ConfirmBookingPage extends BasePage {
 
     By bookCarXpath = By.xpath("//button[@type='submit']");
@@ -17,13 +19,13 @@ public class ConfirmBookingPage extends BasePage {
     }
 
     public ConfirmBookingPage bookCar(){
-        waitElementDisplayed(bookCarXpath, 20);
+        waitElementDisplayed(bookCarXpath, MIDDLE_TIMEOUT);
         bookCar.click();
         return this;
     }
 
     public void verifyCarBooked(){
-        waitElementDisplayed(By.cssSelector("div.alert.alert-success"), 20);
+        waitElementDisplayed(By.cssSelector("div.alert.alert-success"), MIDDLE_TIMEOUT);
     }
 
 }

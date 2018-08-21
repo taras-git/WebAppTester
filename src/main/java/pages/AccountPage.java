@@ -11,6 +11,8 @@ import org.openqa.selenium.support.ui.Select;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import static utils.Timeouts.SHORTER_TIMEOUT;
+import static utils.Timeouts.SHORT_TIMEOUT;
 import static utils.Utils.DE;
 import static utils.Utils.EN;
 
@@ -61,7 +63,7 @@ public class AccountPage extends BasePage {
     }
 
     public AccountPage clickEditAccount(){
-        waitElementClickable(editAccountXpath, 10);
+        waitElementClickable(editAccountXpath, SHORT_TIMEOUT);
         editAccount.click();
         return this;
     }
@@ -139,11 +141,11 @@ public class AccountPage extends BasePage {
     public AccountPage verifyCarIsReserved() {
         switch (LANGUAGE){
             case DE: {
-                waitElementDisplayed(reservedDe, 10);
+                waitElementDisplayed(reservedDe, SHORT_TIMEOUT);
                 break;
             }
             case EN: {
-                waitElementDisplayed(reservedEn, 10);
+                waitElementDisplayed(reservedEn, SHORT_TIMEOUT);
                 break;
             }
         }
@@ -159,7 +161,7 @@ public class AccountPage extends BasePage {
 
     public void verifyNoCarsReservedEn() {
         try {
-            waitElementDisplayed(reservedEn, 5);
+            waitElementDisplayed(reservedEn, SHORTER_TIMEOUT);
         } catch (TimeoutException to) {
             LOG.info(">>> Booking is cancelled");
             return;
@@ -169,7 +171,7 @@ public class AccountPage extends BasePage {
 
     public void verifyNoCarsReservedDe() {
         try {
-            waitElementDisplayed(reservedDe, 5);
+            waitElementDisplayed(reservedDe, SHORTER_TIMEOUT);
         } catch (TimeoutException to) {
             LOG.info(">>> Booking is cancelled");
             return;

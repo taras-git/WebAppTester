@@ -125,6 +125,7 @@ public class A2DBookingTest extends BaseTestCase {
         String currentCountry = accountPage.verifyMyAccountPageDisplayed()
                 .getCurentUserCountry();
 
+
         if (!currentCountry.equalsIgnoreCase("BELGIEN")) {
             throw new RuntimeException("Failed to change land! Current land is still : " + currentCountry);
         }
