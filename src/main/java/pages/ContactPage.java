@@ -3,6 +3,9 @@ package pages;
 import baseclasses.BasePage;
 import org.openqa.selenium.WebDriver;
 
+import static utils.Utils.DE;
+import static utils.Utils.EN;
+
 public class ContactPage extends BasePage {
 
     public ContactPage(WebDriver driver) {
@@ -10,7 +13,15 @@ public class ContactPage extends BasePage {
     }
 
     public void verifyContactPageDisplayed() {
-        super.verifyPageDisplayed("contact", "Contact");
+        switch (LANGUAGE) {
+            case DE : {
+                super.verifyPageDisplayed("kontakt", "ContactDE");
+                break;
+            }
+            case EN : {
+                super.verifyPageDisplayed("contact", "ContactEN");
+                break;
+            }
+        }
     }
-
 }
