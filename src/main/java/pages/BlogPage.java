@@ -19,11 +19,11 @@ public class BlogPage extends BasePage {
 
         switch (LANGUAGE) {
             case DE : {
-                super.verifyPageDisplayed("news", "BlogDE");
+                super.verifyPageDisplayed("news", "BlogDe");
                 break;
             }
             case EN : {
-                super.verifyPageDisplayed("news-en", "Blog");
+                super.verifyPageDisplayed("news-en", "BlogEn");
                 break;
             }
         }

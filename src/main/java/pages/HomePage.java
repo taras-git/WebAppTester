@@ -39,7 +39,7 @@ public class HomePage extends BasePage{
     @FindBy(xpath = "//ul[@id='menu-top-navigation-en-1']//a[contains(text(), 'How it Works')]")
     WebElement howItWorksEn;
 
-    @FindBy(xpath = "//ul[@id='menu-top-navigation-1']//a[contains(text(), 'So geht's')]")
+    @FindBy(xpath = "//ul[@id='menu-top-navigation-1']//a[contains(text(), 'So geht´s')]")
     WebElement howItWorksDe;
 
     @FindBy(xpath = "//ul[@id='menu-top-navigation-en-1']//a[contains(text(), 'Blog')]")
@@ -67,10 +67,7 @@ public class HomePage extends BasePage{
     WebElement contactDe;
 
     @FindBy(xpath = "//a[contains(text(), 'Corporate Mobility')]")
-    WebElement corporateMobilityEn;
-
-    @FindBy(xpath = "//a[contains(text(), 'Corporate Mobility')]")
-    WebElement corporateMobilityDe;
+    WebElement corporateMobilityDeEn;
 
     @FindBy(xpath = "//a[contains(text(), 'Register now')]")
     WebElement registerNowEn;
@@ -79,10 +76,7 @@ public class HomePage extends BasePage{
     WebElement registerNowDe;
 
     @FindBy(xpath = "//span[contains(text(), 'Login')]")
-    WebElement loginEn;
-
-    @FindBy(xpath = "//span[contains(text(), 'Login')]")
-    WebElement loginDe;
+    WebElement loginDeEn;
 
     @FindBy(xpath = "(//a[contains(text(), 'Locations')])[2]")
     WebElement locationsEn;
@@ -145,7 +139,7 @@ public class HomePage extends BasePage{
     public void clickLogin(){
         switch(LANGUAGE){
             case DE : {
-                loginDe.click();
+                loginDeEn.click();
                 return;
             }
             case EN : {
@@ -249,7 +243,7 @@ public class HomePage extends BasePage{
     public void clickCorporateMobility() {
         switch(LANGUAGE){
             case DE : {
-                corporateMobilityDe.click();
+                corporateMobilityDeEn.click();
                 return;
             }
             case EN : {
