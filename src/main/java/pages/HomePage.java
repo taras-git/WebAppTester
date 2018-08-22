@@ -137,16 +137,16 @@ public class HomePage extends BasePage{
     }
 
     public void clickLogin(){
-        switch(LANGUAGE){
-            case DE : {
+        /*switch(LANGUAGE){
+            case DE : {*/
                 loginDeEn.click();
                 return;
-            }
+            /*}
             case EN : {
                 loginEn.click();
                 return;
             }
-        }
+        }*/
     }
 
     public void clickRates(){
@@ -241,16 +241,16 @@ public class HomePage extends BasePage{
     }
 
     public void clickCorporateMobility() {
-        switch(LANGUAGE){
-            case DE : {
+        /*switch(LANGUAGE){
+            case DE : {*/
                 corporateMobilityDeEn.click();
                 return;
-            }
+            /*}
             case EN : {
                 corporateMobilityEn.click();
                 return;
             }
-        }
+        }*/
     }
 
     public void clickContact() {
@@ -283,11 +283,28 @@ public class HomePage extends BasePage{
     public void clickAirfields() { airfieldsEn.click(); }
 
     public void moveToLocationsAndClickStations(){
-        moveToAndClick(locationsEn, stationsXpathEn);
+        switch (LANGUAGE) {
+            case DE : {
+                moveToAndClick(locationsDe, stationsXpathDe);
+                break;
+            }
+            case EN : {
+                moveToAndClick(locationsEn, stationsXpathEn);
+                break;
+            }
+        }
     }
 
     public void moveToLocationsAndClickAirfields(){
-        moveToAndClick(locationsEn, airfieldsXpathEn);
+        switch (LANGUAGE) {
+            case DE : {
+                moveToAndClick(locationsDe, airfieldsXpathDe);
+                break;
+            }
+            case EN : {
+                moveToAndClick(locationsEn, airfieldsXpathEn);
+                break;
+            }
+        }
     }
-
 }
