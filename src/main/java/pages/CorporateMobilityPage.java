@@ -15,7 +15,7 @@ public class CorporateMobilityPage extends BasePage {
     public void verifyCorporateMobilityPageDisplayed() {
         switch (LANGUAGE) {
             case DE : {
-                super.verifyPageDisplayed("firmenkunde_werden", "CorporateMobiityDE");
+                super.verifyPageDisplayed("firmenkunde_werden", "CorporateMobilityDE");
                 break;
             }
             case EN: {

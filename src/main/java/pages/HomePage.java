@@ -137,16 +137,8 @@ public class HomePage extends BasePage{
     }
 
     public void clickLogin(){
-        /*switch(LANGUAGE){
-            case DE : {*/
                 loginDeEn.click();
                 return;
-            /*}
-            case EN : {
-                loginEn.click();
-                return;
-            }
-        }*/
     }
 
     public void clickRates(){
@@ -241,16 +233,8 @@ public class HomePage extends BasePage{
     }
 
     public void clickCorporateMobility() {
-        /*switch(LANGUAGE){
-            case DE : {*/
                 corporateMobilityDeEn.click();
                 return;
-            /*}
-            case EN : {
-                corporateMobilityEn.click();
-                return;
-            }
-        }*/
     }
 
     public void clickContact() {
