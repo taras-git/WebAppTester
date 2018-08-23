@@ -5,7 +5,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-import static utils.Timeouts.MIDDLE_TIMEOUT;
+import static utils.Timeouts.LONGER_TIMEOUT;
 import static utils.Timeouts.SHORT_TIMEOUT;
 import static utils.Utils.DE;
 import static utils.Utils.EN;
@@ -36,11 +36,11 @@ public class ChooseCarPage extends BasePage {
     public ChooseCarPage waitChooseCarDisplayed(){
         switch (LANGUAGE){
             case DE : {
-                waitElementDisplayed(chooseFirstCarXpathDe, MIDDLE_TIMEOUT);
+                waitElementDisplayed(chooseFirstCarXpathDe, LONGER_TIMEOUT);
                 break;
             }
             case EN : {
-                waitElementDisplayed(chooseFirstCarXpathEn, MIDDLE_TIMEOUT);
+                waitElementDisplayed(chooseFirstCarXpathEn, LONGER_TIMEOUT);
                 break;
             }
         }

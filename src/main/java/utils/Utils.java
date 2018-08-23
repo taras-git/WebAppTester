@@ -22,6 +22,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.Base64;
 import java.util.Comparator;
 
+import static utils.JsonReader.getBookTimePattern;
+
 /**
  * Created by taras on 7/17/18.
  */
@@ -39,9 +41,23 @@ public class Utils {
         }
     }
 
-    public static String getTime(){
+    private static String getScreenshotDateTime(){
+        return getDateTime("yyyy_MM_dd_HH_mm_ss");
+    }
+
+    public static String getCurrentDateTime(int plusHours){
+        return  getDateTime(getBookTimePattern(), plusHours);
+    }
+
+    public static String getDateTime(String timePattern){
+        return getDateTime(timePattern, 0);
+    }
+
+    public static String getDateTime(String timePattern, int plusHours){
         LocalDateTime now = LocalDateTime.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy_MM_dd_HH_mm_ss");
+        now = now.plusHours(plusHours);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(timePattern);
+        System.out.println(">>>>>>>>>>>>> " + now.format(formatter));
         return now.format(formatter);
     }
 
@@ -101,7 +117,7 @@ public class Utils {
         return new File(folderName
                 + result.getName()
                 + "_"
-                + getTime()
+                + getScreenshotDateTime()
                 + "_scr.png");
     }
 

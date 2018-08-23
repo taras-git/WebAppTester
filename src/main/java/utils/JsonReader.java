@@ -10,11 +10,12 @@ import java.io.FileReader;
  */
 public class JsonReader {
 
-    static String propertyFile = "artifacts/properties/general_property.json";
-    static String urlsFile = "artifacts/properties/urls.json";
-    static String usersFile = "artifacts/properties/users.json";
-    static String locationsFile = "artifacts/properties/locations.json";
-    static String emailsFile = "artifacts/properties/emails.json";
+    private static String propertyFile = "artifacts/properties/general_property.json";
+    private static String urlsFile = "artifacts/properties/urls.json";
+    private static String usersFile = "artifacts/properties/users.json";
+    private static String locationsFile = "artifacts/properties/locations.json";
+    private static String emailsFile = "artifacts/properties/emails.json";
+    private static String timePatternFile = "artifacts/properties/time_pattern.json";
 
     public static Boolean getBoolean(String key) {
         return (Boolean) getValue(key, propertyFile);
@@ -22,6 +23,14 @@ public class JsonReader {
 
     public static String getString(String key) {
         return (String) getValue(key, propertyFile);
+    }
+
+    public static String getBookTimePattern() {
+        return (String) getValue("book_car_date_time", timePatternFile);
+    }
+
+    public static String getTimePattern(String key) {
+        return (String) getValue(key, timePatternFile);
     }
 
     public static String getUrl(String key) {

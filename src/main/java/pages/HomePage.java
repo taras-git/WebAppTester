@@ -19,54 +19,54 @@ public class HomePage extends BasePage{
     protected String homePageDeProduction = JsonReader.getUrl("home_page_de_production");
 
     @FindBy(xpath = "//nav[@id=\"top-navigation\"]//*[contains(text(), 'Book Vehicle')]")
-    WebElement bookVehicleEn;
+    private WebElement bookVehicleEn;
 
     @FindBy(xpath = "//nav[@id=\"top-navigation\"]//*[contains(text(), 'Fahrzeug buchen')]")
-    WebElement bookVehicleDe;
+    private WebElement bookVehicleDe;
 
     @FindBy(xpath = "//ul[@id='menu-top-navigation-en-1']//a[contains(text(), 'Rates')]")
-    WebElement ratesEn;
+    private WebElement ratesEn;
 
     @FindBy(xpath = "//ul[@id='menu-top-navigation-1']//a[contains(text(), 'Tarife')]")
-    WebElement ratesDe;
+    private WebElement ratesDe;
 
     @FindBy(xpath = "//ul[@id='menu-top-navigation-en-1']//a[contains(text(), 'Fleet')]")
-    WebElement fleet;
+    private WebElement fleet;
 
     @FindBy(xpath = "//ul[@id='menu-top-navigation-en-1']//a[contains(text(), 'How it Works')]")
-    WebElement howItWorks;
+    private WebElement howItWorks;
 
     @FindBy(xpath = "//ul[@id='menu-top-navigation-en-1']//a[contains(text(), 'Blog')]")
-    WebElement blog;
+    private WebElement blog;
 
     @FindBy(xpath = "//ul[@id='menu-top-navigation-en-1']//a[contains(text(), 'Company')]")
-    WebElement company;
+    private WebElement company;
 
     @FindBy(xpath = "//a[contains(text(), 'Apply as partner')]")
-    WebElement applyAsPartner;
+    private WebElement applyAsPartner;
 
     @FindBy(xpath = "//a[contains(text(), 'Contact')]")
-    WebElement contact;
+    private WebElement contact;
 
     @FindBy(xpath = "//a[contains(text(), 'Corporate Mobility')]")
-    WebElement corporateMobility;
+    private WebElement corporateMobility;
 
     @FindBy(xpath = "//a[contains(text(), 'Register now')]")
-    WebElement registerNow;
+    private WebElement registerNow;
 
     @FindBy(xpath = "//span[contains(text(), 'Login')]")
-    WebElement login;
+    private WebElement login;
 
     @FindBy(xpath = "(//a[contains(text(), 'Locations')])[2]")
-    WebElement locations;
+    private WebElement locations;
 
     String stationsXpath = "(//a[contains(text(), 'Stations')])[2]";
     @FindBy(xpath = "(//a[contains(text(), 'Stations')])[2]")
-    WebElement stations;
+    private WebElement stations;
 
     String airfieldsXpath = "(//a[contains(text(), 'Airfields')])[2]";
     @FindBy(xpath = "(//a[contains(text(), 'Airfields')])[2]")
-    WebElement airfields;
+    private WebElement airfields;
 
     public HomePage(WebDriver driver) {
         super(driver);

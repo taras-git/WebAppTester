@@ -20,12 +20,9 @@ import static utils.Timeouts.MIDDLE_TIMEOUT;
  * Created by taras on 7/19/18.
  */
 public class BasePage {
-
     protected WebDriver driver;
     public WebDriverWait wait;
-    public final static String ENVIRONMENT = Utils.getEnvironment();
     public final static String LANGUAGE = Utils.getLanguage();
-
     private static final Logger LOG = LoggerFactory.getLogger(BasePage.class);
 
     protected BasePage(WebDriver driver){
@@ -138,5 +135,10 @@ public class BasePage {
     protected void hoverOver(WebElement hoverOver){
         Actions builder = new Actions(driver);
         builder.moveToElement(hoverOver).perform();
+    }
+
+    public void clearInputField(WebElement element){
+        element.sendKeys(Keys.chord(Keys.CONTROL, "a"));
+        element.sendKeys(Keys.BACK_SPACE);
     }
 }
