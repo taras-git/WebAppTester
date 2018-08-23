@@ -2,16 +2,11 @@ package pages;
 
 import baseclasses.BasePage;
 import exceptions.PropertyMisconfigureException;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 
 import static utils.Timeouts.SHORT_TIMEOUT;
-import static utils.Utils.DE;
-import static utils.Utils.EN;
-import static utils.Utils.sleep;
+import static utils.Utils.*;
 
 /**
  * Created by taras on 7/19/18.
@@ -32,6 +27,12 @@ public class BookingPage extends BasePage{
     @FindBy(xpath = "//a[contains(text(), 'My account')]")
     private WebElement myAccountEn;
 
+    @FindBy(id = "datetimepicker")
+    private WebElement dateFrom;
+
+    @FindBy(id = "datetimepicker2")
+    private WebElement dateTo;
+
     public BookingPage(WebDriver driver) {
         super(driver);
     }
@@ -50,21 +51,50 @@ public class BookingPage extends BasePage{
         throw new RuntimeException("Language is not properly set, please check config files!!!");
     }
 
-    public BookingPage fillCheckOut() {
-        //TODO
+    public BookingPage fillCheckOut(boolean bookNow) {
+        if (bookNow) {
+            clearInputField(dateFrom);
+            dateFrom.sendKeys(getCurrentDateTime(1));
+            dateFrom.sendKeys(Keys.RETURN);
+        }
         return this;
     }
 
-    public BookingPage fillCheckIn() {
-        //TODO
-        return this;
+    public void fillCheckIn(boolean bookNow) {
+        System.out.println("START>>>> " + getDefaultStartDate());
+        System.out.println("END>>>> " + getDefaultEndDate());
+        if (bookNow) {
+            clearInputField(dateTo);
+            dateTo.sendKeys(getCurrentDateTime(4));
+            dateTo.sendKeys(Keys.RETURN);
+        }
     }
+
+    private String getDefaultEndDate() {
+        JavascriptExecutor jse = (JavascriptExecutor) driver;
+        return jse.executeScript(
+                "return (window.bookingConfig || window.wrappedJSObject.bookingConfig).endDate;").toString();
+    }
+
+    private String getDefaultStartDate() {
+        JavascriptExecutor jse = (JavascriptExecutor) driver;
+        return jse.executeScript(
+                "return (window.bookingConfig || window.wrappedJSObject.bookingConfig).startDate;").toString();
+    }
+
 
     public BookingPage chooseLocation(String locationName) {
         waitElementPresent(By.id("map-location"), SHORT_TIMEOUT);
-        location.sendKeys("A");
-        location.sendKeys("s");
-        location.sendKeys("c");
+
+        if (locationName == null) {
+            // location will be set to "Aschaffenburg"
+            location.sendKeys("A");
+            location.sendKeys("s");
+            location.sendKeys("c");
+            location.sendKeys("h");
+        } else {
+            location.sendKeys(locationName);
+        }
 
         sleep(0.2);
         location.sendKeys(Keys.DOWN);

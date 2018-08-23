@@ -15,6 +15,7 @@ import utils.JsonReader;
 import utils.Utils;
 
 import java.lang.reflect.Method;
+import java.util.Date;
 
 import static utils.Utils.createFolder;
 import static utils.Utils.takeScreenshot;
@@ -31,6 +32,13 @@ public class BaseTestCase {
     private final String SCREENSHOTS_FOLDER = JsonReader.getString("failed_tests_screenshot_folder");
     private final String VIDEO_FOLDER = JsonReader.getString("failed_tests_video_folder");
     private static final Logger LOG = LoggerFactory.getLogger(BaseTestCase.class);
+
+    private final String a2dEmail = JsonReader.getUserEmail("app2_driver");
+    private final String a2dPassword = JsonReader.getUserPassword("app2_driver");
+    private final String homePageProductionEn = JsonReader.getUrl("home_page_en_production");
+    private final String homePageProductionDe = JsonReader.getUrl("home_page_de_production");
+    private final String bookingPageInteraEn = JsonReader.getUrl("booking_page_intera_en");
+    private final String bookingPageInteraDe = JsonReader.getUrl("booking_page_intera_de");
 
     protected HomePage homePage;
     protected HomePageIntera homePageIntera;
@@ -135,6 +143,72 @@ public class BaseTestCase {
             return new A2Driver().chromeDriver(browserName);
 
         throw new RuntimeException ("invalid browser name, please check out property json file");
+    }
+
+    protected void login() {
+        switch(ENVIRONMENT){
+            case "prod_en": {
+                loginUserProd(a2dEmail, a2dPassword, homePageProductionEn);
+                return;
+            }
+
+            case "prod_de": {
+                loginUserProd(a2dEmail, a2dPassword, homePageProductionDe);
+                return;
+            }
+
+            case "intera_en": {
+                loginUserIntera(a2dEmail, a2dPassword, bookingPageInteraEn);
+                return;
+            }
+
+            case "intera_de": {
+                loginUserIntera(a2dEmail, a2dPassword, bookingPageInteraDe);
+                return;
+            }
+        }
+    }
+
+    private void loginUserProd(String email, String password, String url) {
+        homePage.start(url)
+                .clickLogin();
+
+        loginPage.verifyLoginPageDisplayed()
+                .waitLoginFieldDisplayed()
+                .login(email, password)
+                .verifyUserLogged();
+    }
+
+    private void loginUserIntera(String email, String password, String url) {
+        homePageIntera.start(url)
+                .login(email, password);
+
+        loginPage.verifyUserLogged();
+    }
+
+    protected void bookVehicle(boolean bookNow) {
+        login();
+
+        bookingPage.verifyBookingPageDisplayed()
+                .fillCheckOut(bookNow)
+                .fillCheckIn(bookNow);
+
+        bookingPage.chooseLocation(null)
+                .clickFindCar();
+
+        chooseCarPage.waitChooseCarDisplayed()
+                .chooseFirstCarDisplayed();
+
+        Date withBookingDate = new Date();
+
+        confirmBookingPage.bookCar()
+                .verifyCarBooked();
+
+        try {
+            EmailReader.checkConfirmationEmailReceived(withBookingDate);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }

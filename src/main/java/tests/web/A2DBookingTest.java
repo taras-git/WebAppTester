@@ -7,10 +7,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
-import utils.EmailReader;
-import utils.JsonReader;
-
-import java.util.Date;
 
 import static utils.Utils.DE;
 import static utils.Utils.EN;
@@ -23,43 +19,16 @@ import static utils.Utils.EN;
 public class A2DBookingTest extends BaseTestCase {
 
     private static final Logger LOG = LoggerFactory.getLogger(A2DBookingTest.class);
-    private final String locationName = JsonReader.getLocation("location1");
-    private final String a2dEmail = JsonReader.getUserEmail("app2_driver");
-    private final String a2dPassword = JsonReader.getUserPassword("app2_driver");
-
-    private final String homePageProductionEn = JsonReader.getUrl("home_page_en_production");
-    private final String homePageProductionDe = JsonReader.getUrl("home_page_de_production");
-    private final String bookingPageInteraEn = JsonReader.getUrl("booking_page_intera_en");
-    private final String bookingPageInteraDe = JsonReader.getUrl("booking_page_intera_de");
 
     @Video
-    @Test(groups="Booking")
+    @Test(groups="Booking", priority=1)
     public void loggedUserCanBookVehicle(){
-        login();
-
-        bookingPage.verifyBookingPageDisplayed()
-                .fillCheckOut()
-                .fillCheckIn()
-                .chooseLocation(locationName)
-                .clickFindCar();
-
-        chooseCarPage.waitChooseCarDisplayed()
-                .chooseFirstCarDisplayed();
-
-        Date withBookingDate = new Date();
-
-        confirmBookingPage.bookCar()
-                .verifyCarBooked();
-
-        try {
-            EmailReader.checkConfirmationEmailReceived(withBookingDate);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        bookVehicle(false);
     }
 
+
     @Video
-    @Test(groups="Booking", dependsOnMethods = "loggedUserCanBookVehicle")
+    @Test(groups="Booking", dependsOnMethods = "loggedUserCanBookVehicle", priority=1)
     public void loggedUserCanCancelBooking(){
         login();
 
@@ -75,7 +44,7 @@ public class A2DBookingTest extends BaseTestCase {
     }
 
     @Video
-    @Test(dependsOnGroups = "Booking")
+    @Test(dependsOnGroups = "Booking", priority=1)
     public void verifyBookingCanceled(){
         login();
 
@@ -88,25 +57,8 @@ public class A2DBookingTest extends BaseTestCase {
                 .verifyNoCarsReserved();
     }
 
-    private void loginUserProd(String email, String password, String url) {
-        homePage.start(url)
-                .clickLogin();
-
-        loginPage.verifyLoginPageDisplayed()
-                .waitLoginFieldDisplayed()
-                .login(email, password)
-                .verifyUserLogged();
-    }
-
-    private void loginUserIntera(String email, String password, String url) {
-        homePageIntera.start(url)
-                .login(email, password);
-
-        loginPage.verifyUserLogged();
-    }
-
     @Video
-    @Test
+    @Test(priority=10)
     public void loggedUserCanChangeCountry(){
         login();
 
@@ -142,7 +94,7 @@ public class A2DBookingTest extends BaseTestCase {
     }
 
     @Video
-    @Test(dependsOnMethods = { "loggedUserCanChangeCountry" })
+    @Test(dependsOnMethods = { "loggedUserCanChangeCountry" }, priority=10)
     public void loggedUserCenRestoreDefaultCountry(){
         login();
 
@@ -183,33 +135,4 @@ public class A2DBookingTest extends BaseTestCase {
             throw new RuntimeException("Failed to restore land! Current land is still: " + currentCountry);
         }
     }
-
-
-    private void login() {
-        switch(ENVIRONMENT){
-            case "prod_en": {
-                loginUserProd(a2dEmail, a2dPassword, homePageProductionEn);
-                return;
-            }
-
-            case "prod_de": {
-                loginUserProd(a2dEmail, a2dPassword, homePageProductionDe);
-                return;
-            }
-
-            case "intera_en": {
-                loginUserIntera(a2dEmail, a2dPassword, bookingPageInteraEn);
-                return;
-            }
-
-            case "intera_de": {
-                loginUserIntera(a2dEmail, a2dPassword, bookingPageInteraDe);
-                return;
-            }
-
-        }
-
-        throw new RuntimeException("Environment is not properly set, please check the property.json/urls.json files!!!");
-    }
-
 }

@@ -45,6 +45,8 @@ public class AccountPage extends BasePage {
 
     By reservedEn = By.xpath("//td[contains(text(), 'reserved')]");
     By reservedDe = By.xpath("//td[contains(text(), 'Reserviert')]");
+    By loadedEn = By.xpath("(//td[contains(text(), 'loaded')])[1]");
+    By loadedDe = By.xpath("(//td[contains(text(), 'Geladen')])[1]");
 
     @FindBy(xpath = "//td[contains(text(), 'reserved')]/following-sibling::td/a")
     private WebElement reservedDetailsEn;
@@ -199,4 +201,17 @@ public class AccountPage extends BasePage {
         return this;
     }
 
+    public AccountPage verifyCarIsLoaded() {
+        switch (LANGUAGE){
+            case DE: {
+                waitElementDisplayed(loadedDe, SHORT_TIMEOUT);
+                break;
+            }
+            case EN: {
+                waitElementDisplayed(loadedEn, SHORT_TIMEOUT);
+                break;
+            }
+        }
+        return this;
+    }
 }
