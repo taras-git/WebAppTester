@@ -130,6 +130,8 @@ public class BasePage {
                 .moveToElement(el)
                 .moveToElement(moveTo)
                 .moveToElement(el)
+                .moveToElement(moveTo)
+                .moveToElement(el)
                 .click()
                 .build()
                 .perform();
