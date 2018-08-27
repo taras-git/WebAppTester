@@ -145,7 +145,7 @@ public class Utils {
         String env;
         try {
             LOG.info("Setting ENV variable");
-            env = System.getProperty("ENVIRONMENT");
+            env = System.getProperty("ENV");
 
             if (env == null) throw new RuntimeException("ENV variable is not set by Jenkins, using JSON file");
             LOG.info("ENV variable is set by Jenkins choice parameter: " + env);
