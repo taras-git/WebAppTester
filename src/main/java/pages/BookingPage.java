@@ -96,7 +96,7 @@ public class BookingPage extends BasePage{
             location.sendKeys(locationName);
         }
 
-        sleep(0.2);
+        sleep(0.5);
         location.sendKeys(Keys.DOWN);
         sleep(0.2);
         location.sendKeys(Keys.RETURN);
