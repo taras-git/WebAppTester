@@ -82,19 +82,21 @@ public class LoginPage extends BasePage{
     public LoginPage verifyUserLogged(){
         waitElementDisplayed(logoutXpath, LONG_TIMEOUT);
         WebElement closeAlert = null;
+
         try {
             closeAlert = getElementFluentWait(closeActiveBookingAlertCss, SHORTEST_TIMEOUT);
             closeAlert.click();
-
-            switch (LANGUAGE) {
-                case DE : bookVehicleDe.click();
-                    break;
-                case EN : bookVehicleEn.click();
-                    break;
-            }
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        switch (LANGUAGE) {
+            case DE : bookVehicleDe.click();
+                break;
+            case EN : bookVehicleEn.click();
+                break;
+        }
+
         return this;
     }
 
