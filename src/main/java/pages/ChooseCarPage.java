@@ -16,7 +16,7 @@ import static utils.Utils.EN;
 public class ChooseCarPage extends BasePage {
 
     private final String chooseFirstCarXpathEn = "(//button[contains(text(), ' Choose car ')])[1]";
-    private final String chooseFirstCarXpathDe = "(//button[contains(text(), ' Fahrzeug wählen ')])[1]";
+    private final String chooseFirstCarXpathDe = "(//button[contains(text(), ' Fahrzeug w')])[1]";
 
     @FindBy(xpath = "(//button[contains(text(), ' Choose car ')])[1]")
     WebElement choosefirstCarEn;
