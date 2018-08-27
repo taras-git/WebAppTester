@@ -61,8 +61,6 @@ public class BookingPage extends BasePage{
     }
 
     public void fillCheckIn(boolean bookNow) {
-        System.out.println("START>>>> " + getDefaultStartDate());
-        System.out.println("END>>>> " + getDefaultEndDate());
         if (bookNow) {
             clearInputField(dateTo);
             dateTo.sendKeys(getCurrentDateTime(4));

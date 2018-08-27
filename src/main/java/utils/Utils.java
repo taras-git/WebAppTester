@@ -57,7 +57,7 @@ public class Utils {
         LocalDateTime now = LocalDateTime.now();
         now = now.plusHours(plusHours);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(timePattern);
-        System.out.println(">>>>>>>>>>>>> " + now.format(formatter));
+
         return now.format(formatter);
     }
 
