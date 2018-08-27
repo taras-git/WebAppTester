@@ -21,7 +21,7 @@ public class ChooseCarPage extends BasePage {
     @FindBy(xpath = "(//button[contains(text(), ' Choose car ')])[1]")
     WebElement choosefirstCarEn;
 
-    @FindBy(xpath = "(//button[contains(text(), ' Fahrzeug wählen ')])[1]")
+    @FindBy(xpath = "(//button[contains(text(), ' Fahrzeug w')])[1]")
     WebElement choosefirstCarDe;
 
     public ChooseCarPage(WebDriver driver) {
