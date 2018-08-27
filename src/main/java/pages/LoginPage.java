@@ -83,7 +83,7 @@ public class LoginPage extends BasePage{
         waitElementDisplayed(logoutXpath, LONG_TIMEOUT);
         WebElement closeAlert = null;
         try {
-            closeAlert = getElementFluentWait(closeActiveBookingAlertCss, SHORT_TIMEOUT);
+            closeAlert = getElementFluentWait(closeActiveBookingAlertCss, SHORTEST_TIMEOUT);
             closeAlert.click();
 
             switch (LANGUAGE) {
