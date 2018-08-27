@@ -70,7 +70,7 @@ public class Utils {
             Files.createDirectories(dirsPath);
             LOG.info(folderName + " folder created");
         } catch (IOException e) {
-            e.printStackTrace();
+            LOG.info("Exception while creating folder: " + folderName);
         }
     }
 
@@ -83,7 +83,7 @@ public class Utils {
         } catch (NoSuchFileException nsfe) {
             LOG.info("Path << " + path + " >> not found");
         } catch (IOException e) {
-            e.printStackTrace();
+            LOG.info("Exception while deleting folder: " + path);
         }
     }
 

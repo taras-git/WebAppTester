@@ -7,6 +7,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import static utils.Timeouts.*;
 import static utils.Utils.DE;
@@ -16,6 +18,8 @@ import static utils.Utils.EN;
  * Created by taras on 7/27/18.
  */
 public class LoginPage extends BasePage{
+
+    private static final Logger LOG = LoggerFactory.getLogger(LoginPage.class);
 
     @FindBy(xpath = "//nav//*[contains(text(), 'Book a vehicle')]")
     private WebElement bookVehicleEn;
@@ -87,7 +91,7 @@ public class LoginPage extends BasePage{
             closeAlert = getElementFluentWait(closeActiveBookingAlertCss, SHORTEST_TIMEOUT);
             closeAlert.click();
         } catch (Exception e) {
-            e.printStackTrace();
+            LOG.info("FAILED: getElementFluentWait for Element " + closeActiveBookingAlertCss );
         }
 
         switch (LANGUAGE) {
