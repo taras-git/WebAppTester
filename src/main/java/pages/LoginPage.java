@@ -8,8 +8,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import static utils.Timeouts.MIDDLE_TIMEOUT;
-import static utils.Timeouts.SHORTER_TIMEOUT;
+import static utils.Timeouts.*;
 import static utils.Utils.DE;
 import static utils.Utils.EN;
 
@@ -18,25 +17,35 @@ import static utils.Utils.EN;
  */
 public class LoginPage extends BasePage{
 
+    @FindBy(xpath = "//nav//*[contains(text(), 'Book a vehicle')]")
+    private WebElement bookVehicleEn;
+
+    @FindBy(xpath = "//nav//*[contains(text(), 'Fahrzeug buchen')]")
+    private WebElement bookVehicleDe;
+
     private final String loginWarningXpath = "//h1[contains(text(), 'You must be logged in to book a car')]";
     @FindBy(xpath = "//h1[contains(text(), 'You must be logged in to book a car')]")
-    WebElement loginWarning;
+    private WebElement loginWarning;
 
     @FindBy(id = "loginID")
-    WebElement emailInput;
+    private WebElement emailInput;
 
     @FindBy(id = "loginPW")
-    WebElement passwordInput;
+    private WebElement passwordInput;
 
     @FindBy(xpath = "//button[contains(text(), 'submit ')]")
-    WebElement submitButton;
+    private WebElement submitButton;
 
     @FindBy(xpath = "//button[contains(text(), 'Login ')]")
-    WebElement loginButton;
+    private WebElement loginButton;
 
     private final String logoutXpath = "//a[contains(text(), 'Logout ')]";
     @FindBy(xpath = "//a[contains(text(), 'Logout ')]")
-    WebElement logout;
+    private WebElement logout;
+
+    private final By closeActiveBookingAlertCss = By.cssSelector("button#closemodal");
+    @FindBy(css = "button#closemodal")
+    private WebElement closeActiveBookingAlert;
 
     public LoginPage(WebDriver driver) {
         super(driver);
@@ -67,12 +76,25 @@ public class LoginPage extends BasePage{
                 break;
             }
         }
-
         return this;
     }
 
     public LoginPage verifyUserLogged(){
-        waitElementDisplayed(logoutXpath, MIDDLE_TIMEOUT);
+        waitElementDisplayed(logoutXpath, LONG_TIMEOUT);
+        WebElement closeAlert = null;
+        try {
+            closeAlert = getElementFluentWait(closeActiveBookingAlertCss, SHORT_TIMEOUT);
+            closeAlert.click();
+
+            switch (LANGUAGE) {
+                case DE : bookVehicleDe.click();
+                    break;
+                case EN : bookVehicleEn.click();
+                    break;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return this;
     }
 

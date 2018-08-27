@@ -19,86 +19,113 @@ public class HomePage extends BasePage{
     protected String homePageDeProduction = JsonReader.getUrl("home_page_de_production");
 
     @FindBy(xpath = "//nav[@id=\"top-navigation\"]//*[contains(text(), 'Book Vehicle')]")
-    WebElement bookVehicleEn;
+    private WebElement bookVehicleEn;
 
     @FindBy(xpath = "//nav[@id=\"top-navigation\"]//*[contains(text(), 'Fahrzeug buchen')]")
-    WebElement bookVehicleDe;
+    private WebElement bookVehicleDe;
 
     @FindBy(xpath = "//ul[@id='menu-top-navigation-en-1']//a[contains(text(), 'Rates')]")
-    WebElement ratesEn;
+    private WebElement ratesEn;
 
     @FindBy(xpath = "//ul[@id='menu-top-navigation-1']//a[contains(text(), 'Tarife')]")
-    WebElement ratesDe;
+    private WebElement ratesDe;
 
     @FindBy(xpath = "//ul[@id='menu-top-navigation-en-1']//a[contains(text(), 'Fleet')]")
-    WebElement fleetEn;
+    private WebElement fleetEn;
 
     @FindBy(xpath = "//ul[@id='menu-top-navigation-1']//a[contains(text(), 'Fahrzeugflotte')]")
-    WebElement fleetDe;
+    private WebElement fleetDe;
 
     @FindBy(xpath = "//ul[@id='menu-top-navigation-en-1']//a[contains(text(), 'How it Works')]")
-    WebElement howItWorksEn;
+    private WebElement howItWorksEn;
 
     @FindBy(xpath = "//ul[@id='menu-top-navigation-1']//a[contains(text(), 'So geht´s')]")
-    WebElement howItWorksDe;
+    private WebElement howItWorksDe;
 
     @FindBy(xpath = "//ul[@id='menu-top-navigation-en-1']//a[contains(text(), 'Blog')]")
-    WebElement blogEn;
+    private WebElement blogEn;
 
     @FindBy(xpath = "//ul[@id='menu-top-navigation-1']//a[contains(text(), 'Blog')]")
-    WebElement blogDe;
+    private WebElement blogDe;
 
     @FindBy(xpath = "//ul[@id='menu-top-navigation-en-1']//a[contains(text(), 'Company')]")
-    WebElement companyEn;
+    private WebElement companyEn;
 
     @FindBy(xpath = "//ul[@id='menu-top-navigation-1']//a[contains(text(), 'Unternehmen')]")
-    WebElement companyDe;
+    private WebElement companyDe;
 
     @FindBy(xpath = "//a[contains(text(), 'Apply as partner')]")
-    WebElement applyAsPartnerEn;
+    private WebElement applyAsPartnerEn;
 
     @FindBy(xpath = "//a[contains(text(), 'Partner werden')]")
-    WebElement applyAsPartnerDe;
+    private WebElement applyAsPartnerDe;
 
     @FindBy(xpath = "//a[contains(text(), 'Contact')]")
-    WebElement contactEn;
+    private WebElement contactEn;
 
     @FindBy(xpath = "//a[contains(text(), 'Kontakt')]")
-    WebElement contactDe;
+    private WebElement contactDe;
 
     @FindBy(xpath = "//a[contains(text(), 'Corporate Mobility')]")
-    WebElement corporateMobilityDeEn;
+    private WebElement corporateMobilityDeEn;
 
     @FindBy(xpath = "//a[contains(text(), 'Register now')]")
-    WebElement registerNowEn;
+    private WebElement registerNowEn;
 
     @FindBy(xpath = "//a[contains(text(), 'Jetzt registrieren')]")
-    WebElement registerNowDe;
+    private WebElement registerNowDe;
 
     @FindBy(xpath = "//span[contains(text(), 'Login')]")
-    WebElement loginDeEn;
+    private WebElement loginDeEn;
 
     @FindBy(xpath = "(//a[contains(text(), 'Locations')])[2]")
-    WebElement locationsEn;
+    private WebElement locationsEn;
 
     @FindBy(xpath = "(//a[contains(text(), 'Stationen')])[2]")
-    WebElement locationsDe;
+    private WebElement locationsDe;
+
+    @FindBy(xpath = "//ul[@id='menu-top-navigation-en-1']//a[contains(text(), 'How it Works')]")
+    private WebElement howItWorks;
+
+    @FindBy(xpath = "//ul[@id='menu-top-navigation-en-1']//a[contains(text(), 'Blog')]")
+    private WebElement blog;
+
+    @FindBy(xpath = "//ul[@id='menu-top-navigation-en-1']//a[contains(text(), 'Company')]")
+    private WebElement company;
+
+    @FindBy(xpath = "//a[contains(text(), 'Apply as partner')]")
+    private WebElement applyAsPartner;
+
+    @FindBy(xpath = "//a[contains(text(), 'Contact')]")
+    private WebElement contact;
+
+    @FindBy(xpath = "//a[contains(text(), 'Corporate Mobility')]")
+    private WebElement corporateMobility;
+
+    @FindBy(xpath = "//a[contains(text(), 'Register now')]")
+    private WebElement registerNow;
+
+    @FindBy(xpath = "//span[contains(text(), 'Login')]")
+    private WebElement login;
+
+    @FindBy(xpath = "(//a[contains(text(), 'Locations')])[2]")
+    private WebElement locations;
 
     String stationsXpathEn = "(//a[contains(text(), 'Stations')])[2]";
     @FindBy(xpath = "(//a[contains(text(), 'Stations')])[2]")
-    WebElement stationsEn;
+    private WebElement stationsEn;
 
     String stationsXpathDe = "(//a[contains(text(), 'Standorte')])[2]";
     @FindBy(xpath = "(//a[contains(text(), 'Standorte')])[2]")
-    WebElement stationsDe;
+    private WebElement stationsDe;
 
     String airfieldsXpathEn = "(//a[contains(text(), 'Airfields')])[2]";
     @FindBy(xpath = "(//a[contains(text(), 'Airfields')])[2]")
-    WebElement airfieldsEn;
+    private WebElement airfieldsEn;
 
     String airfieldsXpathDe = "(//a[contains(text(), 'Verkehrslandeplätze')])[2]";
     @FindBy(xpath = "(//a[contains(text(), 'Verkehrslandeplätze')])[2]")
-    WebElement airfieldsDe;
+    private WebElement airfieldsDe;
 
     public HomePage(WebDriver driver) {
         super(driver);
