@@ -16,12 +16,17 @@ ATF project folder ```artifacts``` holds subfolders for running the project:
   - ```artifacts/drivers``` : holds Webdriver binaries for Linux, Windows, and Mac OSs;
   - ```artifacts/properties``` : holds properties in JSON format;
 
-All configuration needed for the project is stored in ```artifacts/properties/general_property.json``` file.
+All basic configuration needed for the project is stored in ```artifacts/properties/general_property.json``` file.
 Some important keys:
+  - "env" - the main property for the project, possible values are: prod_en, prod_de, intera_en, intera_de.
+  Language is set with end part of the value ("..._en" - English, "..._de" - German)
+  This value is also set in Jenkins jobs, and is used for remote test runs.
+  
   - "browser" - string value, choose among Chrome ("ch" or "chrome") or Firefox ("ff" or "firefox");
   - "headless_mode" - boolean value (true/false), should browser open UI part or run without it;
   - "use_browser_binary" - boolean value (true/false), should the default browser version be picked (usually used by OS), or particular browser version (see next key);
   - "chrome_binary" and "firefox_binary" - path, where particular binaries of browser are stored;
+  - "path to driver executables" - specifies the exact path where the Web-Driver executables are stored.
 
 
 
@@ -47,18 +52,19 @@ Install these software and libraries:
 
 This framework uses PO to separate page classes from tests classes.
 There are 2 main base classes:
-    BaserPage.java
+    BasePage.java
     BaseTestCase.java
 
-Every page (HomePage, BookingPage...) is inhereted from BasePage.
-Every testcase is inhereted from BaseTestCase.
+Every page (HomePage, BookingPage...) is inherited from BasePage.
+Every testcase is inherited from BaseTestCase.
 
 All pages are instantiated in BaseTestCase.java:
 
 ```
+    protected HomePage homePage;
+    
     public void initPages(){
         homePage = new HomePage(driver);
-        bookingPage = new BookingPage(driver);
         ...
     }
 ```
@@ -73,6 +79,57 @@ Doing this, writing the testcase becomes very straightforward:
         bookingPage.verifyBookingPageDisplayed();
     }
 ```
+
+## Screenshots
+
+The framework enables to take a screenshot of failed test.
+The method is called in "@AfterMethod", and takes 3 arguments: result of the testcase (failed or not, path to screenshot folder, and driver instance).
+
+
+```
+@AfterMethod(alwaysRun = true)
+    public void closeBrowser(ITestResult result) {
+        long time = result.getEndMillis() - result.getStartMillis();
+        LOG.info("=== FINISHED : <<<" + result.getName() + ">>>  RESULT: <<<"+ getResultDescription(result.getStatus()) + ">>> ===");
+        LOG.info("=== TIME SPENT: " + time / 1000.0 + " seconds");
+
+        takeScreenshot(result, SCREENSHOTS_FOLDER, driver);
+        driver.quit();
+    }
+```
+
+To change the screenshot rule (i.e. take screenshot of every test), please change the condition ( result.getStatus() ) of taking screenshots:
+
+```
+    public static void takeScreenshot(ITestResult result, String folderName, WebDriver d) {
+        if(result.getStatus() == ITestResult.FAILURE ||
+                result.getStatus() == ITestResult.SKIP) {
+            try {
+                takeScreenshotWithWebdriver(result, folderName, d);
+                LOG.info("Screenshot taken");
+            } catch (Exception e) {
+                LOG.info("Exception while taking screenshot!");
+                e.printStackTrace();
+            }
+        }
+    }
+```
+
+
+## Video Recording
+
+To enable video recording of failed test in the framework library "video-recorder-testng" is used (dependency in pom.xml file). If a test is annotated with "@Video", it will be recorded in case of fail.
+
+```
+    @Video
+    @Test
+    public void loggedUserCanChangeCountry(){
+        ...
+    }
+```
+
+For details please check : 
+(https://github.com/SergeyPirogov/video-recorder-examples)
 
 
 ## REST API test
