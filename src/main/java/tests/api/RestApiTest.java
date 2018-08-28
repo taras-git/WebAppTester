@@ -159,7 +159,9 @@ public class RestApiTest {
         // check for empty ids
         SoftAssert softAssertion= new SoftAssert();
         for(String id : locationsIdsList){
-            softAssertion.assertFalse(id.isEmpty());
+            if(id.isEmpty()){
+                softAssertion.fail("FOND EMPTY LOCATION ID!!!");
+            }
         }
         softAssertion.assertAll();
     }
