@@ -13,7 +13,6 @@ import org.slf4j.LoggerFactory;
 import static utils.Timeouts.*;
 import static utils.Utils.DE;
 import static utils.Utils.EN;
-import static utils.Utils.sleep;
 
 /**
  * Created by taras on 7/27/18.
@@ -22,9 +21,11 @@ public class LoginPage extends BasePage{
 
     private static final Logger LOG = LoggerFactory.getLogger(LoginPage.class);
 
+    private final String bookVehicleEnXath = "//nav//*[contains(text(), 'Book a vehicle')]";
     @FindBy(xpath = "//nav//*[contains(text(), 'Book a vehicle')]")
     private WebElement bookVehicleEn;
 
+    private final String bookVehicleDeXath = "//nav//*[contains(text(), 'Fahrzeug buchen')]";
     @FindBy(xpath = "//nav//*[contains(text(), 'Fahrzeug buchen')]")
     private WebElement bookVehicleDe;
 
@@ -91,15 +92,18 @@ public class LoginPage extends BasePage{
         try {
             closeAlert = getElementFluentWait(closeActiveBookingAlertCss, SHORTEST_TIMEOUT);
             closeAlert.click();
-            sleep(5);
         } catch (Exception e) {
             LOG.info("FAILED: getElementFluentWait for Element " + closeActiveBookingAlertCss );
         }
 
         switch (LANGUAGE) {
-            case DE : bookVehicleDe.click();
+            case DE :
+                waitElementClickable(bookVehicleDeXath, SHORTER_TIMEOUT);
+                bookVehicleDe.click();
                 break;
-            case EN : bookVehicleEn.click();
+            case EN :
+                waitElementClickable(bookVehicleEnXath, SHORTER_TIMEOUT);
+                bookVehicleEn.click();
                 break;
         }
 
