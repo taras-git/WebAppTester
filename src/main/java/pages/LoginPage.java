@@ -7,6 +7,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import static utils.Timeouts.*;
 import static utils.Utils.DE;
@@ -17,9 +19,13 @@ import static utils.Utils.EN;
  */
 public class LoginPage extends BasePage{
 
+    private static final Logger LOG = LoggerFactory.getLogger(LoginPage.class);
+
+    private final String bookVehicleEnXath = "//nav//*[contains(text(), 'Book a vehicle')]";
     @FindBy(xpath = "//nav//*[contains(text(), 'Book a vehicle')]")
     private WebElement bookVehicleEn;
 
+    private final String bookVehicleDeXath = "//nav//*[contains(text(), 'Fahrzeug buchen')]";
     @FindBy(xpath = "//nav//*[contains(text(), 'Fahrzeug buchen')]")
     private WebElement bookVehicleDe;
 
@@ -82,19 +88,25 @@ public class LoginPage extends BasePage{
     public LoginPage verifyUserLogged(){
         waitElementDisplayed(logoutXpath, LONG_TIMEOUT);
         WebElement closeAlert = null;
+
         try {
             closeAlert = getElementFluentWait(closeActiveBookingAlertCss, SHORTEST_TIMEOUT);
             closeAlert.click();
-
-            switch (LANGUAGE) {
-                case DE : bookVehicleDe.click();
-                    break;
-                case EN : bookVehicleEn.click();
-                    break;
-            }
         } catch (Exception e) {
-            e.printStackTrace();
+            LOG.info("FAILED: getElementFluentWait for Element " + closeActiveBookingAlertCss );
         }
+
+        switch (LANGUAGE) {
+            case DE :
+                waitElementClickable(bookVehicleDeXath, SHORTER_TIMEOUT);
+                bookVehicleDe.click();
+                break;
+            case EN :
+                waitElementClickable(bookVehicleEnXath, SHORTER_TIMEOUT);
+                bookVehicleEn.click();
+                break;
+        }
+
         return this;
     }
 

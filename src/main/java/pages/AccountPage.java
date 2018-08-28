@@ -11,6 +11,7 @@ import org.openqa.selenium.support.ui.Select;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import static utils.Timeouts.LONG_TIMEOUT;
 import static utils.Timeouts.SHORTER_TIMEOUT;
 import static utils.Timeouts.SHORT_TIMEOUT;
 import static utils.Utils.DE;
@@ -143,11 +144,11 @@ public class AccountPage extends BasePage {
     public AccountPage verifyCarIsReserved() {
         switch (LANGUAGE){
             case DE: {
-                waitElementDisplayed(reservedDe, SHORT_TIMEOUT);
+                waitElementDisplayed(reservedDe, LONG_TIMEOUT);
                 break;
             }
             case EN: {
-                waitElementDisplayed(reservedEn, SHORT_TIMEOUT);
+                waitElementDisplayed(reservedEn, LONG_TIMEOUT);
                 break;
             }
         }
