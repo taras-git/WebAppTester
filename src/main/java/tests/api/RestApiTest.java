@@ -142,8 +142,12 @@ public class RestApiTest {
 
         // populate locationsIdsList with actual ids
         for(int i = 0; i < locationsArray.length(); i++) {
-            JSONObject id = locationsArray.getJSONObject(i);
-            locationsIdsList.add(id.get("id").toString());
+            String id = locationsArray
+                    .getJSONObject(i)
+                    .get("id")
+                    .toString();
+
+            locationsIdsList.add(id);
         }
 
         // check for duplicated ids
