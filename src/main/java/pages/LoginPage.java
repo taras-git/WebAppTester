@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import static utils.Timeouts.*;
 import static utils.Utils.DE;
 import static utils.Utils.EN;
+import static utils.Utils.sleep;
 
 /**
  * Created by taras on 7/27/18.
@@ -90,6 +91,7 @@ public class LoginPage extends BasePage{
         try {
             closeAlert = getElementFluentWait(closeActiveBookingAlertCss, SHORTEST_TIMEOUT);
             closeAlert.click();
+            sleep(5);
         } catch (Exception e) {
             LOG.info("FAILED: getElementFluentWait for Element " + closeActiveBookingAlertCss );
         }
