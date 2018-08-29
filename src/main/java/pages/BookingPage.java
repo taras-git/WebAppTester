@@ -54,7 +54,7 @@ public class BookingPage extends BasePage{
     public BookingPage fillCheckOut(boolean bookNow) {
         if (bookNow) {
             clearInputField(dateFrom);
-            dateFrom.sendKeys(getCurrentDateTime(1));
+            dateFrom.sendKeys(getCurrentDateTime(2));
             dateFrom.sendKeys(Keys.RETURN);
         }
         return this;
@@ -63,7 +63,7 @@ public class BookingPage extends BasePage{
     public void fillCheckIn(boolean bookNow) {
         if (bookNow) {
             clearInputField(dateTo);
-            dateTo.sendKeys(getCurrentDateTime(4));
+            dateTo.sendKeys(getCurrentDateTime(5));
             dateTo.sendKeys(Keys.RETURN);
         }
     }
