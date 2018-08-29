@@ -3,7 +3,6 @@ package pages;
 import baseclasses.BasePage;
 import exceptions.PropertyMisconfigureException;
 import org.openqa.selenium.By;
-import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -11,8 +10,9 @@ import org.openqa.selenium.support.ui.Select;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.List;
+
 import static utils.Timeouts.LONG_TIMEOUT;
-import static utils.Timeouts.SHORTER_TIMEOUT;
 import static utils.Timeouts.SHORT_TIMEOUT;
 import static utils.Utils.DE;
 import static utils.Utils.EN;
@@ -23,6 +23,8 @@ import static utils.Utils.EN;
 public class AccountPage extends BasePage {
 
     private static final Logger LOG = LoggerFactory.getLogger(AccountPage.class);
+
+    private By carBookingStatus = By.cssSelector("tbody > tr > td:nth-child(7)");
 
     private String editAccountXpath = "(//a[contains(@href,'editaccount')])[1]";
     @FindBy(xpath = "(//a[contains(@href,'editaccount')])[1]")
@@ -54,6 +56,12 @@ public class AccountPage extends BasePage {
 
     @FindBy(xpath = "//td[contains(text(), 'Reserviert')]/following-sibling::td/a")
     private WebElement reservedDetailsDe;
+
+    @FindBy(xpath = "(//td[contains(text(), 'Geladen')]/following-sibling::td/a)[2]")
+    private WebElement loadedDetailsDe;
+
+    @FindBy(xpath = "(//td[contains(text(), 'loaded')]/following-sibling::td/a)[2]")
+    private WebElement loadedDetailsEn;
 
     @FindBy(css = "a#btn-cancelbooking")
     private WebElement cancelBooking;
@@ -155,34 +163,49 @@ public class AccountPage extends BasePage {
         return this;
     }
 
+    public void verifyNoCarsLoaded() {
+        if (isFirstCarLoaded()) {
+            throw new RuntimeException(">>> BOOKING IS NOT CANCELLED! <<<");
+        } else {
+            LOG.info(">>> Booking is cancelled");
+        }
+    }
+
+    private boolean isFirstCarLoaded(){
+        String firstCarStatus = getFirstCarStatus();
+
+        if(firstCarStatus.equalsIgnoreCase("loaded")
+            ||firstCarStatus.equalsIgnoreCase("Geladen")){
+            return true;
+        }
+        return false;
+    }
+
+    private boolean isFirstCarReserved(){
+        String firstCarStatus = getFirstCarStatus();
+
+        if(firstCarStatus.equalsIgnoreCase("reserved")
+                ||firstCarStatus.equalsIgnoreCase("Reserviert")){
+            return true;
+        }
+        return false;
+    }
+
+    private String getFirstCarStatus() {
+        List<WebElement> carStatusList = getElements(carBookingStatus);
+        return carStatusList.get(0).getText();
+    }
+
     public void verifyNoCarsReserved() {
-        switch (LANGUAGE){
-            case DE : verifyNoCarsReservedDe();
-            case EN : verifyNoCarsReservedEn();
-        }
-    }
-
-    public void verifyNoCarsReservedEn() {
-        try {
-            waitElementDisplayed(reservedEn, SHORTER_TIMEOUT);
-        } catch (TimeoutException to) {
+        if (isFirstCarReserved()) {
+            throw new RuntimeException(">>> BOOKING IS NOT CANCELLED! <<<");
+        } else {
             LOG.info(">>> Booking is cancelled");
-            return;
         }
-        throw new RuntimeException(">>> BOOKING IS NOT CANCELLED! <<<");
     }
 
-    public void verifyNoCarsReservedDe() {
-        try {
-            waitElementDisplayed(reservedDe, SHORTER_TIMEOUT);
-        } catch (TimeoutException to) {
-            LOG.info(">>> Booking is cancelled");
-            return;
-        }
-        throw new RuntimeException(">>> BOOKING IS NOT CANCELLED! <<<");
-    }
 
-    public AccountPage clickDetails(){
+    public AccountPage clickReservedDetails(){
         switch (LANGUAGE) {
             case EN : {
                 reservedDetailsEn.click();
@@ -190,6 +213,20 @@ public class AccountPage extends BasePage {
             }
             case DE : {
                 reservedDetailsDe.click();
+                break;
+            }
+        }
+        return this;
+    }
+
+    public AccountPage clickLoadedDetails(){
+        switch (LANGUAGE) {
+            case EN : {
+                loadedDetailsEn.click();
+                break;
+            }
+            case DE : {
+                loadedDetailsDe.click();
                 break;
             }
         }
