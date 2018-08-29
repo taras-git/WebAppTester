@@ -1,19 +1,24 @@
 package tests.api;
 
 import io.restassured.http.ContentType;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 import utils.HtmlUtils;
 import utils.JsonReader;
 
-import java.util.List;
-import java.util.Map;
+import java.io.IOException;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static io.restassured.RestAssured.get;
+import static utils.JsonReader.readJsonFromUrl;
 
 
 /**
@@ -127,4 +132,52 @@ public class RestApiTest {
             });
         }
     }
+
+    @Test
+    public void verifyStationsIdsUniqueAndNotEmpty() throws IOException {
+        String url = "https://rental.app2drive.tech/storm/station/";
+        JSONObject json = readJsonFromUrl(url);
+        JSONArray locationsArray = json.getJSONArray("locations");
+        List<String> locationsIdsList = new LinkedList<String>();
+
+        // populate locationsIdsList with actual ids
+        for(int i = 0; i < locationsArray.length(); i++) {
+            String id = locationsArray
+                    .getJSONObject(i)
+                    .get("id")
+                    .toString();
+
+            locationsIdsList.add(id);
+        }
+
+        // check for duplicated ids
+        if(findDuplicates(locationsIdsList).size() > 0){
+            LOG.error("FOUND DUPLICATED IDs : " + findDuplicates(locationsIdsList));
+            Assert.fail("FOUND DUPLICATED IDs");
+        }
+
+        // check for empty ids
+        SoftAssert softAssertion= new SoftAssert();
+        for(String id : locationsIdsList){
+            if(id.isEmpty()){
+                softAssertion.fail("FOND EMPTY LOCATION ID!!!");
+            }
+        }
+        softAssertion.assertAll();
+    }
+
+    private static Set<String> findDuplicates(List<String> listDuplicates) {
+        final Set<String> setDuplicates = new HashSet<>();
+        final Set<String> setUniqueValues = new HashSet<>();
+
+        for (String s : listDuplicates) {
+            if(!s.isEmpty()) {
+                if (!setUniqueValues.add(s)) {
+                    setDuplicates.add(s);
+                }
+            }
+        }
+        return setDuplicates;
+    }
+
 }
