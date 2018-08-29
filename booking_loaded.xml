@@ -5,7 +5,7 @@
 
     <test name="Booking">
         <classes>
-            <class name="tests.web.A2DBookingNowTest" />
+            <class name="tests.web.A2DBookingLoadedTest" />
         </classes>
     </test>
 

@@ -100,14 +100,8 @@ public class BaseTestCase {
     @BeforeMethod
     public void getDriver(ITestContext context) throws Exception {
         String browser;
-        // get the browser from XML testng file
-        //browser = context.getCurrentXmlTest().getParameter("browser");
-
-        // or
-        // get the browser from JSON property file
         browser = JsonReader.getString("browser");
         driver = new BaseTestCase().createDriver(browser);
-        driver.manage().window().maximize();
         initPages(driver);
     }
 

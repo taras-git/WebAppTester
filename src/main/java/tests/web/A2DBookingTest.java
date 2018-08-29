@@ -28,7 +28,7 @@ public class A2DBookingTest extends BaseTestCase {
 
 
     @Video
-    @Test(groups="Booking", dependsOnMethods = "loggedUserCanBookVehicle", priority=1)
+    @Test(groups="Booking", dependsOnMethods = "loggedUserCanBookVehicle", priority=2)
     public void loggedUserCanCancelBooking(){
         login();
 
@@ -39,12 +39,12 @@ public class A2DBookingTest extends BaseTestCase {
                 .clickBookings()
                 .verifyMyBookingsDisplayed()
                 .verifyCarIsReserved()
-                .clickDetails()
+                .clickReservedDetails()
                 .cancelBooking();
     }
 
     @Video
-    @Test(dependsOnGroups = "Booking", priority=1)
+    @Test(dependsOnGroups = "Booking", priority=3)
     public void verifyBookingCanceled(){
         login();
 

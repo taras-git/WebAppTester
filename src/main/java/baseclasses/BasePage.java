@@ -11,9 +11,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import utils.Utils;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 
+import static utils.Timeouts.LONG_TIMEOUT;
 import static utils.Timeouts.MIDDLE_TIMEOUT;
 
 /**
@@ -143,4 +145,15 @@ public class BasePage {
         element.sendKeys(Keys.chord(Keys.CONTROL, "a"));
         element.sendKeys(Keys.BACK_SPACE);
     }
+
+    public List<WebElement> getElements(By by){
+        waitElementClickable(by, LONG_TIMEOUT);
+        List<WebElement> list = driver.findElements(by);
+        return list;
+    }
+
+    public WebElement getElement(By by){
+        return driver.findElement(by);
+    }
+
 }
