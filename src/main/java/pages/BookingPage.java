@@ -55,10 +55,8 @@ public class BookingPage extends BasePage{
     public BookingPage fillCheckOutCheckIn(String time, WebElement el) {
         if (null != time) {
             clearInputField(el);
-            dateFrom.sendKeys(time);
-            sleep(0.1);
-            dateFrom.sendKeys(Keys.RETURN);
-            sleep(10);
+            el.sendKeys(time);
+            el.sendKeys(Keys.RETURN);
         }
         return this;
     }

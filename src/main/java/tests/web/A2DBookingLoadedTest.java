@@ -23,7 +23,9 @@ public class A2DBookingLoadedTest extends BaseTestCase {
     @Test(groups="BookingLoaded", priority=1)
     public void loggedUserCanBookVehicle_Loaded(){
         String from = getCurrentDateTime(5);
+        System.out.println("FROM >>> " + from);
         String to = getCurrentDateTime(8);
+        System.out.println("TO >>> " + to);
         bookVehicle(from, to);
     }
 
