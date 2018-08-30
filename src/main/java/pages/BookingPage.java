@@ -13,6 +13,7 @@ import static utils.Utils.*;
  */
 public class BookingPage extends BasePage{
 
+    By findCarId = By.id("button1");
     @FindBy(css = "#button1")
     private WebElement findCar;
 
@@ -103,6 +104,7 @@ public class BookingPage extends BasePage{
     }
 
     public BookingPage clickFindCar() {
+        waitElementClickable(findCarId, SHORT_TIMEOUT);
         findCar.click();
         return this;
     }
