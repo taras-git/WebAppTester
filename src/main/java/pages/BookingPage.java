@@ -58,7 +58,7 @@ public class BookingPage extends BasePage{
             dateFrom.sendKeys(time);
             sleep(0.1);
             dateFrom.sendKeys(Keys.RETURN);
-            sleep(1);
+            sleep(10);
         }
         return this;
     }
