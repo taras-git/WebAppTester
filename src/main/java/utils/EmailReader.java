@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.Properties;
 
 import static javax.mail.Flags.Flag.DELETED;
+import static utils.Timeouts.LONG_TIMEOUT;
 import static utils.Utils.sleep;
 
 public class EmailReader {
@@ -53,9 +54,9 @@ public class EmailReader {
     private static Properties setImapProps() {
         Properties props = System.getProperties();
         props.setProperty("mail.store.protocol", "imaps");
-        props.put("mail.smtp.timeout", "10000");
-        props.put("mail.smtp.writetimeout", "10000");
-        props.put("mail.smtp.connectiontimeout", "10000");
+        props.put("mail.imap.timeout", LONG_TIMEOUT);
+        props.put("mail.imap.writetimeout", LONG_TIMEOUT);
+        props.put("mail.imap.connectiontimeout", LONG_TIMEOUT);
         return props;
     }
 
