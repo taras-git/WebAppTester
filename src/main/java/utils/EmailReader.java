@@ -54,7 +54,7 @@ public class EmailReader {
         Properties props = System.getProperties();
         props.setProperty("mail.store.protocol", "imaps");
 
-        String timeout = "30000";
+        String timeout = "15000";
         props.setProperty("mail.imaps.timeout", timeout);
         props.setProperty("mail.imaps.writetimeout", timeout);
         props.setProperty("mail.imaps.connectiontimeout", timeout);
