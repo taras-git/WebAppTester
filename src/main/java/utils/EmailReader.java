@@ -53,6 +53,8 @@ public class EmailReader {
     private static Properties setImapProps() {
         Properties props = System.getProperties();
         props.setProperty("mail.store.protocol", "imaps");
+        props.put("mail.smtp.timeout", "10000");
+        props.put("mail.smtp.connectiontimeout", "10000");
         return props;
     }
 
