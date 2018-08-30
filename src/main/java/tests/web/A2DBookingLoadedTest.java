@@ -8,6 +8,8 @@ import org.slf4j.LoggerFactory;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
+import static utils.Utils.getCurrentDateTime;
+
 
 /**
  * Created by taras on 7/17/18.
@@ -20,7 +22,9 @@ public class A2DBookingLoadedTest extends BaseTestCase {
     @Video
     @Test(groups="BookingLoaded", priority=1)
     public void loggedUserCanBookVehicle_Loaded(){
-        bookVehicle(true);
+        String from = getCurrentDateTime(5);
+        String to = getCurrentDateTime(8);
+        bookVehicle(from, to);
     }
 
     @Video

@@ -51,21 +51,21 @@ public class BookingPage extends BasePage{
         throw new RuntimeException("Language is not properly set, please check config files!!!");
     }
 
-    public BookingPage fillCheckOut(boolean bookNow) {
-        if (bookNow) {
-            clearInputField(dateFrom);
-            dateFrom.sendKeys(getCurrentDateTime(2));
+    public BookingPage fillCheckOutCheckIn(String time, WebElement el) {
+        if (null != time) {
+            clearInputField(el);
+            dateFrom.sendKeys(time);
             dateFrom.sendKeys(Keys.RETURN);
         }
         return this;
     }
 
-    public void fillCheckIn(boolean bookNow) {
-        if (bookNow) {
-            clearInputField(dateTo);
-            dateTo.sendKeys(getCurrentDateTime(5));
-            dateTo.sendKeys(Keys.RETURN);
-        }
+    public BookingPage fillCheckOut(String from) {
+        return fillCheckOutCheckIn(from, dateFrom);
+    }
+
+    public BookingPage fillCheckIn(String to) {
+        return fillCheckOutCheckIn(to, dateTo);
     }
 
     private String getDefaultEndDate() {

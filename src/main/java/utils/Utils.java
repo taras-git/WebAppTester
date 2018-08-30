@@ -18,8 +18,6 @@ import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Base64;
 import java.util.Comparator;
@@ -58,13 +56,8 @@ public class Utils {
     public static String getDateTime(String timePattern, int plusHours){
         LocalDateTime localTime = LocalDateTime.now();
         localTime = localTime.plusHours(plusHours);
-
-        ZoneId berlinTime = ZoneId.of("Europe/Berlin");
-        ZonedDateTime berlinDateTime = ZonedDateTime.of(localTime, berlinTime);
-
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(timePattern);
-        return formatter.format(berlinDateTime);
-//        return localTime.format(formatter);
+        return localTime.format(formatter);
     }
 
     public static void createFolder(String folderName) {
