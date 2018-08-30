@@ -180,12 +180,12 @@ public class BaseTestCase {
         loginPage.verifyUserLogged();
     }
 
-    protected void bookVehicle(boolean bookNow) {
+    protected void bookVehicle(String from, String to) {
         login();
 
         bookingPage.verifyBookingPageDisplayed()
-                .fillCheckOut(bookNow)
-                .fillCheckIn(bookNow);
+                .fillCheckOut(from)
+                .fillCheckIn(to);
 
         bookingPage.chooseLocation(null)
                 .clickFindCar();

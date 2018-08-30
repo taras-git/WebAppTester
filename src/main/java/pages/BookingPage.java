@@ -13,6 +13,7 @@ import static utils.Utils.*;
  */
 public class BookingPage extends BasePage{
 
+    By findCarId = By.id("button1");
     @FindBy(css = "#button1")
     private WebElement findCar;
 
@@ -51,21 +52,21 @@ public class BookingPage extends BasePage{
         throw new RuntimeException("Language is not properly set, please check config files!!!");
     }
 
-    public BookingPage fillCheckOut(boolean bookNow) {
-        if (bookNow) {
-            clearInputField(dateFrom);
-            dateFrom.sendKeys(getCurrentDateTime(1));
-            dateFrom.sendKeys(Keys.RETURN);
+    public BookingPage fillCheckOutCheckIn(String time, WebElement el) {
+        if (null != time) {
+            clearInputField(el);
+            el.sendKeys(time);
+            el.sendKeys(Keys.RETURN);
         }
         return this;
     }
 
-    public void fillCheckIn(boolean bookNow) {
-        if (bookNow) {
-            clearInputField(dateTo);
-            dateTo.sendKeys(getCurrentDateTime(4));
-            dateTo.sendKeys(Keys.RETURN);
-        }
+    public BookingPage fillCheckOut(String from) {
+        return fillCheckOutCheckIn(from, dateFrom);
+    }
+
+    public BookingPage fillCheckIn(String to) {
+        return fillCheckOutCheckIn(to, dateTo);
     }
 
     private String getDefaultEndDate() {
@@ -103,6 +104,7 @@ public class BookingPage extends BasePage{
     }
 
     public BookingPage clickFindCar() {
+        waitElementClickable(findCarId, SHORT_TIMEOUT);
         findCar.click();
         return this;
     }

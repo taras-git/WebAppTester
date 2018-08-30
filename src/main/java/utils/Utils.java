@@ -54,11 +54,10 @@ public class Utils {
     }
 
     public static String getDateTime(String timePattern, int plusHours){
-        LocalDateTime now = LocalDateTime.now();
-        now = now.plusHours(plusHours);
+        LocalDateTime localTime = LocalDateTime.now();
+        localTime = localTime.plusHours(plusHours);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(timePattern);
-
-        return now.format(formatter);
+        return localTime.format(formatter);
     }
 
     public static void createFolder(String folderName) {

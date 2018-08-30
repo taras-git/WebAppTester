@@ -23,7 +23,7 @@ public class A2DBookingTest extends BaseTestCase {
     @Video
     @Test(groups="Booking", priority=1)
     public void loggedUserCanBookVehicle(){
-        bookVehicle(false);
+        bookVehicle(null, null);
     }
 
 
