@@ -74,13 +74,12 @@ public class AccountPage extends BasePage {
     }
 
     public AccountPage clickEditAccount(){
-        waitElementClickable(editAccountXpath, SHORT_TIMEOUT);
-        editAccount.click();
+        clickOn(editAccount);
         return this;
     }
 
     public AccountPage submitAccountChanges(){
-        submitAccountChanges.click();
+        clickOn(submitAccountChanges);
         return this;
     }
 
@@ -131,18 +130,18 @@ public class AccountPage extends BasePage {
     }
 
     public AccountPage logoutCurrentUser(){
-        logout.click();
+        clickOn(logout);
         return this;
     }
 
     public AccountPage clickBookings() {
         switch (LANGUAGE){
             case EN : {
-                bookingsEn.click();
+                clickOn(bookingsEn);
                 return this;
             }
             case DE : {
-                bookingsDe.click();
+                clickOn(bookingsDe);
                 return this;
             }
         }
@@ -208,11 +207,11 @@ public class AccountPage extends BasePage {
     public AccountPage clickReservedDetails(){
         switch (LANGUAGE) {
             case EN : {
-                reservedDetailsEn.click();
+                clickOn(reservedDetailsEn);
                 break;
             }
             case DE : {
-                reservedDetailsDe.click();
+                clickOn(reservedDetailsDe);
                 break;
             }
         }
@@ -222,11 +221,11 @@ public class AccountPage extends BasePage {
     public AccountPage clickLoadedDetails(){
         switch (LANGUAGE) {
             case EN : {
-                loadedDetailsEn.click();
+                clickOn(loadedDetailsEn);
                 break;
             }
             case DE : {
-                loadedDetailsDe.click();
+                clickOn(loadedDetailsDe);
                 break;
             }
         }
@@ -234,8 +233,8 @@ public class AccountPage extends BasePage {
     }
 
     public AccountPage cancelBooking(){
-        cancelBooking.click();
-        cancelBookingOnAlertWindow.click();
+        clickOn(cancelBooking);
+        clickOn(cancelBookingOnAlertWindow);
         return this;
     }
 

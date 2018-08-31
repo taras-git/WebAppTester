@@ -19,8 +19,7 @@ public class ConfirmBookingPage extends BasePage {
     }
 
     public ConfirmBookingPage bookCar(){
-        waitElementDisplayed(bookCarXpath, MIDDLE_TIMEOUT);
-        bookCar.click();
+        clickOn(bookCar);
         return this;
     }
 

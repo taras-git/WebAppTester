@@ -57,20 +57,33 @@ public class BasePage {
     }
 
     public void waitElementClickable(By by, int timeout){
+        LOG.info("Wait Element clickable > " + by + " Timeout: " + timeout);
         WebDriverWait wait = new WebDriverWait(driver, timeout);
         wait.until(ExpectedConditions.elementToBeClickable(by));
     }
+
+    public void waitElementClickable(WebElement el, int timeout){
+        String locator = el.toString();
+        locator = locator.substring(locator.lastIndexOf("->") + 2);
+        LOG.info("Wait Element clickable > " + locator + " Timeout: " + timeout);
+
+        WebDriverWait wait = new WebDriverWait(driver, timeout);
+        wait.until(ExpectedConditions.elementToBeClickable(el));
+    }
+
 
     public void waitElementDisplayed(String xpath, int timeout){
         waitElementDisplayed(By.xpath(xpath), timeout);
     }
 
     public void waitElementDisplayed(By by, int timeout){
+        LOG.info("Wait Element displayed > " + by + " Timeout: " + timeout);
         WebDriverWait wait = new WebDriverWait(driver, timeout);
         wait.until(ExpectedConditions.visibilityOfElementLocated(by));
     }
 
     public void waitElementPresent(By by, int timeout){
+        LOG.info("Wait Element present > " + by + " Timeout: " + timeout);
         WebDriverWait wait = new WebDriverWait(driver, timeout);
         wait
                 .withMessage("Cannot find element: " + by.toString())
@@ -85,9 +98,11 @@ public class BasePage {
         return element;
     }
 
+
     public WebElement getElementFluentWait(By by, int timeout){
+        LOG.info("Get Element FluentWait > " + by + " Timeout: " + timeout);
         FluentWait<WebDriver> wait = new FluentWait<WebDriver>(driver)
-            .pollingEvery(250,  TimeUnit.MILLISECONDS)
+            .pollingEvery(100,  TimeUnit.MILLISECONDS)
             .withTimeout(timeout, TimeUnit.SECONDS)
             .ignoring(NoSuchElementException.class);
 
@@ -120,6 +135,8 @@ public class BasePage {
     }
 
     protected void moveToAndClick(WebElement moveTo, String clickOn){
+        LOG.info("Move to Element > " + moveTo);
+        LOG.info("Click on > " + clickOn);
         WebElement el = driver.findElement(By.xpath(clickOn));
         Actions builder = new Actions(driver);
 
@@ -154,6 +171,21 @@ public class BasePage {
 
     public WebElement getElement(By by){
         return driver.findElement(by);
+    }
+
+    public void clickOn(WebElement element){
+        clickOn(element, true);
+    }
+
+    public void clickOn(WebElement element, boolean shouldWait){
+        if(shouldWait) {
+            waitElementClickable(element, LONG_TIMEOUT);
+        }
+        element.click();
+
+        String locator = element.toString();
+        locator = locator.substring(locator.lastIndexOf("->") + 2);
+        LOG.info("Click on > " + locator);
     }
 
 }

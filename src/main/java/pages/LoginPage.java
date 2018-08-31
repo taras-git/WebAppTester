@@ -74,11 +74,11 @@ public class LoginPage extends BasePage{
 
         switch (LANGUAGE){
             case DE : {
-                loginButton.click();
+                clickOn(loginButton);
                 break;
             }
             case EN : {
-                submitButton.click();
+                clickOn(submitButton);
                 break;
             }
         }
@@ -91,19 +91,17 @@ public class LoginPage extends BasePage{
 
         try {
             closeAlert = getElementFluentWait(closeActiveBookingAlertCss, SHORTEST_TIMEOUT);
-            closeAlert.click();
+            clickOn(closeAlert, false);
         } catch (Exception e) {
             LOG.info("FAILED: getElementFluentWait for Element " + closeActiveBookingAlertCss );
         }
 
         switch (LANGUAGE) {
             case DE :
-                waitElementClickable(bookVehicleDeXath, SHORTER_TIMEOUT);
-                bookVehicleDe.click();
+                clickOn(bookVehicleDe);
                 break;
             case EN :
-                waitElementClickable(bookVehicleEnXath, SHORTER_TIMEOUT);
-                bookVehicleEn.click();
+                clickOn(bookVehicleEn);
                 break;
         }
 
