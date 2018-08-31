@@ -153,29 +153,29 @@ public class HomePage extends BasePage{
     public void clickBookVehicle() {
         switch (LANGUAGE){
             case DE : {
-                bookVehicleDe.click();
+                clickOn(bookVehicleDe);
                 return;
             }
             case EN : {
-                bookVehicleEn.click();
+                clickOn(bookVehicleEn);
                 return;
             }
         }
     }
 
     public void clickLogin(){
-                loginDeEn.click();
-                return;
+        clickOn(loginDeEn);
+        return;
     }
 
     public void clickRates(){
         switch(LANGUAGE){
             case DE : {
-                ratesDe.click();
+                clickOn(ratesDe);
                 return;
             }
             case EN : {
-                ratesEn.click();
+                clickOn(ratesEn);
                 return;
             }
         }
@@ -184,11 +184,11 @@ public class HomePage extends BasePage{
     public void clickFleet() {
         switch(LANGUAGE){
             case DE : {
-                fleetDe.click();
+                clickOn(fleetDe);
                 return;
             }
             case EN : {
-                fleetEn.click();
+                clickOn(fleetEn);
                 return;
             }
         }
@@ -197,11 +197,11 @@ public class HomePage extends BasePage{
     public void clickHowItWorks() {
         switch(LANGUAGE){
             case DE : {
-                howItWorksDe.click();
+                clickOn(howItWorksDe);
                 return;
             }
             case EN : {
-                howItWorksEn.click();
+                clickOn(howItWorksEn);
                 return;
             }
         }
@@ -210,11 +210,11 @@ public class HomePage extends BasePage{
     public void clickCompany() {
         switch(LANGUAGE){
             case DE : {
-                companyDe.click ();
+                clickOn(companyDe);
                 return;
             }
             case EN : {
-                companyEn.click();
+                clickOn(companyEn);
                 return;
             }
         }
@@ -223,11 +223,11 @@ public class HomePage extends BasePage{
     public void clickBlog() {
         switch(LANGUAGE){
             case DE : {
-                blogDe.click();
+                clickOn(blogDe);
                 return;
             }
             case EN : {
-                blogEn.click();
+                clickOn(blogEn);
                 return;
             }
         }
@@ -236,11 +236,11 @@ public class HomePage extends BasePage{
     public void clickRegisterNow() {
         switch(LANGUAGE){
             case DE : {
-                registerNowDe.click();
+                clickOn(registerNowDe);
                 return;
             }
             case EN : {
-                registerNowEn.click();
+                clickOn(registerNowEn);
                 return;
             }
         }
@@ -249,29 +249,29 @@ public class HomePage extends BasePage{
     public void clickApplyAsPartner() {
         switch(LANGUAGE){
             case DE : {
-                applyAsPartnerDe.click();
+                clickOn(applyAsPartnerDe);
                 return;
             }
             case EN : {
-                applyAsPartnerEn.click();
+                clickOn(applyAsPartnerEn);
                 return;
             }
         }
     }
 
     public void clickCorporateMobility() {
-                corporateMobilityDeEn.click();
-                return;
+        clickOn(corporateMobilityDeEn);
+        return;
     }
 
     public void clickContact() {
         switch(LANGUAGE){
             case DE : {
-                contactDe.click();
+                clickOn(contactDe);
                 return;
             }
             case EN : {
-                contactEn.click();
+                clickOn(contactEn);
                 return;
             }
         }
@@ -280,18 +280,16 @@ public class HomePage extends BasePage{
     public HomePage clickLocations() {
         switch (LANGUAGE) {
             case DE: {
-                locationsDe.click();
+                clickOn(locationsDe);
                 return this;
             }
             case EN: {
-                locationsEn.click();
+                clickOn(locationsEn);
                 return this;
             }
         }
         throw new PropertyMisconfigureException();
     }
-
-    public void clickAirfields() { airfieldsEn.click(); }
 
     public void moveToLocationsAndClickStations(){
         switch (LANGUAGE) {

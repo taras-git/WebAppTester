@@ -18,6 +18,6 @@ public class RatesPage extends BasePage{
     }
 
     public void verifyRatesPageDisplayed() {
-        basicRates.click();
+        clickOn(basicRates);
     }
 }

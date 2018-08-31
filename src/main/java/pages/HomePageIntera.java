@@ -37,10 +37,10 @@ public class HomePageIntera extends HomePage {
     }
 
     public void login(String email, String password){
-        login.click();
+        clickOn(login);
         loginEmail.sendKeys(email);
         loginPassword.sendKeys(password);
-        loginSubmit.click();
+        clickOn(loginSubmit);
     }
 
 }

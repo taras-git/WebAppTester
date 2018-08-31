@@ -120,8 +120,9 @@ public class BaseTestCase {
     @AfterMethod(alwaysRun = true)
     public void closeBrowser(ITestResult result) {
         long time = result.getEndMillis() - result.getStartMillis();
-        LOG.info("=== FINISHED : <<<" + result.getName() + ">>>  RESULT: <<<"+ getResultDescription(result.getStatus()) + ">>> ===");
-        LOG.info("=== TIME SPENT: " + time / 1000.0 + " seconds");
+        LOG.info("+++ FINISHED : <" + result.getName() + " > +++");
+        LOG.info("+++ WITH RESULT: <"+ getResultDescription(result.getStatus()) + "> +++");
+        LOG.info("+++ TIME SPENT: <" + time / 1000.0 + "> seconds +++");
 
         takeScreenshot(result, SCREENSHOTS_FOLDER, driver);
         driver.quit();

@@ -104,8 +104,7 @@ public class BookingPage extends BasePage{
     }
 
     public BookingPage clickFindCar() {
-        waitElementClickable(findCarId, SHORT_TIMEOUT);
-        findCar.click();
+        clickOn(findCar);
         return this;
     }
 
@@ -118,14 +117,12 @@ public class BookingPage extends BasePage{
     }
 
     public BookingPage clickMyAccountDe() {
-        waitElementClickable(myAccountXpathDe, SHORT_TIMEOUT);
-        myAccountDe.click();
+        clickOn(myAccountDe);
         return this;
     }
 
     public BookingPage clickMyAccountEn() {
-        waitElementClickable(myAccountXpathEn, SHORT_TIMEOUT);
-        myAccountEn.click();
+        clickOn(myAccountEn);
         return this;
     }
 

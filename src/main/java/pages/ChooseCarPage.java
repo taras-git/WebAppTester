@@ -6,7 +6,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import static utils.Timeouts.LONGER_TIMEOUT;
-import static utils.Timeouts.SHORT_TIMEOUT;
 import static utils.Utils.DE;
 import static utils.Utils.EN;
 
@@ -63,14 +62,12 @@ public class ChooseCarPage extends BasePage {
 
     public void chooseFirstCarDisplayedEn(){
         scrollOnePageDown();
-        waitElementClickable(chooseFirstCarXpathEn, SHORT_TIMEOUT);
-        choosefirstCarEn.click();
+        clickOn(choosefirstCarEn);
     }
 
     public void chooseFirstCarDisplayedDe(){
         scrollOnePageDown();
-        waitElementClickable(chooseFirstCarXpathDe, SHORT_TIMEOUT);
-        choosefirstCarDe.click();
+        clickOn(choosefirstCarDe);
     }
 
 
