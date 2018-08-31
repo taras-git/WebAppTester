@@ -17,35 +17,38 @@ ATF project folder ```artifacts``` holds subfolders for running the project:
   - ```artifacts/properties``` : holds properties in JSON format;
 
 All basic configuration needed for the project is stored in ```artifacts/properties/general_property.json``` file.
+
+#### general_property.json
 Some important keys:
+
+###### Environment
   - "env" - the main property for the project, possible values are: prod_en, prod_de, intera_en, intera_de.
   Language is set with end part of the value ("..._en" - English, "..._de" - German)
   This value is also set in Jenkins jobs, and is used for remote test runs.
-  
+
+###### Browser 
   - "browser" - string value, choose among Chrome ("ch" or "chrome") or Firefox ("ff" or "firefox");
   - "headless_mode" - boolean value (true/false), should browser open UI part or run without it;
   - "use_browser_binary" - boolean value (true/false), should the default browser version be picked (usually used by OS), or particular browser version (see next key);
   - "chrome_binary" and "firefox_binary" - path, where particular binaries of browser are stored;
   - "path to driver executables" - specifies the exact path where the Web-Driver executables are stored.
 
+#### emails.json
 
+Holds information about emails subjects (in En and De languages) that are received while booking.
 
-### Install these software and libraries
+## WebDriver executables
 
-Install these software and libraries:
-  - Java 8
-  - Maven
-  - IntelliJIDEA
-  - Selenium libraries. Good tutorial to install Selenium:
-    https://www.guru99.com/intellij-selenium-webdriver.html
+In order to automatically run test and open browsers, the driver executables need to be present in the project.
+Default path to it: "artifacts/drivers/"
+There are FireFox and Chrome drivers for:
+- Linux("artifacts/drivers/linux/geckodriver" and "artifacts/drivers/linux/chromedriver"); 
+- MacOS("artifacts/drivers/macos/geckodriver" and "artifacts/drivers/macos/chromedriver");
+- Windows("artifacts/drivers/windows/geckodriver.exe" and "artifacts/drivers/windows/chromedriver.exe").
 
-
-## Built With
-
-* [Java 8](https://java.com) - Main coding language
-* [IntelliJIDEA](https://www.jetbrains.com/idea/) - Java IDE
-* [Maven](https://maven.apache.org/) - Dependency Management
-* [Selenium](https://www.seleniumhq.org/) - Web Application test tool
+More information can be found on:
+* [Firefox driver](https://github.com/mozilla/geckodriver/releases)
+* [Chrome driver](http://chromedriver.chromium.org/home)  
 
 
 ## Page Object (PO) Pattern
@@ -144,3 +147,21 @@ ATF framework allows executing REST call and verifying the responses:
             .assertThat()
             .statusCode(200);
 ```
+
+
+### Install these software and libraries
+
+Install these software and libraries:
+  - Java 8
+  - Maven
+  - IntelliJIDEA
+  - Selenium libraries. Good tutorial to install Selenium:
+    https://www.guru99.com/intellij-selenium-webdriver.html
+
+
+## Built With
+
+* [Java 8](https://java.com) - Main coding language
+* [IntelliJIDEA](https://www.jetbrains.com/idea/) - Java IDE
+* [Maven](https://maven.apache.org/) - Dependency Management
+* [Selenium](https://www.seleniumhq.org/) - Web Application test tool
