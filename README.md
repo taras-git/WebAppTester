@@ -35,7 +35,20 @@ Some important keys:
 
 #### emails.json
 
-Holds information about emails subjects (in En and De languages) that are received while booking.
+Holds information about emails subjects (in English and German languages) that are received while booking.
+
+#### time_pattern.json
+
+Holds time pattern for creating file name during making screenshots, 
+and time pattern for booking an auto.
+
+#### urls.json
+
+Holds URLs which are used in ATF.
+
+#### users.json
+
+Holds cashed login and password to access email (app2driver@yahoo.com) and login to app2drive.com . 
 
 ## WebDriver executables
 
@@ -61,7 +74,8 @@ There are 2 main base classes:
 Every page (HomePage, BookingPage...) is inherited from BasePage.
 Every testcase is inherited from BaseTestCase.
 
-All pages are instantiated in BaseTestCase.java:
+All pages are instantiated in 
+###### BaseTestCase.java:
 
 ```
     protected HomePage homePage;
@@ -72,7 +86,8 @@ All pages are instantiated in BaseTestCase.java:
     }
 ```
 
-Doing this, writing the testcase becomes very straightforward:
+Doing this, writing the testcase becomes very straightforward
+###### for example  - A2DNavigationTests.java:
 
 ```
     @Test
@@ -87,7 +102,6 @@ Doing this, writing the testcase becomes very straightforward:
 
 The framework enables to take a screenshot of failed test.
 The method is called in "@AfterMethod", and takes 3 arguments: result of the testcase (failed or not, path to screenshot folder, and driver instance).
-
 
 ```
 @AfterMethod(alwaysRun = true)
