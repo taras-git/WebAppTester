@@ -134,6 +134,43 @@ public class RestApiTest {
     }
 
     @Test
+    public void verifyApiCalls(){
+        String env = JsonReader.getApiCallsUrl("prod_url");
+        LOG.info("Testing " + env);
+
+        testApi(env);
+
+        env = JsonReader.getApiCallsUrl("staging_url");
+        LOG.info("Testing " + env);
+
+        testApi(env);
+
+    }
+
+    private void testApi(String env) {
+        Map<Boolean, List<String>> apiCallsResult = null;
+        List<String> apiCalls = JsonReader.getApiCallsBody("api_calls");
+
+        apiCalls = apiCalls.stream()
+                .map(el -> env + el)
+                .collect(Collectors.toList());
+        try{
+            apiCallsResult = apiCalls
+                    .stream()
+                    .collect(Collectors.partitioningBy(l -> HtmlUtils.getResponseCode(l) == 200)); // group the links based on the "200" response code
+
+        } catch (Exception e) {
+            LOG.info("Parsing exception: ", e);
+        }
+
+        if(!apiCallsResult.get(false).isEmpty()){
+            apiCallsResult.get(false).forEach((v) -> {
+                LOG.error("FOUND URL WITH CODE != 200 : " + v);
+            });
+        }
+    }
+
+    @Test
     public void verifyStationsIdsUniqueAndNotEmpty() throws IOException {
         String url = "https://rental.app2drive.tech/storm/station/";
         JSONObject json = readJsonFromUrl(url);

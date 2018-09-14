@@ -1,11 +1,13 @@
 package utils;
 
 import org.json.JSONObject;
+import org.json.simple.JSONArray;
 import org.json.simple.parser.JSONParser;
 
 import java.io.*;
 import java.net.URL;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
 
 /**
  * Created by taras on 7/17/18.
@@ -18,49 +20,58 @@ public class JsonReader {
     private static String locationsFile = "artifacts/properties/locations.json";
     private static String emailsFile = "artifacts/properties/emails.json";
     private static String timePatternFile = "artifacts/properties/time_pattern.json";
+    private static String apiCallsFile = "artifacts/properties/api_calls.json";
 
     public static Boolean getBoolean(String key) {
-        return (Boolean) getValue(key, propertyFile);
+        return getBoolean(key, propertyFile);
     }
 
     public static String getString(String key) {
-        return (String) getValue(key, propertyFile);
+        return getString(key, propertyFile);
     }
 
     public static String getBookTimePattern() {
-        return (String) getValue("book_car_date_time", timePatternFile);
+        return getString("book_car_date_time", timePatternFile);
     }
 
     public static String getTimePattern(String key) {
-        return (String) getValue(key, timePatternFile);
+        return getString(key, timePatternFile);
+    }
+
+    public static String getApiCallsUrl(String key) {
+        return getString(key, apiCallsFile);
+    }
+
+    public static ArrayList getApiCallsBody(String key){
+        return getArray(key, apiCallsFile);
     }
 
     public static String getUrl(String key) {
-        return (String) getValue(key, urlsFile);
+        return getString(key, urlsFile);
     }
 
     public static String getUserEmail(String key) {
-        return Utils.getUserEmail((String) getValue(key, usersFile));
+        return Utils.getUserEmail(getString(key, usersFile));
     }
 
     public static String getUserPassword(String key) {
-        return Utils.getUserPassword((String) getValue(key, usersFile));
+        return Utils.getUserPassword(getString(key, usersFile));
     }
 
     public static String getUserImap(String key) {
-        return (String) getValue(key, usersFile);
+        return getString(key, usersFile);
     }
 
     public static String getConfirmationSubjectEN() {
-        return (String) getValue("confirmation_subject_en", emailsFile);
+        return getString("confirmation_subject_en", emailsFile);
     }
 
     public static String getConfirmationSubjectDE() {
-        return (String) getValue("confirmation_subject_de", emailsFile);
+        return getString("confirmation_subject_de", emailsFile);
     }
 
     public static String getLocation(String key) {
-        return (String) getValue(key, locationsFile);
+        return getString(key, locationsFile);
     }
 
     private static <T extends Object> T getValue(String key, String fileName) {
@@ -68,6 +79,26 @@ public class JsonReader {
         Object value = jsonObject.get(key);
 
         return (T) value;
+    }
+
+    private static String getString(String key, String fileName) {
+        return (String) getValue(key, fileName);
+    }
+
+    private static Boolean getBoolean(String key, String fileName) {
+        return (Boolean) getValue(key, fileName);
+    }
+
+    private static ArrayList getArray(String key, String fileName) {
+        ArrayList<String> list = new ArrayList<>();
+        JSONArray jsonArray = getValue(key, fileName);
+        if (jsonArray != null) {
+            int len = jsonArray.size();
+            for (int i = 0; i < len; i++){
+                list.add(jsonArray.get(i).toString());
+            }
+        }
+        return list;
     }
 
     private static org.json.simple.JSONObject getJsonObject(String fileName) {

@@ -1,0 +1,16 @@
+{
+  "prod_url": "https://rental.app2drive.com",
+  "staging_url": "https://rental.app2drive.tech",
+
+  "api_calls": [
+    "/storm/station/",
+    "/storm/station/ids?id=",
+    "/storm/station/availability",
+    "/storm/price/",
+    "/storm/booking/",
+    "/storm/payment/query/hashcode",
+    "/storm/account/user/tariffNameCheck/",
+    "/storm/booking/register",
+    "/storm/booking/mystique/id/"
+  ]
+}
