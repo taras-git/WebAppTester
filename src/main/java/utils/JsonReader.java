@@ -90,7 +90,7 @@ public class JsonReader {
         return (Boolean) getValue(key, fileName);
     }
 
-    private static ArrayList getArray(String key, String fileName) {
+    private static ArrayList<String> getArray(String key, String fileName) {
         JSONArray jsonArray = getValue(key, fileName);
         return new Gson().fromJson(jsonArray.toString(), ArrayList.class);
     }
