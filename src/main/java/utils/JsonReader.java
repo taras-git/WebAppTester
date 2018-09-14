@@ -2,7 +2,6 @@ package utils;
 
 import com.google.gson.Gson;
 import org.json.JSONObject;
-import org.json.simple.JSONArray;
 import org.json.simple.parser.JSONParser;
 
 import java.io.*;
@@ -22,6 +21,7 @@ public class JsonReader {
     private static String emailsFile = "artifacts/properties/emails.json";
     private static String timePatternFile = "artifacts/properties/time_pattern.json";
     private static String apiCallsFile = "artifacts/properties/api_calls.json";
+    private static Gson gson = new Gson();
 
     public static Boolean getBoolean(String key) {
         return getBoolean(key, propertyFile);
@@ -91,13 +91,11 @@ public class JsonReader {
     }
 
     private static ArrayList<String> getArray(String key, String fileName) {
-        JSONArray jsonArray = getValue(key, fileName);
-        return new Gson().fromJson(jsonArray.toString(), ArrayList.class);
+        return gson.fromJson(getValue(key, fileName).toString(), ArrayList.class);
     }
 
     private static org.json.simple.JSONObject getJsonObject(String fileName) {
         JSONParser jsonParser = new JSONParser();
-        Object value = null;
         org.json.simple.JSONObject jsonObject = null;
 
         try {
