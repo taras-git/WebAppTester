@@ -1,5 +1,6 @@
 package utils;
 
+import com.google.gson.Gson;
 import org.json.JSONObject;
 import org.json.simple.JSONArray;
 import org.json.simple.parser.JSONParser;
@@ -90,15 +91,8 @@ public class JsonReader {
     }
 
     private static ArrayList getArray(String key, String fileName) {
-        ArrayList<String> list = new ArrayList<>();
         JSONArray jsonArray = getValue(key, fileName);
-        if (jsonArray != null) {
-            int len = jsonArray.size();
-            for (int i = 0; i < len; i++){
-                list.add(jsonArray.get(i).toString());
-            }
-        }
-        return list;
+        return new Gson().fromJson(jsonArray.toString(), ArrayList.class);
     }
 
     private static org.json.simple.JSONObject getJsonObject(String fileName) {
