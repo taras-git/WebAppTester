@@ -1,6 +1,8 @@
 package utils;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import org.json.JSONObject;
 import org.json.simple.parser.JSONParser;
 
@@ -43,7 +45,11 @@ public class JsonReader {
         return getString(key, apiCallsFile);
     }
 
-    public static ArrayList getApiCallsBody(String key){
+    public static ArrayList<String> getApiGetCalls(String key){
+        return getArray(key, apiCallsFile);
+    }
+
+    public static ArrayList<String> getApiPostCalls(String key){
         return getArray(key, apiCallsFile);
     }
 
@@ -92,6 +98,18 @@ public class JsonReader {
 
     private static ArrayList<String> getArray(String key, String fileName) {
         return gson.fromJson(getValue(key, fileName).toString(), ArrayList.class);
+    }
+
+    public static ArrayList<JsonObject> getApiPostCallsList(String key) {
+        JsonArray apiCallsJson = gson.fromJson(getValue(key, apiCallsFile).toString(), JsonArray.class);
+        ArrayList<JsonObject> apiCalls = new ArrayList<>();
+
+        if (apiCallsJson != null) {
+            for (int i = 0; i < apiCallsJson.size(); i++){
+                apiCalls.add(apiCallsJson.get(i).getAsJsonObject());
+            }
+        }
+        return apiCalls;
     }
 
     private static org.json.simple.JSONObject getJsonObject(String fileName) {

@@ -1,5 +1,8 @@
 package tests.api;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import io.restassured.http.ContentType;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -18,6 +21,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import static io.restassured.RestAssured.get;
+import static io.restassured.RestAssured.given;
 import static utils.JsonReader.readJsonFromUrl;
 
 
@@ -27,6 +31,7 @@ import static utils.JsonReader.readJsonFromUrl;
 public class RestApiTest {
 
     private static final Logger LOG = LoggerFactory.getLogger(RestApiTest.class);
+    private static Gson gson = new Gson();
 
     protected final String homePageEnProduction = JsonReader.getUrl("home_page_en_production");
     protected final String homePageDeProduction = JsonReader.getUrl("home_page_de_production");
@@ -133,8 +138,41 @@ public class RestApiTest {
         }
     }
 
+
+    @DataProvider
+    public Object[][] postParams() {
+        ArrayList<JsonObject> apiPostCalls = JsonReader.getApiPostCallsList("api_post_calls");
+
+        return apiPostCalls.stream()
+                .map(call -> new Object[] { call })
+                .toArray(Object[][]::new);
+    }
+
+    @Test(dataProvider="postParams")
+    public void verifyApiPostCalls(JsonObject jsonObject){
+        String endpoint = "https://rental.app2drive.com" + jsonObject.get("endpoint").getAsString();
+        LOG.info("ENDPOINT: " + endpoint);
+        jsonObject.remove("endpoint");
+
+        // create a POST body
+        Map<String, Object> jsonBody = new HashMap<>();
+        Set<Map.Entry<String, JsonElement>> entrySet = jsonObject.entrySet();
+        for(Map.Entry<String,JsonElement> entry : entrySet){
+            jsonBody.put(entry.getKey(), jsonObject.get(entry.getKey()));
+            LOG.info("POST BODY: " +entry.getKey()+ " : " + jsonObject.get(entry.getKey()));
+        }
+
+        given()
+                .contentType(ContentType.JSON)
+                .body(jsonBody)
+                .when()
+                .post(endpoint)
+                .then()
+                .statusCode(200);
+    }
+
     @Test
-    public void verifyApiCalls(){
+    public void verifyApiGetCalls(){
         String env = JsonReader.getApiCallsUrl("prod_url");
         LOG.info("Testing " + env);
 
@@ -149,13 +187,13 @@ public class RestApiTest {
 
     private void testApi(String env) {
         Map<Boolean, List<String>> apiCallsResult = null;
-        List<String> apiCalls = JsonReader.getApiCallsBody("api_calls");
+        List<String> apiGetCalls = JsonReader.getApiGetCalls("api_get_calls");
 
-        apiCalls = apiCalls.stream()
+        apiGetCalls = apiGetCalls.stream()
                 .map(el -> env + el)
                 .collect(Collectors.toList());
         try{
-            apiCallsResult = apiCalls
+            apiCallsResult = apiGetCalls
                     .stream()
                     .collect(Collectors.partitioningBy(l -> HtmlUtils.getResponseCode(l) == 200)); // group the links based on the "200" response code
 
