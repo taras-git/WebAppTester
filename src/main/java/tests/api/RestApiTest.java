@@ -14,6 +14,7 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import utils.HtmlUtils;
 import utils.JsonReader;
+import utils.Utils;
 
 import java.io.IOException;
 import java.util.*;
@@ -58,6 +59,7 @@ public class RestApiTest {
     protected final String blogPageEn = homePageEnProduction + "category/news-en";
     protected final String blogPageDe = homePageDeProduction + "category/news";
 
+    public final static String ENVIRONMENT = Utils.getRestApiTestEnvironment();
 
     @DataProvider
     public Object[][] urls(){

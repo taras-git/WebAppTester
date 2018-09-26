@@ -33,6 +33,10 @@ public class JsonReader {
         return getString(key, propertyFile);
     }
 
+    public static String getString(String key, String fileName) {
+        return (String) getValue(key, fileName);
+    }
+
     public static String getBookTimePattern() {
         return getString("book_car_date_time", timePatternFile);
     }
@@ -86,10 +90,6 @@ public class JsonReader {
         Object value = jsonObject.get(key);
 
         return (T) value;
-    }
-
-    private static String getString(String key, String fileName) {
-        return (String) getValue(key, fileName);
     }
 
     private static Boolean getBoolean(String key, String fileName) {
