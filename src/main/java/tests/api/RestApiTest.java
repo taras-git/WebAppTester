@@ -1,6 +1,5 @@
 package tests.api;
 
-import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import io.restassured.http.ContentType;
@@ -31,7 +30,6 @@ import static utils.JsonReader.readJsonFromUrl;
 public class RestApiTest {
 
     private static final Logger LOG = LoggerFactory.getLogger(RestApiTest.class);
-    private static Gson gson = new Gson();
 
     protected final String homePageEnProduction = JsonReader.getUrl("home_page_en_production");
     protected final String homePageDeProduction = JsonReader.getUrl("home_page_de_production");
