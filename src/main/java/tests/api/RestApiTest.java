@@ -59,8 +59,6 @@ public class RestApiTest {
     protected final String blogPageEn = homePageEnProduction + "category/news-en";
     protected final String blogPageDe = homePageDeProduction + "category/news";
 
-    public final static String ENVIRONMENT = Utils.getRestApiTestEnvironment();
-
     @DataProvider
     public Object[][] urls(){
         return new Object[][]{
@@ -209,10 +207,7 @@ public class RestApiTest {
     }
 
     private String getApiCallEnv() {
-//        String env = JsonReader.getApiCallsUrl("api_call_url");
-        String env = ENVIRONMENT;
-        LOG.info("Testing API CALL for: " + env);
-        return env;
+        return Utils.getRestApiTestEnvironment();
     }
 
     @Test
