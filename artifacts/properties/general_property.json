@@ -1,6 +1,6 @@
 {
   "//":"allowed values: prod_en, prod_de, intera_en, intera_de",
-  "env": "intera_de",
+  "env": "prod_en",
 
   "//": "allowed browser names: ff, firefox, ch, chrome",
   "browser": "ff",
