@@ -59,6 +59,8 @@ public class RestApiTest {
     protected final String blogPageEn = homePageEnProduction + "category/news-en";
     protected final String blogPageDe = homePageDeProduction + "category/news";
 
+    private final String ENVIRONMENT = Utils.getRestApiTestEnvironment();
+
     @DataProvider
     public Object[][] urls(){
         return new Object[][]{
@@ -174,7 +176,7 @@ public class RestApiTest {
     }
 
     private String getPostEndpoint(JsonObject jsonObject) {
-        String endpoint = getApiCallEnv() + jsonObject.get("endpoint").getAsString();
+        String endpoint = ENVIRONMENT + jsonObject.get("endpoint").getAsString();
         LOG.info("POST API CALL ENDPOINT: " + endpoint);
         return endpoint;
     }
@@ -201,13 +203,9 @@ public class RestApiTest {
     }
 
     private String getGetEndpoint(String url) {
-        String endpoint = getApiCallEnv() + url;
+        String endpoint = ENVIRONMENT + url;
         LOG.info("GET API CALL ENDPOINT: " + endpoint);
         return endpoint;
-    }
-
-    private String getApiCallEnv() {
-        return Utils.getRestApiTestEnvironment();
     }
 
     @Test
