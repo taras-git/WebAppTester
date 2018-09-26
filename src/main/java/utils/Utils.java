@@ -142,19 +142,6 @@ public class Utils {
 
     public static  String getUiTestEnvironment() {
         return getTestEnvironment("ui");
-
-//        String env;
-//        try {
-//            LOG.info("Setting ENV variable");
-//            env = System.getProperty("ENV_Ui_Test");
-//
-//            if (env == null) throw new RuntimeException("ENV variable is not set by Jenkins, using JSON file");
-//            LOG.info("ENV variable is set by Jenkins choice parameter: " + env);
-//        } catch (Exception e){
-//            env = JsonReader.getString("env").toLowerCase();
-//            LOG.info("ENV variable is set by Json property file: " + env);
-//        }
-//        return env;
     }
 
     public static  String getRestApiTestEnvironment() {
@@ -162,24 +149,25 @@ public class Utils {
     }
 
     public static  String getTestEnvironment(String testEnv) {
-        String env = null;
+        String env;
 
         try {
-            LOG.info("Setting ENV variable");
+            LOG.info("Set ENV for : " + testEnv + " test");
             env = getEnvFromJenkins(testEnv);
 
             if (env == null) {
-                throw new RuntimeException("ENV variable is not set by Jenkins, using JSON file");
+                throw new RuntimeException("ENV is not set by Jenkins, using JSON file");
             }
-            LOG.info("ENV variable is set by Jenkins choice parameter: " + env);
+            LOG.info("ENV is set by Jenkins : " + env);
         } catch (Exception ex){
             env = getEnvFromJsonFile(testEnv);
-            LOG.info("ENV variable is set by Json property file: " + env);
+            LOG.info("ENV is set by Json property file: " + env);
         }
         return env;
     }
 
     private static String getEnvFromJsonFile(String testEnv) {
+        LOG.info("ENV variable is set by JSON file for : " + testEnv);
         if(testEnv.equalsIgnoreCase("ui")) {
             return JsonReader.getString("env").toLowerCase();
         }
@@ -189,15 +177,18 @@ public class Utils {
         return null;
     }
 
-    private static String getEnvFromJenkins(String e) {
-        if(e.equalsIgnoreCase("ui")){
+    private static String getEnvFromJenkins(String testEnv) {
+        String result = null;
+
+        if(testEnv.equalsIgnoreCase("ui")){
             return System.getProperty("EnvUiTest");
         }
-        if(e.equalsIgnoreCase("rest")){
-            return "https://" + System.getProperty("EnvApiTest");
+
+        if(testEnv.equalsIgnoreCase("rest")){
+            result = (null == System.getProperty("EnvApiTest")) ?  null : "https://" + System.getProperty("EnvApiTest");
         }
 
-        return null;
+        return result;
     }
 
     public static String getLanguage() {

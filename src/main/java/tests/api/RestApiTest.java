@@ -209,7 +209,8 @@ public class RestApiTest {
     }
 
     private String getApiCallEnv() {
-        String env = JsonReader.getApiCallsUrl("api_call_url");
+//        String env = JsonReader.getApiCallsUrl("api_call_url");
+        String env = ENVIRONMENT;
         LOG.info("Testing API CALL for: " + env);
         return env;
     }
