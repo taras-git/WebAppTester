@@ -181,13 +181,6 @@ public class RestApiTest {
         return endpoint;
     }
 
-    @Test
-    public void verifyApiGetCalls(){
-        //this method verifies API GET calls without failing test, so the results can be seen in LOG only
-        String env = getApiCallEnv();
-        testApi(env);
-    }
-
     @DataProvider
     public Object[][] getGetParams() {
         ArrayList<String> apiGetCalls = JsonReader.getJsonStringArrayList("api_get_calls");
@@ -198,7 +191,7 @@ public class RestApiTest {
     }
 
     @Test(dataProvider= "getGetParams")
-    public void verifyApiGetCalls2(String url){
+    public void verifyApiGetCalls(String url){
         //this method verifies API GET calls with failing tests
         String endpoint = getGetEndpoint(url);
 
@@ -219,29 +212,6 @@ public class RestApiTest {
         String env = JsonReader.getApiCallsUrl("api_call_url");
         LOG.info("Testing API CALL for: " + env);
         return env;
-    }
-
-    private void testApi(String env) {
-        Map<Boolean, List<String>> apiCallsResult = null;
-        List<String> apiGetCalls = JsonReader.getApiGetCalls("api_get_calls");
-
-        apiGetCalls = apiGetCalls.stream()
-                .map(el -> env + el)
-                .collect(Collectors.toList());
-        try{
-            apiCallsResult = apiGetCalls
-                    .stream()
-                    .collect(Collectors.partitioningBy(l -> HtmlUtils.getResponseCode(l) == 200)); // group the links based on the "200" response code
-
-        } catch (Exception e) {
-            LOG.info("Parsing exception: ", e);
-        }
-
-        if(!apiCallsResult.get(false).isEmpty()){
-            apiCallsResult.get(false).forEach((v) -> {
-                LOG.error("FOUND URL WITH CODE != 200 : " + v);
-            });
-        }
     }
 
     @Test
