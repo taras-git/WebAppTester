@@ -100,16 +100,28 @@ public class JsonReader {
         return gson.fromJson(getValue(key, fileName).toString(), ArrayList.class);
     }
 
-    public static ArrayList<JsonObject> getApiPostCallsList(String key) {
-        JsonArray apiCallsJson = gson.fromJson(getValue(key, apiCallsFile).toString(), JsonArray.class);
-        ArrayList<JsonObject> apiCalls = new ArrayList<>();
+    public static ArrayList<JsonObject> getJsonObjectArrayList(String key) {
+        JsonArray jsonArray = gson.fromJson(getValue(key, apiCallsFile).toString(), JsonArray.class);
+        ArrayList<JsonObject> arrayList = new ArrayList<>();
 
-        if (apiCallsJson != null) {
-            for (int i = 0; i < apiCallsJson.size(); i++){
-                apiCalls.add(apiCallsJson.get(i).getAsJsonObject());
+        if (jsonArray != null) {
+            for (int i = 0; i < jsonArray.size(); i++){
+                arrayList.add(jsonArray.get(i).getAsJsonObject());
             }
         }
-        return apiCalls;
+        return arrayList;
+    }
+
+    public static ArrayList<String> getJsonStringArrayList(String key) {
+        JsonArray jsonArray = gson.fromJson(getValue(key, apiCallsFile).toString(), JsonArray.class);
+        ArrayList<String> arrayList = new ArrayList<>();
+
+        if (jsonArray != null) {
+            for (int i = 0; i < jsonArray.size(); i++){
+                arrayList.add(jsonArray.get(i).getAsString());
+            }
+        }
+        return arrayList;
     }
 
     private static org.json.simple.JSONObject getJsonObject(String fileName) {

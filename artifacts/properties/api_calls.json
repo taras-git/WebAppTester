@@ -1,37 +1,37 @@
 {
-  "prod_url": "https://rental.app2drive.com",
-  "staging_url": "https://rental.app2drive.tech",
+  "//": "possible API CALLs URLs values:",
+  "//": "https://rental.app2drive.com",
+  "//": "https://rental.app2drive.tech",
+  "api_call_url": "https://rental.app2drive.com",
 
   "api_get_calls": [
     "/storm/station/",
     "/storm/station/ids?id=",
     "/storm/station/availability",
     "/storm/booking/",
-    "/storm/payment/query/hashcode",
-    "/storm/account/user/tariffNameCheck/",
     "/storm/booking/mystique/id/55148b49-e1e3-462a-a628-2d603cf58e05"
   ],
 
   "api_post_calls":[
     {
       "endpoint": "/storm/price/",
-      "ci": "1537275600000",
+      "ci": 1537275600000,
       "ciLocationCode": "TA1706048601DE",
-      "co": "1537102800000",
+      "co": 1537102800000,
       "coLocationCode": "TA1706048601DE"
     },
     {
       "endpoint": "/storm/payment/query/hashcode",
       "carType": "MIDSIZE",
-      "ci": "1537275600000",
+      "ci": 1537275600000,
       "ciLocationCode": "TA1706048601DE",
       "clientType": "MYSTIQUE",
-      "co": "1537102800000",
+      "co": 1537102800000,
       "coLocationCode": "TA1706048601DE",
       "deductible": "LOW_PRICE",
       "email": "cbrzelviv@ukr.net",
-      "prepaid": "false",
-      "priceOptions": "[]",
+      "prepaid": false,
+      "priceOptions": [],
       "tariffName": "VGFyaWZmQmFzaWNIRkFTT0lGV1FFQ2NicnplbHZpdkB1a3IubmV0"
     },
     {

@@ -105,10 +105,10 @@ public class RestApiTest {
 
     private void siteIsUp(String url) {
         get(url)
-            .then()
+        .then()
             .contentType(ContentType.HTML)
-            .and()
-            .assertThat()
+        .and()
+        .assertThat()
             .statusCode(200);
     }
 
@@ -138,51 +138,87 @@ public class RestApiTest {
         }
     }
 
-
     @DataProvider
-    public Object[][] postParams() {
-        ArrayList<JsonObject> apiPostCalls = JsonReader.getApiPostCallsList("api_post_calls");
+    public Object[][] getPostParams() {
+        ArrayList<JsonObject> apiPostCalls = JsonReader.getJsonObjectArrayList("api_post_calls");
 
         return apiPostCalls.stream()
-                .map(call -> new Object[] { call })
+                .map(call -> new Object[] { call } )
                 .toArray(Object[][]::new);
     }
 
-    @Test(dataProvider="postParams")
+    @Test(dataProvider= "getPostParams")
     public void verifyApiPostCalls(JsonObject jsonObject){
-        String endpoint = "https://rental.app2drive.com" + jsonObject.get("endpoint").getAsString();
-        LOG.info("ENDPOINT: " + endpoint);
+        String endpoint = getPostEndpoint(jsonObject);
         jsonObject.remove("endpoint");
 
+        Map<String, Object> jsonBody = getPostBody(jsonObject);
+
+        given()
+            .contentType(ContentType.JSON)
+            .body(jsonBody)
+        .when()
+            .post(endpoint)
+        .then()
+            .statusCode(200);
+    }
+
+    private Map<String, Object> getPostBody(JsonObject jsonObject) {
         // create a POST body
         Map<String, Object> jsonBody = new HashMap<>();
         Set<Map.Entry<String, JsonElement>> entrySet = jsonObject.entrySet();
+
         for(Map.Entry<String,JsonElement> entry : entrySet){
             jsonBody.put(entry.getKey(), jsonObject.get(entry.getKey()));
-            LOG.info("POST BODY: " +entry.getKey()+ " : " + jsonObject.get(entry.getKey()));
+            LOG.info("API CALL POST BODY: " +entry.getKey()+ " : " + jsonObject.get(entry.getKey()));
         }
+        return jsonBody;
+    }
 
-        given()
-                .contentType(ContentType.JSON)
-                .body(jsonBody)
-                .when()
-                .post(endpoint)
-                .then()
-                .statusCode(200);
+    private String getPostEndpoint(JsonObject jsonObject) {
+        String endpoint = getApiCallEnv() + jsonObject.get("endpoint").getAsString();
+        LOG.info("POST API CALL ENDPOINT: " + endpoint);
+        return endpoint;
     }
 
     @Test
     public void verifyApiGetCalls(){
-        String env = JsonReader.getApiCallsUrl("prod_url");
-        LOG.info("Testing " + env);
-
+        //this method verifies API GET calls without failing test, so the results can be seen in LOG only
+        String env = getApiCallEnv();
         testApi(env);
+    }
 
-        env = JsonReader.getApiCallsUrl("staging_url");
-        LOG.info("Testing " + env);
+    @DataProvider
+    public Object[][] getGetParams() {
+        ArrayList<String> apiGetCalls = JsonReader.getJsonStringArrayList("api_get_calls");
 
-        testApi(env);
+        return apiGetCalls.stream()
+                .map(call -> new Object[] { call })
+                .toArray(Object[][]::new);
+    }
 
+    @Test(dataProvider= "getGetParams")
+    public void verifyApiGetCalls2(String url){
+        //this method verifies API GET calls with failing tests
+        String endpoint = getGetEndpoint(url);
+
+        given()
+        .when()
+        .get(endpoint)
+            .then()
+            .statusCode(200);
+    }
+
+    private String getGetEndpoint(String url) {
+        String endpoint = getApiCallEnv() + url;
+        LOG.info("GET API CALL ENDPOINT: " + endpoint);
+        return endpoint;
+    }
+
+    private String getApiCallEnv() {
+        String env = JsonReader.getApiCallsUrl("api_call_url");
+        LOG.info("Testing API CALL for: " + env);
+        return env;
     }
 
     private void testApi(String env) {
@@ -210,7 +246,7 @@ public class RestApiTest {
 
     @Test
     public void verifyStationsIdsUniqueAndNotEmpty() throws IOException {
-        String url = "https://rental.app2drive.tech/storm/station/";
+        String url = JsonReader.getApiCallsUrl("api_call_url") + "/storm/station/";
         JSONObject json = readJsonFromUrl(url);
         JSONArray locationsArray = json.getJSONArray("locations");
         List<String> locationsIdsList = new LinkedList<String>();
