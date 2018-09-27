@@ -14,6 +14,7 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import utils.HtmlUtils;
 import utils.JsonReader;
+import utils.Utils;
 
 import java.io.IOException;
 import java.util.*;
@@ -58,6 +59,7 @@ public class RestApiTest {
     protected final String blogPageEn = homePageEnProduction + "category/news-en";
     protected final String blogPageDe = homePageDeProduction + "category/news";
 
+    private final String ENVIRONMENT = Utils.getRestApiTestEnvironment();
 
     @DataProvider
     public Object[][] urls(){
@@ -174,7 +176,7 @@ public class RestApiTest {
     }
 
     private String getPostEndpoint(JsonObject jsonObject) {
-        String endpoint = getApiCallEnv() + jsonObject.get("endpoint").getAsString();
+        String endpoint = ENVIRONMENT + jsonObject.get("endpoint").getAsString();
         LOG.info("POST API CALL ENDPOINT: " + endpoint);
         return endpoint;
     }
@@ -201,15 +203,9 @@ public class RestApiTest {
     }
 
     private String getGetEndpoint(String url) {
-        String endpoint = getApiCallEnv() + url;
+        String endpoint = ENVIRONMENT + url;
         LOG.info("GET API CALL ENDPOINT: " + endpoint);
         return endpoint;
-    }
-
-    private String getApiCallEnv() {
-        String env = JsonReader.getApiCallsUrl("api_call_url");
-        LOG.info("Testing API CALL for: " + env);
-        return env;
     }
 
     @Test

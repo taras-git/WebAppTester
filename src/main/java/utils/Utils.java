@@ -140,24 +140,60 @@ public class Utils {
         return getPassword(credentials);
     }
 
-    public static  String getEnvironment() {
-        String env;
-        try {
-            LOG.info("Setting ENV variable");
-            env = System.getProperty("ENV");
+    public static  String getUiTestEnvironment() {
+        return getTestEnvironment("ui");
+    }
 
-            if (env == null) throw new RuntimeException("ENV variable is not set by Jenkins, using JSON file");
-            LOG.info("ENV variable is set by Jenkins choice parameter: " + env);
-        } catch (Exception e){
-            env = JsonReader.getString("env").toLowerCase();
-            LOG.info("ENV variable is set by Json property file: " + env);
+    public static  String getRestApiTestEnvironment() {
+        return getTestEnvironment("rest");
+    }
+
+    public static  String getTestEnvironment(String testEnv) {
+        String env;
+
+        try {
+            LOG.info("Set ENV for : " + testEnv + " test");
+            env = getEnvFromJenkins(testEnv);
+
+            if (env == null) {
+                throw new RuntimeException("ENV is not set by Jenkins, using JSON file");
+            }
+            LOG.info("ENV is set by Jenkins : " + env);
+        } catch (Exception ex){
+            env = getEnvFromJsonFile(testEnv);
+            LOG.info("ENV is set by Json property file: " + env);
         }
         return env;
     }
 
+    private static String getEnvFromJsonFile(String testEnv) {
+        LOG.info("ENV variable is set by JSON file for : " + testEnv);
+        if(testEnv.equalsIgnoreCase("ui")) {
+            return JsonReader.getString("env").toLowerCase();
+        }
+        if(testEnv.equalsIgnoreCase("rest")){
+            return JsonReader.getString("api_call_url", "artifacts/properties/api_calls.json").toLowerCase();
+        }
+        return null;
+    }
+
+    private static String getEnvFromJenkins(String testEnv) {
+        String result = null;
+
+        if(testEnv.equalsIgnoreCase("ui")){
+            return System.getProperty("EnvUiTest");
+        }
+
+        if(testEnv.equalsIgnoreCase("rest")){
+            result = (null == System.getProperty("EnvApiTest")) ?  null : "https://" + System.getProperty("EnvApiTest");
+        }
+
+        return result;
+    }
+
     public static String getLanguage() {
-        if(getEnvironment().toLowerCase().contains("_de")) return DE;
-        if(getEnvironment().toLowerCase().contains("_en")) return EN;
+        if(getUiTestEnvironment().toLowerCase().contains("_de")) return DE;
+        if(getUiTestEnvironment().toLowerCase().contains("_en")) return EN;
 
         throw new RuntimeException("Language is not set in property file!!!");
     }
