@@ -50,6 +50,11 @@ Holds URLs which are used in ATF.
 
 Holds cashed login and password to access email (app2driver@yahoo.com) and login to app2drive.com . 
 
+#### api_calls.json
+
+Holds values for Api GET and POST tests.
+
+
 ## WebDriver executables
 
 In order to automatically run test and open browsers, the driver executables need to be present in the project.
@@ -77,7 +82,7 @@ Every testcase is inherited from BaseTestCase.
 All pages are instantiated in 
 ###### BaseTestCase.java:
 
-```
+```$xslt
     protected HomePage homePage;
     
     public void initPages(){
@@ -89,7 +94,7 @@ All pages are instantiated in
 Doing this, writing the testcase becomes very straightforward
 ###### for example  - A2DNavigationTests.java:
 
-```
+```$xslt
     @Test
     public void navigateToBookingPage() {
         homePage.start()
@@ -103,7 +108,7 @@ Doing this, writing the testcase becomes very straightforward
 The framework enables to take a screenshot of failed test.
 The method is called in "@AfterMethod", and takes 3 arguments: result of the testcase (failed or not, path to screenshot folder, and driver instance).
 
-```
+```$xslt
 @AfterMethod(alwaysRun = true)
     public void closeBrowser(ITestResult result) {
         long time = result.getEndMillis() - result.getStartMillis();
@@ -117,7 +122,7 @@ The method is called in "@AfterMethod", and takes 3 arguments: result of the tes
 
 To change the screenshot rule (i.e. take screenshot of every test), please change the condition ( result.getStatus() ) of taking screenshots:
 
-```
+```$xslt
     public static void takeScreenshot(ITestResult result, String folderName, WebDriver d) {
         if(result.getStatus() == ITestResult.FAILURE ||
                 result.getStatus() == ITestResult.SKIP) {
@@ -137,7 +142,7 @@ To change the screenshot rule (i.e. take screenshot of every test), please chang
 
 To enable video recording of failed test in the framework library "video-recorder-testng" is used (dependency in pom.xml file). If a test is annotated with "@Video", it will be recorded in case of fail.
 
-```
+```$xslt
     @Video
     @Test
     public void loggedUserCanChangeCountry(){
@@ -151,15 +156,43 @@ For details please check :
 
 ## REST API test
 
-ATF framework allows executing REST call and verifying the responses:
+ATF framework allows executing REST call and verifying the responses(usually should be 200):
 
-```
+```$xslt
         get(url)
             .then()
             .contentType(ContentType.HTML)
             .and()
             .assertThat()
             .statusCode(200);
+```
+
+It is possible to test both GET and POST requests by adding relevant information to api_calls.json:
+
+For GET test add an endpoint to "api_get_calls":
+
+```$xslt
+"api_get_calls": [
+    "/storm/station/",
+    "/storm/station/ids?id=",
+    "... 
+``` 
+
+For POST test add JSON object with "endpoint" and POST body:
+
+```$xslt
+"api_post_calls":[
+    {
+      "endpoint": "/storm/price/",
+      "ci": 1537275600000,
+      "ciLocationCode": "TA1706048601DE",
+      "co": 1537102800000,
+      "coLocationCode": "TA1706048601DE"
+    },
+    {
+    ...
+    }
+]
 ```
 
 

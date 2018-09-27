@@ -160,7 +160,9 @@ public class RestApiTest {
         .when()
             .post(endpoint)
         .then()
-            .statusCode(200);
+            .statusCode(200)
+        .and()
+            .contentType(ContentType.JSON);
     }
 
     private Map<String, Object> getPostBody(JsonObject jsonObject) {
@@ -198,8 +200,10 @@ public class RestApiTest {
         given()
         .when()
         .get(endpoint)
-            .then()
-            .statusCode(200);
+        .then()
+            .statusCode(200)
+        .and()
+            .contentType(ContentType.JSON);
     }
 
     private String getGetEndpoint(String url) {
