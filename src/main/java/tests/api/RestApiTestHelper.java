@@ -25,33 +25,33 @@ public class RestApiTestHelper {
 
     private static final Logger LOG = LoggerFactory.getLogger(RestApiTestHelper.class);
 
-    protected final String homePageEnProduction = JsonReader.getUrl("home_page_en_production");
-    protected final String homePageDeProduction = JsonReader.getUrl("home_page_de_production");
-    protected final String interaBasePageEn = JsonReader.getUrl("intera_base_page_en");
-    protected final String interaBasePageDe = JsonReader.getUrl("intera_base_page_de");
+    final String homePageEnProduction = JsonReader.getUrl("home_page_en_production");
+    private final String homePageDeProduction = JsonReader.getUrl("home_page_de_production");
+    private final String interaBasePageEn = JsonReader.getUrl("intera_base_page_en");
+    private final String interaBasePageDe = JsonReader.getUrl("intera_base_page_de");
 
-    protected final String bookingPageEn = interaBasePageEn + "find_and_book_a_vehicle#/rental-data";
-    protected final String findHotspotsPageEn = interaBasePageEn + "find_hotspots_and_stations";
-    protected final String ratesPageEn = interaBasePageEn + "rates";
-    protected final String contactPageEn = interaBasePageEn + "siteservice,contact";
-    protected final String registrationPageEn = interaBasePageEn + "siteservice,register";
-    protected final String loginPageEn = interaBasePageEn + "login";
-    protected final String corporateMobilityPageEn = interaBasePageEn + "more,become_a_corporate_customer?open&TYPE=CORPORATE";
-    protected final String bookingPageDe = interaBasePageDe + "fahrzeug_finden_und_buchen#/rental-data";
-    protected final String findHotspotsPageDe = interaBasePageDe + "hotspots_und_stationen_finden";
-    protected final String ratesPageDe = interaBasePageDe + "tarife";
-    protected final String contactPageDe = interaBasePageDe + "siteservice,kontakt";
-    protected final String registrationPageDe = interaBasePageDe + "siteservice,kunde_werden";
-    protected final String loginPageDe = interaBasePageDe + "login";
-    protected final String corporateMobilityPageDe = interaBasePageDe + "more,firmenkunde_werden?open&TYPE=CORPORATE";
-    protected final String fleetPageEn = homePageEnProduction + "fleet";
-    protected final String fleetPageDe = homePageDeProduction + "fahrzeugflotte";
-    protected final String howItWorksPageEn = homePageEnProduction + "how-it-works";
-    protected final String howItWorksPageDe = homePageDeProduction + "so-funktioniert-es";
-    protected final String companyPageEn = homePageEnProduction + "company";
-    protected final String companyPageDe = homePageDeProduction + "unternehmen";
-    protected final String blogPageEn = homePageEnProduction + "category/news-en";
-    protected final String blogPageDe = homePageDeProduction + "category/news";
+    private final String bookingPageEn = interaBasePageEn + "find_and_book_a_vehicle#/rental-data";
+    private final String findHotspotsPageEn = interaBasePageEn + "find_hotspots_and_stations";
+    private final String ratesPageEn = interaBasePageEn + "rates";
+    private final String contactPageEn = interaBasePageEn + "siteservice,contact";
+    private final String registrationPageEn = interaBasePageEn + "siteservice,register";
+    private final String loginPageEn = interaBasePageEn + "login";
+    private final String corporateMobilityPageEn = interaBasePageEn + "more,become_a_corporate_customer?open&TYPE=CORPORATE";
+    private final String bookingPageDe = interaBasePageDe + "fahrzeug_finden_und_buchen#/rental-data";
+    private final String findHotspotsPageDe = interaBasePageDe + "hotspots_und_stationen_finden";
+    private final String ratesPageDe = interaBasePageDe + "tarife";
+    private final String contactPageDe = interaBasePageDe + "siteservice,kontakt";
+    private final String registrationPageDe = interaBasePageDe + "siteservice,kunde_werden";
+    private final String loginPageDe = interaBasePageDe + "login";
+    private final String corporateMobilityPageDe = interaBasePageDe + "more,firmenkunde_werden?open&TYPE=CORPORATE";
+    private final String fleetPageEn = homePageEnProduction + "fleet";
+    private final String fleetPageDe = homePageDeProduction + "fahrzeugflotte";
+    private final String howItWorksPageEn = homePageEnProduction + "how-it-works";
+    private final String howItWorksPageDe = homePageDeProduction + "so-funktioniert-es";
+    private final String companyPageEn = homePageEnProduction + "company";
+    private final String companyPageDe = homePageDeProduction + "unternehmen";
+    private final String blogPageEn = homePageEnProduction + "category/news-en";
+    private final String blogPageDe = homePageDeProduction + "category/news";
 
     protected final List<String> pageNames = asList(
             homePageEnProduction,
