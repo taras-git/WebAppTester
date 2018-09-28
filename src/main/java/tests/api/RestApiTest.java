@@ -1,6 +1,5 @@
 package tests.api;
 
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import io.restassured.http.ContentType;
 import org.json.JSONArray;
@@ -14,13 +13,12 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import utils.HtmlUtils;
 import utils.JsonReader;
-import utils.Utils;
 
 import java.io.IOException;
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
-import static io.restassured.RestAssured.get;
 import static io.restassured.RestAssured.given;
 import static utils.JsonReader.readJsonFromUrl;
 
@@ -31,71 +29,18 @@ import static utils.JsonReader.readJsonFromUrl;
 public class RestApiTest {
 
     private static final Logger LOG = LoggerFactory.getLogger(RestApiTest.class);
-
-    protected final String homePageEnProduction = JsonReader.getUrl("home_page_en_production");
-    protected final String homePageDeProduction = JsonReader.getUrl("home_page_de_production");
-    protected final String interaBasePageEn = JsonReader.getUrl("intera_base_page_en");
-    protected final String interaBasePageDe = JsonReader.getUrl("intera_base_page_de");
-    protected final String bookingPageEn = interaBasePageEn + "find_and_book_a_vehicle#/rental-data";
-    protected final String findHotspotsPageEn = interaBasePageEn + "find_hotspots_and_stations";
-    protected final String ratesPageEn = interaBasePageEn + "rates";
-    protected final String contactPageEn = interaBasePageEn + "siteservice,contact";
-    protected final String registrationPageEn = interaBasePageEn + "siteservice,register";
-    protected final String loginPageEn = interaBasePageEn + "login";
-    protected final String corporateMobilityPageEn = interaBasePageEn + "more,become_a_corporate_customer?open&TYPE=CORPORATE";
-    protected final String bookingPageDe = interaBasePageDe + "fahrzeug_finden_und_buchen#/rental-data";
-    protected final String findHotspotsPageDe = interaBasePageDe + "hotspots_und_stationen_finden";
-    protected final String ratesPageDe = interaBasePageDe + "tarife";
-    protected final String contactPageDe = interaBasePageDe + "siteservice,kontakt";
-    protected final String registrationPageDe = interaBasePageDe + "siteservice,kunde_werden";
-    protected final String loginPageDe = interaBasePageDe + "login";
-    protected final String corporateMobilityPageDe = interaBasePageDe + "more,firmenkunde_werden?open&TYPE=CORPORATE";
-    protected final String fleetPageEn = homePageEnProduction + "fleet";
-    protected final String fleetPageDe = homePageDeProduction + "fahrzeugflotte";
-    protected final String howItWorksPageEn = homePageEnProduction + "how-it-works";
-    protected final String howItWorksPageDe = homePageDeProduction + "so-funktioniert-es";
-    protected final String companyPageEn = homePageEnProduction + "company";
-    protected final String companyPageDe = homePageDeProduction + "unternehmen";
-    protected final String blogPageEn = homePageEnProduction + "category/news-en";
-    protected final String blogPageDe = homePageDeProduction + "category/news";
-
-    private final String ENVIRONMENT = Utils.getRestApiTestEnvironment();
+    RestApiTestHelper testHelper = new RestApiTestHelper();
 
     @DataProvider
     public Object[][] urls(){
-        return new Object[][]{
-                {homePageEnProduction},
-                {homePageDeProduction},
-                {bookingPageEn},
-                {findHotspotsPageEn},
-                {ratesPageEn},
-                {contactPageEn},
-                {registrationPageEn},
-                {loginPageEn},
-                {corporateMobilityPageEn},
-                {bookingPageDe},
-                {findHotspotsPageDe},
-                {ratesPageDe},
-                {contactPageDe},
-                {registrationPageDe},
-                {loginPageDe},
-                {corporateMobilityPageDe},
-                {fleetPageEn},
-                {fleetPageDe},
-                {howItWorksPageEn},
-                {howItWorksPageDe},
-                {companyPageEn},
-                {companyPageDe},
-                {blogPageEn},
-                {blogPageDe}
-        };
+        return testHelper.getDataProviderFromList(testHelper.pageNames);
     }
 
     @Test(dataProvider = "urls")
-    public void a2dSiteIsUp(String url) {
+    public void verifySiteIsUpTest(String url) {
         LOG.info(">>> Start new test for: <<<" + url + ">>>");
         try {
-            siteIsUp(url);
+            testHelper.siteIsUp(url);
             LOG.info("<<<" + url + ">>> is up!");
         } catch (Exception e) {
             LOG.error("Can't opening site: " + url + " :: " + e.getMessage());
@@ -103,30 +48,13 @@ public class RestApiTest {
         }
     }
 
-    private void siteIsUp(String url) {
-        get(url)
-        .then()
-            .contentType(ContentType.HTML)
-        .and()
-        .assertThat()
-            .statusCode(200);
-    }
-
     @Test
-    public void verifyLinksOnPage(){
+    public void verifyLinksReturnSuccessCodeTest(){
         Map<Boolean, List<String>> linksMap = null;
 
         try{
-            Elements elementsWithHref = HtmlUtils.getElements(homePageEnProduction);
-
-            linksMap = elementsWithHref
-                    .stream()
-                    .map(el -> el.attr("href"))  // get the "href" value of the element
-                    .map(String::trim)  // trim the text
-                    .filter(el -> el.contains("http"))  // get absolute links only
-                    .distinct()// there could be duplicate links , so find unique
-                    .collect(Collectors.partitioningBy(l -> HtmlUtils.getResponseCode(l) == 200)); // group the links based on the "200" response code
-
+            Elements elementsWithHref = HtmlUtils.getElements(testHelper.homePageEnProduction);
+            linksMap = testHelper.collectHttpResponses(elementsWithHref);
         } catch (Exception e) {
             LOG.info("Parsing exception: ", e);
         }
@@ -141,18 +69,15 @@ public class RestApiTest {
     @DataProvider
     public Object[][] getPostParams() {
         ArrayList<JsonObject> apiPostCalls = JsonReader.getJsonObjectArrayList("api_post_calls");
-
-        return apiPostCalls.stream()
-                .map(call -> new Object[] { call } )
-                .toArray(Object[][]::new);
+        return testHelper.getDataProviderFromList(apiPostCalls);
     }
 
     @Test(dataProvider= "getPostParams")
-    public void verifyApiPostCalls(JsonObject jsonObject){
-        String endpoint = getPostEndpoint(jsonObject);
+    public void verifyApiPostCallsTest(JsonObject jsonObject){
+        String endpoint = testHelper.getPostEndpoint(jsonObject);
         jsonObject.remove("endpoint");
 
-        Map<String, Object> jsonBody = getPostBody(jsonObject);
+        Map<String, Object> jsonBody = testHelper.getPostBody(jsonObject);
 
         given()
             .contentType(ContentType.JSON)
@@ -165,73 +90,37 @@ public class RestApiTest {
             .contentType(ContentType.JSON);
     }
 
-    private Map<String, Object> getPostBody(JsonObject jsonObject) {
-        // create a POST body
-        Map<String, Object> jsonBody = new HashMap<>();
-        Set<Map.Entry<String, JsonElement>> entrySet = jsonObject.entrySet();
-
-        for(Map.Entry<String,JsonElement> entry : entrySet){
-            jsonBody.put(entry.getKey(), jsonObject.get(entry.getKey()));
-            LOG.info("API CALL POST BODY: " +entry.getKey()+ " : " + jsonObject.get(entry.getKey()));
-        }
-        return jsonBody;
-    }
-
-    private String getPostEndpoint(JsonObject jsonObject) {
-        String endpoint = ENVIRONMENT + jsonObject.get("endpoint").getAsString();
-        LOG.info("POST API CALL ENDPOINT: " + endpoint);
-        return endpoint;
-    }
-
     @DataProvider
     public Object[][] getGetParams() {
         ArrayList<String> apiGetCalls = JsonReader.getJsonStringArrayList("api_get_calls");
-
-        return apiGetCalls.stream()
-                .map(call -> new Object[] { call })
-                .toArray(Object[][]::new);
+        return testHelper.getDataProviderFromList(apiGetCalls);
     }
 
     @Test(dataProvider= "getGetParams")
-    public void verifyApiGetCalls(String url){
+    public void verifyApiGetCallsTest(String url){
         //this method verifies API GET calls with failing tests
-        String endpoint = getGetEndpoint(url);
+        String endpoint = testHelper.getGetEndpoint(url);
 
         given()
         .when()
-        .get(endpoint)
+            .get(endpoint)
         .then()
             .statusCode(200)
         .and()
             .contentType(ContentType.JSON);
     }
 
-    private String getGetEndpoint(String url) {
-        String endpoint = ENVIRONMENT + url;
-        LOG.info("GET API CALL ENDPOINT: " + endpoint);
-        return endpoint;
-    }
-
     @Test
-    public void verifyStationsIdsUniqueAndNotEmpty() throws IOException {
+    public void verifyStationsIdsUniqueAndNotEmptyTest() throws IOException {
         String url = JsonReader.getApiCallsUrl("api_call_url") + "/storm/station/";
-        JSONObject json = readJsonFromUrl(url);
-        JSONArray locationsArray = json.getJSONArray("locations");
-        List<String> locationsIdsList = new LinkedList<String>();
+        JSONObject jsonObject = readJsonFromUrl(url);
+        JSONArray locationsArray = jsonObject.getJSONArray("locations");
 
-        // populate locationsIdsList with actual ids
-        for(int i = 0; i < locationsArray.length(); i++) {
-            String id = locationsArray
-                    .getJSONObject(i)
-                    .get("id")
-                    .toString();
-
-            locationsIdsList.add(id);
-        }
+        List<String> locationsIdsList = testHelper.getLocationIdList(locationsArray);
 
         // check for duplicated ids
-        if(findDuplicates(locationsIdsList).size() > 0){
-            LOG.error("FOUND DUPLICATED IDs : " + findDuplicates(locationsIdsList));
+        if(testHelper.findDuplicates(locationsIdsList).size() > 0){
+            LOG.error("FOUND DUPLICATED IDs : " + testHelper.findDuplicates(locationsIdsList));
             Assert.fail("FOUND DUPLICATED IDs");
         }
 
@@ -243,20 +132,6 @@ public class RestApiTest {
             }
         }
         softAssertion.assertAll();
-    }
-
-    private static Set<String> findDuplicates(List<String> listDuplicates) {
-        final Set<String> setDuplicates = new HashSet<>();
-        final Set<String> setUniqueValues = new HashSet<>();
-
-        for (String s : listDuplicates) {
-            if(!s.isEmpty()) {
-                if (!setUniqueValues.add(s)) {
-                    setDuplicates.add(s);
-                }
-            }
-        }
-        return setDuplicates;
     }
 
 }
