@@ -75,7 +75,7 @@ public class HomePage extends BasePage{
     @FindBy(xpath = "//a[contains(text(), 'Jetzt registrieren')]")
     private WebElement registerNowDe;
 
-    @FindBy(xpath = "//span[contains(text(), 'Login')]")
+    @FindBy(xpath = "(//*[contains(text(), 'Login')])[1]")
     private WebElement loginDeEn;
 
     @FindBy(xpath = "(//a[contains(text(), 'Locations')])[2]")

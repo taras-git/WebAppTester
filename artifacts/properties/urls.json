@@ -1,6 +1,8 @@
 {
   "home_page_de_production": "https://www.app2drive.com/",
   "home_page_en_production": "https://www.app2drive.com/en/",
+  "www3_en": "https://www3.app2drive.com/",
+  "www3_de": "https://www3.app2drive.com/de/",
 
   "home_page_de_staging": "https://staging.app2drive.com/",
   "home_page_en_staging": "https://staging.app2drive.com/en/",
