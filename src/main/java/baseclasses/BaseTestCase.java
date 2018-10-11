@@ -39,6 +39,8 @@ public class BaseTestCase {
     private final String homePageProductionDe = JsonReader.getUrl("home_page_de_production");
     private final String bookingPageInteraEn = JsonReader.getUrl("booking_page_intera_en");
     private final String bookingPageInteraDe = JsonReader.getUrl("booking_page_intera_de");
+    private final String www3PageEn = JsonReader.getUrl("www3_en");
+    private final String www3PageDe = JsonReader.getUrl("www3_de");
 
     protected HomePage homePage;
     protected HomePageIntera homePageIntera;
@@ -159,6 +161,16 @@ public class BaseTestCase {
 
             case "intera_de": {
                 loginUserIntera(a2dEmail, a2dPassword, bookingPageInteraDe);
+                return;
+            }
+
+            case "www3_en": {
+                loginUserProd(a2dEmail, a2dPassword, www3PageEn);
+                return;
+            }
+
+            case "www3_de": {
+                loginUserProd(a2dEmail, a2dPassword, www3PageDe);
                 return;
             }
         }

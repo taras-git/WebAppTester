@@ -29,7 +29,7 @@ import static utils.JsonReader.readJsonFromUrl;
 public class RestApiTest {
 
     private static final Logger LOG = LoggerFactory.getLogger(RestApiTest.class);
-    RestApiTestHelper testHelper = new RestApiTestHelper();
+    private final RestApiTestHelper testHelper = new RestApiTestHelper();
 
     @DataProvider
     public Object[][] urls(){
@@ -48,22 +48,31 @@ public class RestApiTest {
         }
     }
 
-    @Test
-    public void verifyLinksReturnSuccessCodeTest(){
+    @DataProvider
+    public Object[][] getStartUrls(){
+        return testHelper.getDataProviderFromList(testHelper.startUrls);
+    }
+
+    @Test(dataProvider =  "getStartUrls")
+    public void verifyLinksReturnSuccessCodeTest(String url){
         Map<Boolean, List<String>> linksMap = null;
+        LOG.info("Testing page: " + url);
 
         try{
-            Elements elementsWithHref = HtmlUtils.getElements(testHelper.homePageEnProduction);
+            Elements elementsWithHref = HtmlUtils.getElements(url);
             linksMap = testHelper.collectHttpResponses(elementsWithHref);
         } catch (Exception e) {
             LOG.info("Parsing exception: ", e);
         }
 
+        SoftAssert softAssertion= new SoftAssert();
         if(!linksMap.get(false).isEmpty()){
             linksMap.get(false).forEach((v) -> {
                 LOG.error("FOUND URL WITH CODE != 200 : " + v);
+                softAssertion.fail("Stauts code !=200 for: " + v);
             });
         }
+        softAssertion.assertAll();
     }
 
     @DataProvider
