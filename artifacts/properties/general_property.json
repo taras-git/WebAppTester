@@ -1,12 +1,11 @@
 {
   "//":"allowed values: prod_en, prod_de, intera_en, intera_de, www3_en, www3_de",
-  "//env" : "prod_en",
+  "env" : "prod_en",
   "//env" : "prod_de",
   "//env" : "intera_en",
   "//env" : "intera_de",
   "//env" : "www3_en",
   "//env" : "www3_de",
-  "env": "www3_de",
 
   "//": "allowed browser names: ff, firefox, ch, chrome",
   "browser": "ff",

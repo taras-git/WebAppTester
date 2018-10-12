@@ -3,10 +3,7 @@ package baseclasses;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.FluentWait;
-import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.support.ui.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import utils.Utils;
@@ -187,5 +184,11 @@ public class BasePage {
         locator = locator.substring(locator.lastIndexOf("->") + 2);
         LOG.info("Click on > " + locator);
     }
+
+    public void setSelect(WebElement element, String value){
+        Select select = new Select(element);
+        select.selectByValue(value);
+    }
+
 
 }

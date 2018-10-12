@@ -35,12 +35,12 @@ public class BaseTestCase {
 
     private final String a2dEmail = JsonReader.getUserEmail("app2_driver");
     private final String a2dPassword = JsonReader.getUserPassword("app2_driver");
-    private final String homePageProductionEn = JsonReader.getUrl("home_page_en_production");
-    private final String homePageProductionDe = JsonReader.getUrl("home_page_de_production");
-    private final String bookingPageInteraEn = JsonReader.getUrl("booking_page_intera_en");
-    private final String bookingPageInteraDe = JsonReader.getUrl("booking_page_intera_de");
-    private final String www3PageEn = JsonReader.getUrl("www3_en");
-    private final String www3PageDe = JsonReader.getUrl("www3_de");
+    private static final String homePageProductionEn = JsonReader.getUrl("home_page_en_production");
+    private static final String homePageProductionDe = JsonReader.getUrl("home_page_de_production");
+    private static final String bookingPageInteraEn = JsonReader.getUrl("booking_page_intera_en");
+    private static final String bookingPageInteraDe = JsonReader.getUrl("booking_page_intera_de");
+    private static final String www3PageEn = JsonReader.getUrl("www3_en");
+    private static final String www3PageDe = JsonReader.getUrl("www3_de");
 
     protected HomePage homePage;
     protected HomePageIntera homePageIntera;
@@ -175,6 +175,18 @@ public class BaseTestCase {
             }
         }
     }
+
+    public static String getEnvUrl() {
+        switch(ENVIRONMENT){
+            case "prod_en": return homePageProductionEn;
+            case "prod_de": return homePageProductionDe;
+            case "intera_en": return bookingPageInteraEn;
+            case "intera_de": return bookingPageInteraDe;
+            case "www3_en": return www3PageEn;
+            case "www3_de": return www3PageDe;
+        }
+        return null;
+   }
 
     private void loginUserProd(String email, String password, String url) {
         homePage.start(url)
