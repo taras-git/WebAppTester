@@ -11,6 +11,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 import pages.*;
 import utils.EmailReader;
+import utils.Env;
 import utils.JsonReader;
 import utils.Utils;
 
@@ -32,15 +33,6 @@ public class BaseTestCase {
     private final String SCREENSHOTS_FOLDER = JsonReader.getString("failed_tests_screenshot_folder");
     private final String VIDEO_FOLDER = JsonReader.getString("failed_tests_video_folder");
     private static final Logger LOG = LoggerFactory.getLogger(BaseTestCase.class);
-
-    private final String a2dEmail = JsonReader.getUserEmail("app2_driver");
-    private final String a2dPassword = JsonReader.getUserPassword("app2_driver");
-    private static final String HOME_PAGE_PRODUCTION_EN = JsonReader.getUrl("home_page_en_production");
-    private static final String HOME_PAGE_PRODUCTION_DE = JsonReader.getUrl("home_page_de_production");
-    private static final String BOOKING_PAGE_INTERA_EN = JsonReader.getUrl("booking_page_intera_en");
-    private static final String BOOKING_PAGE_INTERA_DE = JsonReader.getUrl("booking_page_intera_de");
-    private static final String WWW_3_PAGE_EN = JsonReader.getUrl("www3_en");
-    private static final String WWW_3_PAGE_DE = JsonReader.getUrl("www3_de");
 
     protected HomePage homePage;
     protected HomePageIntera homePageIntera;
@@ -142,50 +134,21 @@ public class BaseTestCase {
         throw new RuntimeException ("invalid browser name, please check out property json file");
     }
 
+
     protected void login() {
-        switch(ENVIRONMENT){
-            case "prod_en": {
-                loginUserProd(a2dEmail, a2dPassword, HOME_PAGE_PRODUCTION_EN);
-                return;
-            }
-
-            case "prod_de": {
-                loginUserProd(a2dEmail, a2dPassword, HOME_PAGE_PRODUCTION_DE);
-                return;
-            }
-
-            case "intera_en": {
-                loginUserIntera(a2dEmail, a2dPassword, BOOKING_PAGE_INTERA_EN);
-                return;
-            }
-
-            case "intera_de": {
-                loginUserIntera(a2dEmail, a2dPassword, BOOKING_PAGE_INTERA_DE);
-                return;
-            }
-
-            case "www3_en": {
-                loginUserProd(a2dEmail, a2dPassword, WWW_3_PAGE_EN);
-                return;
-            }
-
-            case "www3_de": {
-                loginUserProd(a2dEmail, a2dPassword, WWW_3_PAGE_DE);
-                return;
-            }
+        if (ENVIRONMENT.contains("intera")){
+            loginUserIntera(JsonReader.getUserEmail("app2_driver"),
+                    JsonReader.getUserPassword("app2_driver"),
+                    getEnvUrl());
+        } else {
+            loginUserProd(JsonReader.getUserEmail("app2_driver"),
+                    JsonReader.getUserPassword("app2_driver"),
+                    getEnvUrl());
         }
     }
 
     public static String getEnvUrl() {
-        switch(ENVIRONMENT){
-            case "prod_en": return HOME_PAGE_PRODUCTION_EN;
-            case "prod_de": return HOME_PAGE_PRODUCTION_DE;
-            case "intera_en": return BOOKING_PAGE_INTERA_EN;
-            case "intera_de": return BOOKING_PAGE_INTERA_DE;
-            case "www3_en": return WWW_3_PAGE_EN;
-            case "www3_de": return WWW_3_PAGE_DE;
-        }
-        return null;
+        return Env.valueOf(ENVIRONMENT.toUpperCase()).getUrl();
    }
 
     private void loginUserProd(String email, String password, String url) {
