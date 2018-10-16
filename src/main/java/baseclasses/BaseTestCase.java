@@ -35,12 +35,12 @@ public class BaseTestCase {
 
     private final String a2dEmail = JsonReader.getUserEmail("app2_driver");
     private final String a2dPassword = JsonReader.getUserPassword("app2_driver");
-    private static final String homePageProductionEn = JsonReader.getUrl("home_page_en_production");
-    private static final String homePageProductionDe = JsonReader.getUrl("home_page_de_production");
-    private static final String bookingPageInteraEn = JsonReader.getUrl("booking_page_intera_en");
-    private static final String bookingPageInteraDe = JsonReader.getUrl("booking_page_intera_de");
-    private static final String www3PageEn = JsonReader.getUrl("www3_en");
-    private static final String www3PageDe = JsonReader.getUrl("www3_de");
+    private static final String HOME_PAGE_PRODUCTION_EN = JsonReader.getUrl("home_page_en_production");
+    private static final String HOME_PAGE_PRODUCTION_DE = JsonReader.getUrl("home_page_de_production");
+    private static final String BOOKING_PAGE_INTERA_EN = JsonReader.getUrl("booking_page_intera_en");
+    private static final String BOOKING_PAGE_INTERA_DE = JsonReader.getUrl("booking_page_intera_de");
+    private static final String WWW_3_PAGE_EN = JsonReader.getUrl("www3_en");
+    private static final String WWW_3_PAGE_DE = JsonReader.getUrl("www3_de");
 
     protected HomePage homePage;
     protected HomePageIntera homePageIntera;
@@ -145,32 +145,32 @@ public class BaseTestCase {
     protected void login() {
         switch(ENVIRONMENT){
             case "prod_en": {
-                loginUserProd(a2dEmail, a2dPassword, homePageProductionEn);
+                loginUserProd(a2dEmail, a2dPassword, HOME_PAGE_PRODUCTION_EN);
                 return;
             }
 
             case "prod_de": {
-                loginUserProd(a2dEmail, a2dPassword, homePageProductionDe);
+                loginUserProd(a2dEmail, a2dPassword, HOME_PAGE_PRODUCTION_DE);
                 return;
             }
 
             case "intera_en": {
-                loginUserIntera(a2dEmail, a2dPassword, bookingPageInteraEn);
+                loginUserIntera(a2dEmail, a2dPassword, BOOKING_PAGE_INTERA_EN);
                 return;
             }
 
             case "intera_de": {
-                loginUserIntera(a2dEmail, a2dPassword, bookingPageInteraDe);
+                loginUserIntera(a2dEmail, a2dPassword, BOOKING_PAGE_INTERA_DE);
                 return;
             }
 
             case "www3_en": {
-                loginUserProd(a2dEmail, a2dPassword, www3PageEn);
+                loginUserProd(a2dEmail, a2dPassword, WWW_3_PAGE_EN);
                 return;
             }
 
             case "www3_de": {
-                loginUserProd(a2dEmail, a2dPassword, www3PageDe);
+                loginUserProd(a2dEmail, a2dPassword, WWW_3_PAGE_DE);
                 return;
             }
         }
@@ -178,12 +178,12 @@ public class BaseTestCase {
 
     public static String getEnvUrl() {
         switch(ENVIRONMENT){
-            case "prod_en": return homePageProductionEn;
-            case "prod_de": return homePageProductionDe;
-            case "intera_en": return bookingPageInteraEn;
-            case "intera_de": return bookingPageInteraDe;
-            case "www3_en": return www3PageEn;
-            case "www3_de": return www3PageDe;
+            case "prod_en": return HOME_PAGE_PRODUCTION_EN;
+            case "prod_de": return HOME_PAGE_PRODUCTION_DE;
+            case "intera_en": return BOOKING_PAGE_INTERA_EN;
+            case "intera_de": return BOOKING_PAGE_INTERA_DE;
+            case "www3_en": return WWW_3_PAGE_EN;
+            case "www3_de": return WWW_3_PAGE_DE;
         }
         return null;
    }
