@@ -15,6 +15,9 @@ public enum Env {
     }
 
     public String getUrl() {
+        if (null == url){
+            throw new RuntimeException("Please check if URL is correctly added to enum Env.java");
+        }
         return url;
     }
 }
