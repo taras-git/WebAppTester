@@ -148,7 +148,13 @@ public class BaseTestCase {
     }
 
     public static String getEnvUrl() {
-        return Env.getEnum(ENVIRONMENT.toUpperCase()).getUrl();
+        String url;
+        try {
+            url = Env.valueOf(ENVIRONMENT.toUpperCase()).getUrl();
+        } catch (IllegalArgumentException e) {
+            throw new RuntimeException("Please check if environment and url are correctly set in Env.java");
+        }
+        return url;
    }
 
     private void loginUserProd(String email, String password, String url) {

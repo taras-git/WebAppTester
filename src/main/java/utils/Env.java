@@ -1,10 +1,5 @@
 package utils;
 
-import org.openqa.selenium.NotFoundException;
-
-import java.util.Arrays;
-import java.util.List;
-
 public enum Env {
     PROD_EN("https://www.app2drive.com/en/"),
     PROD_DE("https://www.app2drive.com/"),
@@ -22,18 +17,4 @@ public enum Env {
     public String getUrl() {
         return url;
     }
-
-    @Override
-    public String toString() {
-        return this.getUrl();
-    }
-
-    public static Env getEnum(String key) {
-        List<Env> envList = Arrays.asList(Env.values());
-        return envList.stream()
-                .filter(e -> e.name().equalsIgnoreCase(key))
-                .findAny()
-                .orElseThrow(() -> new NotFoundException("Please check if ENV is correctly set in Env.java"));
-    }
-
 }
