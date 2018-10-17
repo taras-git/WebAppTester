@@ -31,11 +31,11 @@ public class BaseTestCase {
 
     protected WebDriver driver;
 
-    private final String screenshotFolder = JsonReader.getString("failed_tests_screenshot_folder");
-    private final String videoFolder = JsonReader.getString("failed_tests_video_folder");
+    protected final static String LANGUAGE = Utils.getLanguage();
 
-    public final static String ENVIRONMENT = Utils.getUiTestEnvironment();
-    public final static String LANGUAGE = Utils.getLanguage();
+    private final static String ENVIRONMENT = Utils.getUiTestEnvironment();
+    private final static String SCREENSHOT_FOLDER = JsonReader.getString("failed_tests_screenshot_folder");
+    private final static String VIDEO_FOLDER = JsonReader.getString("failed_tests_video_folder");
     private final static String APP2_DRIVER = "app2_driver";
 
     protected HomePage homePage;
@@ -86,8 +86,8 @@ public class BaseTestCase {
             e.printStackTrace();
         }
 
-        createFolder(screenshotFolder);
-        createFolder(videoFolder);
+        createFolder(SCREENSHOT_FOLDER);
+        createFolder(VIDEO_FOLDER);
     }
 
     @BeforeMethod
@@ -122,7 +122,7 @@ public class BaseTestCase {
         LOG.info("+++ WITH RESULT: <"+ getResultDescription(result.getStatus()) + "> +++");
         LOG.info("+++ TIME SPENT: <" + time / 1000.0 + "> seconds +++");
 
-        takeScreenshot(result, screenshotFolder, driver);
+        takeScreenshot(result, SCREENSHOT_FOLDER, driver);
         driver.quit();
     }
 
