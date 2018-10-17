@@ -27,12 +27,16 @@ import static utils.Utils.takeScreenshot;
  */
 public class BaseTestCase {
 
+    private static final Logger LOG = LoggerFactory.getLogger(BaseTestCase.class);
+
     protected WebDriver driver;
+
+    private final String screenshotFolder = JsonReader.getString("failed_tests_screenshot_folder");
+    private final String videoFolder = JsonReader.getString("failed_tests_video_folder");
+
     public final static String ENVIRONMENT = Utils.getUiTestEnvironment();
     public final static String LANGUAGE = Utils.getLanguage();
-    private final String SCREENSHOTS_FOLDER = JsonReader.getString("failed_tests_screenshot_folder");
-    private final String VIDEO_FOLDER = JsonReader.getString("failed_tests_video_folder");
-    private static final Logger LOG = LoggerFactory.getLogger(BaseTestCase.class);
+    private final static String APP2_DRIVER = "app2_driver";
 
     protected HomePage homePage;
     protected HomePageIntera homePageIntera;
@@ -82,8 +86,8 @@ public class BaseTestCase {
             e.printStackTrace();
         }
 
-        createFolder(SCREENSHOTS_FOLDER);
-        createFolder(VIDEO_FOLDER);
+        createFolder(screenshotFolder);
+        createFolder(videoFolder);
     }
 
     @BeforeMethod
@@ -118,7 +122,7 @@ public class BaseTestCase {
         LOG.info("+++ WITH RESULT: <"+ getResultDescription(result.getStatus()) + "> +++");
         LOG.info("+++ TIME SPENT: <" + time / 1000.0 + "> seconds +++");
 
-        takeScreenshot(result, SCREENSHOTS_FOLDER, driver);
+        takeScreenshot(result, screenshotFolder, driver);
         driver.quit();
     }
 
@@ -137,14 +141,22 @@ public class BaseTestCase {
 
     protected void login() {
         if (ENVIRONMENT.contains("intera")){
-            loginUserIntera(JsonReader.getUserEmail("app2_driver"),
-                    JsonReader.getUserPassword("app2_driver"),
+            loginUserIntera(
+                    JsonReader.getUserEmail(APP2_DRIVER),
+                    JsonReader.getUserPassword(APP2_DRIVER),
                     getEnvUrl());
-        } else {
-            loginUserProd(JsonReader.getUserEmail("app2_driver"),
-                    JsonReader.getUserPassword("app2_driver"),
-                    getEnvUrl());
+            return;
         }
+
+        if (ENVIRONMENT.contains("prod") || ENVIRONMENT.contains("www3")) {
+            loginUserProd(
+                    JsonReader.getUserEmail(APP2_DRIVER),
+                    JsonReader.getUserPassword(APP2_DRIVER),
+                    getEnvUrl());
+            return;
+        }
+
+        throw new RuntimeException("Please configure environment/url in Env.java");
     }
 
     public static String getEnvUrl() {
