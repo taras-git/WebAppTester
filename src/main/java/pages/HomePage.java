@@ -1,6 +1,7 @@
 package pages;
 
 import baseclasses.BasePage;
+import baseclasses.BaseTestCase;
 import exceptions.PropertyMisconfigureException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -134,11 +135,11 @@ public class HomePage extends BasePage{
     public HomePage start() {
         switch (LANGUAGE){
             case DE : {
-                driver.get(homePageDeProduction);
+                driver.get(BaseTestCase.getEnvUrl());
                 return this;
             }
             case EN : {
-                driver.get(homePageEnProduction);
+                driver.get(BaseTestCase.getEnvUrl());
                 return this;
             }
         }
