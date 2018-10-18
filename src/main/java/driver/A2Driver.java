@@ -3,6 +3,7 @@ package driver;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxBinary;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
@@ -31,6 +32,8 @@ public class A2Driver {
     private final String firefoxDriverPathMacos = JsonReader.getString("firefox_driver_macos");
     private final String firefoxDriverPathWindows = JsonReader.getString("firefox_driver_windows");
 
+    private final String edgeDriverPathWindows = JsonReader.getString("edge_driver_windows");
+
     private boolean headlessMode = JsonReader.getBoolean("headless_mode");
     private boolean useBrowserBinary = JsonReader.getBoolean("use_browser_binary");
 
@@ -49,6 +52,11 @@ public class A2Driver {
             if (isWindows()) return chromeDriverPathWindows;
         }
 
+        if (browserName.equalsIgnoreCase("edge") ||
+                browserName.equalsIgnoreCase("ie")) {
+            return edgeDriverPathWindows;
+        }
+
         return null;
     }
 
@@ -65,27 +73,22 @@ public class A2Driver {
                     ("chromedriver executable file does not exist!");
         }
 
-        try {
-            System.setProperty("webdriver.chrome.driver", chromeDriverPath);
-            System.setProperty("webdriver.chrome.logfile", "test-output/ChromeTestLog.txt");
-            ChromeOptions options = new ChromeOptions();
-//            options.addArguments("--start-maximised");
-            options.addArguments("--disable-local-storage");
-            options.addArguments("window-size=1920x1080");
+        System.setProperty("webdriver.chrome.driver", chromeDriverPath);
+        System.setProperty("webdriver.chrome.logfile", "test-output/ChromeTestLog.txt");
 
-            if (useBrowserBinary) {
-                options.setBinary(JsonReader.getString("chrome_binary"));
-            }
-            if (headlessMode) {
-                options.setHeadless(true);
-                options.addArguments("window-size=1920x1080");
-            }
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--disable-local-storage");
+        options.addArguments("window-size=1920x1080");
 
-            return new ChromeDriver(options);
-        } catch (Exception ex) {
-            throw new RuntimeException
-                    ("couldn't create chrome driver");
+        if (useBrowserBinary) {
+            options.setBinary(JsonReader.getString("chrome_binary"));
         }
+        if (headlessMode) {
+            options.setHeadless(true);
+            options.addArguments("window-size=1920x1080");
+        }
+
+        return new ChromeDriver(options);
     }
 
     public WebDriver firefoxDriver(String browserName) {
@@ -100,39 +103,46 @@ public class A2Driver {
             throw new RuntimeException
                     ("firefox executable file does not exist!");
 
-        try {
-            System.setProperty("webdriver.gecko.driver", firefoxDriverPath);
-            System.setProperty("webdriver.firefox.logfile", "test-output/FirefoxTestLog.txt");
+        System.setProperty("webdriver.gecko.driver", firefoxDriverPath);
+        System.setProperty("webdriver.firefox.logfile", "test-output/FirefoxTestLog.txt");
 
-            FirefoxProfile firefoxProfile = new FirefoxProfile();
-            firefoxProfile.setPreference("network.cookie.cookieBehavior", 0);
-            // disable push notifications
-            firefoxProfile.setPreference("dom.webnotifications.enabled", false);
-            firefoxProfile.setPreference("geo.prompt.testing", false);
-            firefoxProfile.setPreference("geo.prompt.testing.allow", false);
-            firefoxProfile.setPreference("geo.enabled", false);
-            FirefoxOptions options = new FirefoxOptions();
+        FirefoxProfile firefoxProfile = new FirefoxProfile();
+        firefoxProfile.setPreference("network.cookie.cookieBehavior", 0);
+        // disable push notifications
+        firefoxProfile.setPreference("dom.webnotifications.enabled", false);
+        firefoxProfile.setPreference("geo.prompt.testing", false);
+        firefoxProfile.setPreference("geo.prompt.testing.allow", false);
+        firefoxProfile.setPreference("geo.enabled", false);
+        FirefoxOptions options = new FirefoxOptions();
 
-            options.setProfile(firefoxProfile);
+        options.setProfile(firefoxProfile);
 
-            FirefoxBinary firefoxBinary = new FirefoxBinary();
+        FirefoxBinary firefoxBinary = new FirefoxBinary();
 
-            if (useBrowserBinary) {
-                firefoxBinary = new FirefoxBinary(new File(JsonReader.getString("firefox_binary")));
-            }
-
-            if (headlessMode) {
-                firefoxBinary.addCommandLineOptions("--headless");
-            }
-
-            options.setBinary(firefoxBinary);
-
-            return new FirefoxDriver(options);
-
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            throw new RuntimeException
-                    ("could not create firefox driver");
+        if (useBrowserBinary) {
+            firefoxBinary = new FirefoxBinary(new File(JsonReader.getString("firefox_binary")));
         }
+
+        if (headlessMode) {
+            firefoxBinary.addCommandLineOptions("--headless");
+        }
+
+        options.setBinary(firefoxBinary);
+        return new FirefoxDriver(options);
+    }
+
+    public WebDriver edgeDriver() {
+        if (edgeDriverPathWindows == null) {
+            throw new RuntimeException
+                    ("edgeDriverPathWindows is not correctly set, please check the property file");
+        }
+
+        if (!new File(edgeDriverPathWindows).exists()) {
+            throw new RuntimeException
+                    ("edge executable file does not exist!");
+        }
+
+        System.setProperty("webdriver.edge.driver", edgeDriverPathWindows);
+        return new EdgeDriver();
     }
 }

@@ -7,7 +7,7 @@
   "//env" : "www3_en",
   "//env" : "www3_de",
 
-  "//": "allowed browser names: ff, firefox, ch, chrome",
+  "//": "allowed browser names: ff, firefox, ch, chrome, ie, edge",
   "browser": "ff",
   "headless_mode": false,
   "use_browser_binary": false,
@@ -21,6 +21,7 @@
   "chrome_driver_macos": "artifacts/drivers/macos/chromedriver",
   "firefox_driver_windows": "artifacts/drivers/windows/geckodriver.exe",
   "chrome_driver_windows": "artifacts/drivers/windows/chromedriver.exe",
+  "edge_driver_windows": "artifacts/drivers/windows/MicrosoftWebDriver.exe",
 
   "//": "path to screenshots",
   "failed_tests_screenshot_folder": "test-output/screenshots/",

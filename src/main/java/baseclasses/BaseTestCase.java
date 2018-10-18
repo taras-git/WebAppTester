@@ -135,6 +135,10 @@ public class BaseTestCase {
                 browserName.equalsIgnoreCase("ch"))
             return new A2Driver().chromeDriver(browserName);
 
+        if (browserName.equalsIgnoreCase("edge") ||
+                browserName.equalsIgnoreCase("ie"))
+            return new A2Driver().edgeDriver();
+
         throw new RuntimeException ("invalid browser name, please check out property json file");
     }
 
