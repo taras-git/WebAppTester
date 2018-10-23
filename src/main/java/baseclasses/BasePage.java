@@ -170,11 +170,11 @@ public class BasePage {
         return driver.findElement(by);
     }
 
-    public void clickOn(WebElement element){
+    protected void clickOn(WebElement element){
         clickOn(element, true);
     }
 
-    public void clickOn(WebElement element, boolean shouldWait){
+    protected void clickOn(WebElement element, boolean shouldWait){
         if(shouldWait) {
             waitElementClickable(element, LONG_TIMEOUT);
         }

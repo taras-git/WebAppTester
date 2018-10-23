@@ -9,8 +9,8 @@ import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 @Listeners(VideoListener.class)
-public class RegistrationTest extends BaseTestCase {
-    private static final Logger LOG = LoggerFactory.getLogger(RegistrationTest.class);
+public class MicsTest extends BaseTestCase {
+    private static final Logger LOG = LoggerFactory.getLogger(MicsTest.class);
 
     @Video
     @Test(groups="Register", priority=1)
@@ -28,5 +28,13 @@ public class RegistrationTest extends BaseTestCase {
                 .setAcceptTerms()
                 .clickRegister()
                 .verifyUserRegisterSuccess();
+    }
+
+    @Video
+    @Test
+    public void verifyStationsDisplayed_Test(){
+        homePage.start(getUrlFromEnvEnum("USER_CABINET_EN"))
+                .clickChooseStations()
+                .verifyStationsDisplayed();
     }
 }
