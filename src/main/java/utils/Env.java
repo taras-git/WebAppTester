@@ -6,7 +6,8 @@ public enum Env {
     WWW3_EN("https://www3.app2drive.com/"),
     WWW3_DE("https://www3.app2drive.com/de/"),
     INTERA_EN("https://app2drive.intera.de/app2drive/de-en/app2drive.nsf#/rental-data"),
-    INTERA_DE("https://app2drive.intera.de/app2drive/dev/de/index.nsf/c/fahrzeug_finden_und_buchen#/rental-data");
+    INTERA_DE("https://app2drive.intera.de/app2drive/dev/de/index.nsf/c/fahrzeug_finden_und_buchen#/rental-data"),
+    USER_CABINET_EN("http://10.77.3.32/");
 
     private final String url;
 
@@ -17,4 +18,9 @@ public enum Env {
     public String getUrl() {
         return url;
     }
+
+    public static String getUrl(String key) {
+        return Env.valueOf(key).getUrl();
+    }
+
 }

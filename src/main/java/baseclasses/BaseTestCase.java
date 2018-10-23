@@ -148,7 +148,7 @@ public class BaseTestCase {
             loginUserIntera(
                     JsonReader.getUserEmail(APP2_DRIVER),
                     JsonReader.getUserPassword(APP2_DRIVER),
-                    getEnvUrl());
+                    getUrlFromProperty());
             return;
         }
 
@@ -156,14 +156,14 @@ public class BaseTestCase {
             loginUserProd(
                     JsonReader.getUserEmail(APP2_DRIVER),
                     JsonReader.getUserPassword(APP2_DRIVER),
-                    getEnvUrl());
+                    getUrlFromProperty());
             return;
         }
 
         throw new RuntimeException("Please configure environment/url in Env.java");
     }
 
-    public static String getEnvUrl() {
+    public static String getUrlFromProperty() {
         String url;
         try {
             url = Env.valueOf(ENVIRONMENT.toUpperCase()).getUrl();
@@ -172,6 +172,16 @@ public class BaseTestCase {
         }
         return url;
    }
+
+    public static String getUrlFromEnvEnum(String key) {
+        String url;
+        try {
+            url = Env.getUrl(key);
+        } catch (IllegalArgumentException e) {
+            throw new RuntimeException("Please check if KEY and Env.java are have same values");
+        }
+        return url;
+    }
 
     private void loginUserProd(String email, String password, String url) {
         homePage.start(url)

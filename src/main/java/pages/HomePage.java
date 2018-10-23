@@ -3,10 +3,16 @@ package pages;
 import baseclasses.BasePage;
 import baseclasses.BaseTestCase;
 import exceptions.PropertyMisconfigureException;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.testng.Assert;
 import utils.JsonReader;
+
+import java.util.List;
 
 import static utils.Utils.DE;
 import static utils.Utils.EN;
@@ -15,6 +21,8 @@ import static utils.Utils.EN;
  * Created by taras on 7/19/18.
  */
 public class HomePage extends BasePage{
+
+    private static final Logger LOG = LoggerFactory.getLogger(HomePage.class);
 
     protected String homePageEnProduction = JsonReader.getUrl("home_page_en_production");
     protected String homePageDeProduction = JsonReader.getUrl("home_page_de_production");
@@ -128,6 +136,11 @@ public class HomePage extends BasePage{
     @FindBy(xpath = "(//a[contains(text(), 'Verkehrslandeplätze')])[2]")
     private WebElement airfieldsDe;
 
+    @FindBy(css = ".desktop#same-station-field")
+    private WebElement chooseStation;
+
+    By station = By.cssSelector(".desktop .station");
+
     public HomePage(WebDriver driver) {
         super(driver);
     }
@@ -135,11 +148,11 @@ public class HomePage extends BasePage{
     public HomePage start() {
         switch (LANGUAGE){
             case DE : {
-                driver.get(BaseTestCase.getEnvUrl());
+                driver.get(BaseTestCase.getUrlFromProperty());
                 return this;
             }
             case EN : {
-                driver.get(BaseTestCase.getEnvUrl());
+                driver.get(BaseTestCase.getUrlFromProperty());
                 return this;
             }
         }
@@ -292,6 +305,11 @@ public class HomePage extends BasePage{
         throw new PropertyMisconfigureException();
     }
 
+    public HomePage clickChooseStations(){
+        clickOn(chooseStation);
+        return this;
+    }
+
     public void moveToLocationsAndClickStations(){
         switch (LANGUAGE) {
             case DE : {
@@ -316,5 +334,13 @@ public class HomePage extends BasePage{
                 break;
             }
         }
+    }
+
+    public void verifyStationsDisplayed(){
+        List<WebElement>stations =  driver.findElements(station);
+        if(stations.isEmpty()){
+            Assert.fail("Stations are not displayed!");
+        }
+        LOG.info("Found stations: " + stations.size());
     }
 }

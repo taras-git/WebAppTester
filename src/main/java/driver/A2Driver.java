@@ -78,6 +78,7 @@ public class A2Driver {
 
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--disable-local-storage");
+        options.addArguments("disable-infobars");
         options.addArguments("window-size=1920x1080");
 
         if (useBrowserBinary) {
