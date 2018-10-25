@@ -27,7 +27,8 @@ Some important keys:
   This value is also set in Jenkins jobs, and is used for remote test runs.
 
 ###### Browser 
-  - "browser" - string value, choose among Chrome ("ch" or "chrome") or Firefox ("ff" or "firefox");
+  - "browser" - string value, choose among Chrome ("ch" or "chrome"), Firefox ("ff" or "firefox"), Edge ("edge"),
+    Internet Explorer ("ie"), Safari ("safari");
   - "headless_mode" - boolean value (true/false), should browser open UI part or run without it;
   - "use_browser_binary" - boolean value (true/false), should the default browser version be picked (usually used by OS), or particular browser version (see next key);
   - "chrome_binary" and "firefox_binary" - path, where particular binaries of browser are stored;
@@ -62,11 +63,32 @@ Default path to it: "artifacts/drivers/"
 There are FireFox and Chrome drivers for:
 - Linux("artifacts/drivers/linux/geckodriver" and "artifacts/drivers/linux/chromedriver"); 
 - MacOS("artifacts/drivers/macos/geckodriver" and "artifacts/drivers/macos/chromedriver");
-- Windows("artifacts/drivers/windows/geckodriver.exe" and "artifacts/drivers/windows/chromedriver.exe").
+- Windows("artifacts/drivers/windows/geckodriver.exe", "artifacts/drivers/windows/chromedriver.exe",
+  "artifacts/drivers/windows/IEDriverServer.exe" and "artifacts/drivers/windows/MicrosoftWebDriver.exe").
 
-More information can be found on:
-* [Firefox driver](https://github.com/mozilla/geckodriver/releases)
-* [Chrome driver](http://chromedriver.chromium.org/home)  
+
+## Chrome
+* [Driver](https://github.com/SeleniumHQ/selenium/wiki/ChromeDriver)
+* [More info](http://chromedriver.chromium.org/home)
+
+
+## Firefox
+* [Driver](https://github.com/mozilla/geckodriver/releases)
+
+
+## Internet Explorer
+* [IE driver configuration](https://github.com/SeleniumHQ/selenium/wiki/InternetExplorerDriver#required-configuration)
+Please read carefully "Required Configuration" section, and do all steps required.
+
+
+## Edge
+* [Driver](https://developer.microsoft.com/en-us/microsoft-edge/tools/webdriver/)
+
+
+##Safari
+*[Info](https://developer.apple.com/documentation/webkit/testing_with_webdriver_in_safari)
+*[Download Safari extension](https://www.seleniumhq.org/download/)
+SafariDriver now requires manual installation of the extension prior to automation
 
 
 ## Page Object (PO) Pattern
