@@ -85,9 +85,9 @@ Please read carefully "Required Configuration" section, and do all steps require
 * [Driver](https://developer.microsoft.com/en-us/microsoft-edge/tools/webdriver/)
 
 
-##Safari
-*[Info](https://developer.apple.com/documentation/webkit/testing_with_webdriver_in_safari)
-*[Download Safari extension](https://www.seleniumhq.org/download/)
+## Safari
+* [Info](https://developer.apple.com/documentation/webkit/testing_with_webdriver_in_safari)
+* [Download Safari extension](https://www.seleniumhq.org/download/)
 SafariDriver now requires manual installation of the extension prior to automation
 
 
