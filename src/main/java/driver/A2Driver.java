@@ -8,9 +8,12 @@ import org.openqa.selenium.firefox.FirefoxBinary;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.firefox.FirefoxProfile;
+import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.safari.SafariDriver;
 import utils.JsonReader;
 
 import java.io.File;
+import java.util.Map;
 
 import static utils.OsName.isMac;
 import static utils.OsName.isUnix;
@@ -33,6 +36,9 @@ public class A2Driver {
     private final String firefoxDriverPathWindows = JsonReader.getString("firefox_driver_windows");
 
     private final String edgeDriverPathWindows = JsonReader.getString("edge_driver_windows");
+    private final String ieDriverPathWindows = JsonReader.getString("ie_driver_windows");
+
+    private final String safariDriverPathMacos = JsonReader.getString("safari_driver_macos");
 
     private boolean headlessMode = JsonReader.getBoolean("headless_mode");
     private boolean useBrowserBinary = JsonReader.getBoolean("use_browser_binary");
@@ -52,9 +58,16 @@ public class A2Driver {
             if (isWindows()) return chromeDriverPathWindows;
         }
 
-        if (browserName.equalsIgnoreCase("edge") ||
-                browserName.equalsIgnoreCase("ie")) {
+        if (browserName.equalsIgnoreCase("edge")) {
             return edgeDriverPathWindows;
+        }
+
+        if (browserName.equalsIgnoreCase("ie")) {
+            return ieDriverPathWindows;
+        }
+
+        if (browserName.equalsIgnoreCase("safari")) {
+            return safariDriverPathMacos;
         }
 
         return null;
@@ -146,4 +159,53 @@ public class A2Driver {
         System.setProperty("webdriver.edge.driver", edgeDriverPathWindows);
         return new EdgeDriver();
     }
+
+    public WebDriver ieDriver() {
+        if (ieDriverPathWindows == null) {
+            throw new RuntimeException
+                    ("ieDriverPathWindows is not correctly set, please check the property file");
+        }
+
+        if (!new File(ieDriverPathWindows).exists()) {
+            throw new RuntimeException
+                    ("IE executable file does not exist!");
+        }
+
+        String absoluteIeDriverPath = getIeDriverAbsolutePath(ieDriverPathWindows);
+        updateWindowsEnvVariablePath(absoluteIeDriverPath);
+
+        System.setProperty("webdriver.ie.driver", absoluteIeDriverPath);
+
+        return new InternetExplorerDriver();
+    }
+
+    private String getIeDriverAbsolutePath(String relativePath) {
+        File file = new File(relativePath);
+        return file.getAbsolutePath();
+    }
+
+    private void updateWindowsEnvVariablePath(String absolutePath) {
+        ProcessBuilder pb = new ProcessBuilder("CMD.exe", "/C", "SET");
+        pb.redirectErrorStream(true);
+        Map<String,String> env = pb.environment();
+        String newEnvPath = env.get("Path") + ";" + absolutePath;
+        env.put("Path", newEnvPath);
+    }
+
+
+    public WebDriver safariDriver() {
+        if (safariDriverPathMacos == null) {
+            throw new RuntimeException
+                    ("safariDriverPathMacos is not correctly set, please check the property file");
+        }
+
+        if (!new File(safariDriverPathMacos).exists()) {
+            throw new RuntimeException
+                    ("Safari executable file does not exist!");
+        }
+
+        System.setProperty("webdriver.ie.driver", safariDriverPathMacos);
+        return new SafariDriver();
+    }
+
 }

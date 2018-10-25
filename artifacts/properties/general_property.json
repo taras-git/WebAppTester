@@ -1,15 +1,15 @@
 {
   "//":"allowed values: prod_en, prod_de, intera_en, intera_de, www3_en, www3_de",
-  "//env" : "prod_en",
+  "env" : "prod_en",
   "//env" : "prod_de",
   "//env" : "intera_en",
   "//env" : "intera_de",
   "//env" : "www3_en",
   "//env" : "www3_de",
-  "env" : "user_cabinet_en",
+  "//env" : "user_cabinet_en",
 
-  "//": "allowed browser names: ff, firefox, ch, chrome, ie, edge",
-  "browser": "ff",
+  "//": "allowed browser names: ff, firefox, ch, chrome, ie, edge, safari",
+  "browser": "ie",
   "headless_mode": false,
   "use_browser_binary": false,
   "chrome_binary": "artifacts/binaries/linux/chrome/chrome",
@@ -23,6 +23,8 @@
   "firefox_driver_windows": "artifacts/drivers/windows/geckodriver.exe",
   "chrome_driver_windows": "artifacts/drivers/windows/chromedriver.exe",
   "edge_driver_windows": "artifacts/drivers/windows/MicrosoftWebDriver.exe",
+  "ie_driver_windows": "artifacts/drivers/windows/IEDriverServer.exe",
+  "safari_driver_macos": "artifacts/drivers/macos/safaridriver",
 
   "//": "path to screenshots",
   "failed_tests_screenshot_folder": "test-output/screenshots/",
