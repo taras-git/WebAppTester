@@ -33,8 +33,6 @@ public class Utils {
     public static final String DE = "DE";
     public static final String EN = "EN";
 
-    public static String browser = "chrome";
-
     public static void sleep(double seconds){
         try {
             Thread.sleep((int)(seconds * 1000));
@@ -194,15 +192,21 @@ public class Utils {
     }
 
     private static String getBrowserFromJenkins() {
-        browser = System.getProperty("Browser");
-        return browser;
+        return System.getProperty("Browser");
+    }
+
+    private static String getBrowserFromJson() {
+        return JsonReader.getString("browser");
     }
 
     public static String getBrowser(){
         if(null != getBrowserFromJenkins()){
+            LOG.info("Browser is set by Jenkins: " + getBrowserFromJenkins());
             return getBrowserFromJenkins();
         }
-        return JsonReader.getString("browser");
+
+        LOG.info("Browser is set by JSON: " + getBrowserFromJson());
+        return getBrowserFromJson();
     }
 
     public static String getLanguage() {

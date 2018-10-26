@@ -87,7 +87,6 @@ public class BaseTestCase {
 
         createFolder(SCREENSHOT_FOLDER);
         createFolder(VIDEO_FOLDER);
-        browser = getBrowser();
     }
 
     @BeforeMethod
@@ -97,7 +96,7 @@ public class BaseTestCase {
 
     @BeforeMethod
     public void getDriver(ITestContext context) throws Exception {
-        driver = new BaseTestCase().createDriver(browser);
+        driver = new BaseTestCase().createDriver(getBrowser());
         initPages(driver);
     }
 
