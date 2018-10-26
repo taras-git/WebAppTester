@@ -178,6 +178,7 @@ public class Utils {
     }
 
     private static String getEnvFromJenkins(String testEnv) {
+        LOG.info(" >>>>>>>> " + getBrowserFromJenkins());
         String result = System.getProperty("ENV");
 
         if(testEnv.equalsIgnoreCase("ui")){
