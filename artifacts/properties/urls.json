@@ -1,14 +1,4 @@
 {
-  "home_page_de_production": "https://www.app2drive.com/",
-  "home_page_en_production": "https://www.app2drive.com/en/",
-  "www3_en": "https://www3.app2drive.com/",
-  "www3_de": "https://www3.app2drive.com/de/",
-
-  "home_page_de_staging": "https://staging.app2drive.com/",
-  "home_page_en_staging": "https://staging.app2drive.com/en/",
-
-  "home_page_test_env":   "https://book.app2drive.com/app2drive/de/app2drive.nsf/c/fahrzeug_finden_und_buchen#/rental-data",
-
   "booking_page_production": "https://book.app2drive.com/app2drive/de/app2drive.nsf/c/fahrzeug_finden_und_buchen#/rental-data",
   "booking_page_intera_de": "https://app2drive.intera.de/app2drive/dev/de/index.nsf/c/fahrzeug_finden_und_buchen#/rental-data",
   "booking_page_intera_en": "https://app2drive.intera.de/app2drive/de-en/app2drive.nsf#/rental-data",

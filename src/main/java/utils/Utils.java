@@ -178,17 +178,21 @@ public class Utils {
     }
 
     private static String getEnvFromJenkins(String testEnv) {
-        String result = null;
+        String result = System.getProperty("ENV");
 
         if(testEnv.equalsIgnoreCase("ui")){
-            return System.getProperty("EnvUiTest");
+            return result;
         }
 
         if(testEnv.equalsIgnoreCase("rest")){
-            result = (null == System.getProperty("EnvApiTest")) ?  null : "https://" + System.getProperty("EnvApiTest");
+            return "https://" + result;
         }
 
-        return result;
+        return null;
+    }
+
+    private static String getBrowserFromJenkins() {
+        return System.getProperty("Browser");
     }
 
     public static String getLanguage() {
