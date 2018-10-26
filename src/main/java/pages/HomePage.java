@@ -24,9 +24,6 @@ public class HomePage extends BasePage{
 
     private static final Logger LOG = LoggerFactory.getLogger(HomePage.class);
 
-    protected String homePageEnProduction = JsonReader.getUrl("home_page_en_production");
-    protected String homePageDeProduction = JsonReader.getUrl("home_page_de_production");
-
     @FindBy(xpath = "//nav[@id=\"top-navigation\"]//*[contains(text(), 'Book Vehicle')]")
     private WebElement bookVehicleEn;
 

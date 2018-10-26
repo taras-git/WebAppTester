@@ -178,17 +178,35 @@ public class Utils {
     }
 
     private static String getEnvFromJenkins(String testEnv) {
-        String result = null;
+        String result = System.getProperty("ENV");
 
         if(testEnv.equalsIgnoreCase("ui")){
-            return System.getProperty("EnvUiTest");
+            return result;
         }
 
         if(testEnv.equalsIgnoreCase("rest")){
-            result = (null == System.getProperty("EnvApiTest")) ?  null : "https://" + System.getProperty("EnvApiTest");
+            return "https://" + result;
         }
 
-        return result;
+        return null;
+    }
+
+    private static String getBrowserFromJenkins() {
+        return System.getProperty("Browser");
+    }
+
+    private static String getBrowserFromJson() {
+        return JsonReader.getString("browser");
+    }
+
+    public static String getBrowser(){
+        if(null != getBrowserFromJenkins()){
+            LOG.info("Browser is set by Jenkins: " + getBrowserFromJenkins());
+            return getBrowserFromJenkins();
+        }
+
+        LOG.info("Browser is set by JSON: " + getBrowserFromJson());
+        return getBrowserFromJson();
     }
 
     public static String getLanguage() {

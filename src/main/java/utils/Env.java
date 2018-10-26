@@ -3,8 +3,8 @@ package utils;
 public enum Env {
     PROD_EN("https://www.app2drive.com/en/"),
     PROD_DE("https://www.app2drive.com/"),
-    WWW3_EN("https://www3.app2drive.com/"),
-    WWW3_DE("https://www3.app2drive.com/de/"),
+    WWW3_EN("https://www3.app2drive.com/en/"),
+    WWW3_DE("https://www3.app2drive.com/"),
     INTERA_EN("https://app2drive.intera.de/app2drive/de-en/app2drive.nsf#/rental-data"),
     INTERA_DE("https://app2drive.intera.de/app2drive/dev/de/index.nsf/c/fahrzeug_finden_und_buchen#/rental-data"),
     USER_CABINET_EN("http://10.77.3.32/");

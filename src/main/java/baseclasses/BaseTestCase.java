@@ -18,8 +18,7 @@ import utils.Utils;
 import java.lang.reflect.Method;
 import java.util.Date;
 
-import static utils.Utils.createFolder;
-import static utils.Utils.takeScreenshot;
+import static utils.Utils.*;
 
 
 /**
@@ -97,9 +96,7 @@ public class BaseTestCase {
 
     @BeforeMethod
     public void getDriver(ITestContext context) throws Exception {
-        String browser;
-        browser = JsonReader.getString("browser");
-        driver = new BaseTestCase().createDriver(browser);
+        driver = new BaseTestCase().createDriver(getBrowser());
         initPages(driver);
     }
 

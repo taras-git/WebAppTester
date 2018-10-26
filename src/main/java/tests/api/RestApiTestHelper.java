@@ -7,6 +7,7 @@ import org.json.JSONArray;
 import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import utils.Env;
 import utils.HtmlUtils;
 import utils.JsonReader;
 import utils.Utils;
@@ -25,12 +26,13 @@ public class RestApiTestHelper {
 
     private static final Logger LOG = LoggerFactory.getLogger(RestApiTestHelper.class);
 
-    private final String homePageEnProduction = JsonReader.getUrl("home_page_en_production");
-    private final String homePageDeProduction = JsonReader.getUrl("home_page_de_production");
+    private final String homePageEnProduction = Env.PROD_EN.getUrl();
+    private final String homePageDeProduction = Env.PROD_DE.getUrl();
+    private final String www3PageEn = Env.WWW3_EN.getUrl();
+    private final String www3PageDe = Env.WWW3_DE.getUrl();
+
     private final String interaBasePageEn = JsonReader.getUrl("intera_base_page_en");
     private final String interaBasePageDe = JsonReader.getUrl("intera_base_page_de");
-    private final String www3PageEn = JsonReader.getUrl("www3_en");
-    private final String www3PageDe = JsonReader.getUrl("www3_de");
 
     private final String bookingPageEn = interaBasePageEn + "find_and_book_a_vehicle#/rental-data";
     private final String findHotspotsPageEn = interaBasePageEn + "find_hotspots_and_stations";
