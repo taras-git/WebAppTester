@@ -55,6 +55,18 @@ Holds cashed login and password to access email (app2driver@yahoo.com) and login
 
 Holds values for Api GET and POST tests.
 
+## CI - Jenkins
+
+Jenkins job is configured using command:
+```aidl
+mvn clean package -DsuiteXmlFile=${TestSuite} -DENV=${ENV_Ui_Test} -DBrowser=${Browser}
+```
+
+where:
+ - "suiteXmlFile" - XML file for test suite
+ - "ENV" - environment, where test suite runs (see general_properties.json)
+ - "Browser" - specify browser name for the test suite
+
 
 ## WebDriver executables
 
