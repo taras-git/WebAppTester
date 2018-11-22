@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
+import utils.Utils;
 
 @Listeners(VideoListener.class)
 public class MicsTest extends BaseTestCase {
@@ -33,8 +34,9 @@ public class MicsTest extends BaseTestCase {
     @Video
     @Test
     public void verifyStationsDisplayed_Test(){
-        homePage.start(getUrlFromEnvEnum("USER_CABINET_EN"))
+        homePage.start(getUrlFromEnvEnum("DOMINO_EN"))
                 .clickChooseStations()
                 .verifyStationsDisplayed();
     }
+
 }

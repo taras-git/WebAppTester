@@ -1,5 +1,10 @@
 {
-  "app2_driver": "YXBwMmRyaXZlckB5YWhvby5jb20lcyUzMzIyMTFSdSQkTWFOTiElcyUwMTAxMTk3MA==",
+  "//app2driver" : "test user",
+  "//app2_driver": "YXBwMmRyaXZlckB5YWhvby5jb20lcyUzMzIyMTFSdSQkTWFOTiElcyUwMTAxMTk3MA==",
+
+  "//nightcrawler" : "test user",
+  "app2_driver":"bmlnaHRjcmF3bGVyQHJ1c3NtYW5uLmRlJXMlTmV3VGVzdDAxJXMlMTAw",
+
   "app2_driver_mail": "YXBwMmRyaXZlckB5YWhvby5jb20lcyUxMTIyMzNSdSQkTWFOTiElcyUxMTIyMzM=",
   "app2_driver_mail_imap": "imap.mail.yahoo.com"
 }

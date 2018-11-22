@@ -154,7 +154,9 @@ public class BaseTestCase {
             return;
         }
 
-        if (ENVIRONMENT.contains("prod") || ENVIRONMENT.contains("www3")) {
+        if (ENVIRONMENT.contains("prod")
+                || ENVIRONMENT.contains("www3")
+                || ENVIRONMENT.contains("domino")) {
             loginUserProd(
                     JsonReader.getUserEmail(APP2_DRIVER),
                     JsonReader.getUserPassword(APP2_DRIVER),

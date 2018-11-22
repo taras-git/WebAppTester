@@ -33,16 +33,18 @@ public class LoginPage extends BasePage{
     @FindBy(xpath = "//h1[contains(text(), 'You must be logged in to book a car')]")
     private WebElement loginWarning;
 
-    @FindBy(id = "loginID")
+    private By loginForm = By.xpath("//h1[contains(text(), 'Login')]");
+
+    @FindBy(xpath = "(//input[@type='email'])[1]")
     private WebElement emailInput;
 
-    @FindBy(id = "loginPW")
+    @FindBy(xpath = "(//input[@type='password'])[1]")
     private WebElement passwordInput;
 
     @FindBy(xpath = "//button[contains(text(), 'submit ')]")
     private WebElement submitButton;
 
-    @FindBy(xpath = "//button[contains(text(), 'Login ')]")
+    @FindBy(xpath = "//button[contains(text(), 'Login')]")
     private WebElement loginButton;
 
     private final String logoutXpath = "//a[contains(text(), 'Logout ')]";
@@ -109,7 +111,7 @@ public class LoginPage extends BasePage{
     }
 
     public LoginPage waitLoginFieldDisplayed() {
-        waitElementPresent(By.cssSelector("#loginID"), SHORTER_TIMEOUT);
+        waitElementPresent(loginForm, SHORTER_TIMEOUT);
         return this;
     }
 }
