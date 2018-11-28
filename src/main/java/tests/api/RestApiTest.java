@@ -79,7 +79,7 @@ public class RestApiTest {
     @DataProvider
     public Object[][] getPostApiWithoutLogin() {
         ArrayList<JsonObject> apiPostCalls = JsonReader.getJsonObjectArrayList("api_post_calls");
-        apiPostCalls.forEach(call -> System.out.println("apiPostCalls: " + call));
+        apiPostCalls.forEach(c -> LOG.info("apiPostCalls : " + c.toString()));
 
         apiPostCalls = (ArrayList<JsonObject>) apiPostCalls
                 .stream()
@@ -89,12 +89,12 @@ public class RestApiTest {
                         .contains("login"))
                 .collect(Collectors.toList());
 
-        apiPostCalls.forEach(call -> System.out.println("filtered apiPostCalls : " + call));
+        apiPostCalls.forEach(c -> LOG.info("filtered apiPostCalls : " + c.toString()));
         return testHelper.getDataProviderFromList(apiPostCalls);
     }
 
     @Test(dataProvider= "getPostApiWithoutLogin")
-    public void verifyApiPost_WithoutLogin_Test(JsonObject jsonObject){
+    public void verifyApiPostWithoutLoginTest(JsonObject jsonObject){
         String endpoint = testHelper.getPostEndpoint(jsonObject);
         jsonObject.remove("endpoint");
 
@@ -114,7 +114,7 @@ public class RestApiTest {
     @DataProvider
     public Object[][] getPostApiWithLogin() {
         ArrayList<JsonObject> apiPostCalls = JsonReader.getJsonObjectArrayList("api_post_calls");
-        apiPostCalls.forEach(a -> System.out.println("apiPostCalls: " + a));
+        apiPostCalls.forEach(c -> LOG.info("apiPostCalls : " + c.toString()))
 
         apiPostCalls = (ArrayList<JsonObject>) apiPostCalls
                 .stream()
@@ -124,12 +124,12 @@ public class RestApiTest {
                         .contains("login"))
                 .collect(Collectors.toList());
 
-        apiPostCalls.forEach(a -> System.out.println("filtered apiPostCalls : " + a));
+        apiPostCalls.forEach(c -> LOG.info("filtered apiPostCalls : " + c.toString()))
         return testHelper.getDataProviderFromList(apiPostCalls);
     }
 
     @Test(dataProvider= "getPostApiWithLogin")
-    public void verifyApiPost_Login_Test(JsonObject jsonObject){
+    public void verifyApiPostLoginTest(JsonObject jsonObject){
         String endpoint = testHelper.getPostEndpoint(jsonObject);
         jsonObject.remove("endpoint");
 
