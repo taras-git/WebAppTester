@@ -114,7 +114,7 @@ public class RestApiTest {
     @DataProvider
     public Object[][] getPostApiWithLogin() {
         ArrayList<JsonObject> apiPostCalls = JsonReader.getJsonObjectArrayList("api_post_calls");
-        apiPostCalls.forEach(c -> LOG.info("apiPostCalls : " + c.toString()))
+        apiPostCalls.forEach(c -> LOG.info("apiPostCalls : " + c.toString()));
 
         apiPostCalls = (ArrayList<JsonObject>) apiPostCalls
                 .stream()
@@ -124,7 +124,7 @@ public class RestApiTest {
                         .contains("login"))
                 .collect(Collectors.toList());
 
-        apiPostCalls.forEach(c -> LOG.info("filtered apiPostCalls : " + c.toString()))
+        apiPostCalls.forEach(c -> LOG.info("filtered apiPostCalls : " + c.toString()));
         return testHelper.getDataProviderFromList(apiPostCalls);
     }
 
