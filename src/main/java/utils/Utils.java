@@ -185,6 +185,9 @@ public class Utils {
         }
 
         if(testEnv.equalsIgnoreCase("rest")){
+            if(result.equals(null)){
+                return null;
+            }
             return "https://" + result;
         }
 

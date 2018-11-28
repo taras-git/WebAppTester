@@ -1,8 +1,8 @@
 {
   "//": "possible API CALLs URLs values:",
-  "//": "https://rental.app2drive.com",
-  "//": "https://rental.app2drive.tech",
-  "api_call_url": "https://rental.app2drive.com",
+  "//api_call_url": "https://rental.app2drive.com",
+  "api_call_url": "http://rental.app2drive.tech:8080",
+  "//api_call_url": "https://rental.app2drive.com",
 
   "api_get_calls": [
     "/storm/station/",
@@ -40,6 +40,11 @@
       "co": "2018-09-16T13:00",
       "email": "cbrzelviv@ukr.net",
       "tariffName": "TariffBasic"
+    },
+    {
+      "endpoint": "/storm/account/user/login/",
+      "login" : "jer1@test.com",
+      "password" : "1111"
     }
   ]
 }

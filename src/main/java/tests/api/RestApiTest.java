@@ -2,6 +2,7 @@ package tests.api;
 
 import com.google.gson.JsonObject;
 import io.restassured.http.ContentType;
+import io.restassured.response.Response;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.jsoup.select.Elements;
@@ -15,11 +16,11 @@ import utils.HtmlUtils;
 import utils.JsonReader;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import static io.restassured.RestAssured.given;
+import static org.junit.Assert.assertEquals;
 import static utils.JsonReader.readJsonFromUrl;
 
 
@@ -76,13 +77,24 @@ public class RestApiTest {
     }
 
     @DataProvider
-    public Object[][] getPostParams() {
+    public Object[][] getPostApiWithoutLogin() {
         ArrayList<JsonObject> apiPostCalls = JsonReader.getJsonObjectArrayList("api_post_calls");
+        apiPostCalls.forEach(c -> LOG.info("apiPostCalls : " + c.toString()));
+
+        apiPostCalls = (ArrayList<JsonObject>) apiPostCalls
+                .stream()
+                .filter(call -> !call //api call shalt not contain "login"
+                        .get("endpoint")
+                        .getAsString()
+                        .contains("login"))
+                .collect(Collectors.toList());
+
+        apiPostCalls.forEach(c -> LOG.info("filtered apiPostCalls : " + c.toString()));
         return testHelper.getDataProviderFromList(apiPostCalls);
     }
 
-    @Test(dataProvider= "getPostParams")
-    public void verifyApiPostCallsTest(JsonObject jsonObject){
+    @Test(dataProvider= "getPostApiWithoutLogin")
+    public void verifyApiPostWithoutLoginTest(JsonObject jsonObject){
         String endpoint = testHelper.getPostEndpoint(jsonObject);
         jsonObject.remove("endpoint");
 
@@ -97,6 +109,68 @@ public class RestApiTest {
             .statusCode(200)
         .and()
             .contentType(ContentType.JSON);
+    }
+
+    @DataProvider
+    public Object[][] getPostApiWithLogin() {
+        ArrayList<JsonObject> apiPostCalls = JsonReader.getJsonObjectArrayList("api_post_calls");
+        apiPostCalls.forEach(c -> LOG.info("apiPostCalls : " + c.toString()));
+
+        apiPostCalls = (ArrayList<JsonObject>) apiPostCalls
+                .stream()
+                .filter(call -> call //api call should contain "login"
+                        .get("endpoint")
+                        .toString()
+                        .contains("login"))
+                .collect(Collectors.toList());
+
+        apiPostCalls.forEach(c -> LOG.info("filtered apiPostCalls : " + c.toString()));
+        return testHelper.getDataProviderFromList(apiPostCalls);
+    }
+
+    @Test(dataProvider= "getPostApiWithLogin")
+    public void verifyApiPostLoginTest(JsonObject jsonObject){
+        String endpoint = testHelper.getPostEndpoint(jsonObject);
+        jsonObject.remove("endpoint");
+
+        Map<String, Object> jsonBody = testHelper.getPostBody(jsonObject);
+
+        //get user id and session
+        Response response =
+        given()
+            .contentType(ContentType.JSON)
+            .body(jsonBody)
+        .when()
+            .post(endpoint)
+        .then()
+            .statusCode(200)
+        .extract()
+            .response();
+
+        String userId = response.path("userId");
+        String stormSession = response.path("stormSession");
+        endpoint = endpoint.replace("login/", "");
+        LOG.info("\nID: {} \nSESSION: {} \nENDPOINT: {}", userId, stormSession, endpoint);
+
+        //validate user
+        response = given()
+        .when()
+            .header("STORMSESSION", stormSession)
+            .header("userId", userId)
+            .get(endpoint)
+        .then()
+            .statusCode(200)
+        .and()
+            .contentType(ContentType.JSON)
+        .extract()
+            .response();
+
+        String userLogin = jsonObject.get("login").getAsString();
+        String userEmail = response.path("email");
+        String userIdReturned = response.path("id");
+
+        assertEquals(userLogin,userEmail);
+        assertEquals(userId, userIdReturned);
     }
 
     @DataProvider
