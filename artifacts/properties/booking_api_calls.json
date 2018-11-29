@@ -1,0 +1,23 @@
+{
+  "booking_get_calls": [
+    "/storm/booking/",
+    "/storm/booking/planned"
+  ],
+
+  "booking_id_get_calls": [
+    "/storm/booking/id/"
+  ],
+
+  "booking_id_mystique_get_calls": [
+    "/storm/booking/mystique/id/"
+  ],
+
+  "booking_get_paginated": [
+    "/storm/booking/paginated/{page}/{itemsPerPage}"
+  ],
+
+  "booking_xavier_get_call": [
+    "/storm/booking/xavier/{bookingId}"
+  ]
+
+}

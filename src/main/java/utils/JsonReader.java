@@ -113,7 +113,11 @@ public class JsonReader {
     }
 
     public static ArrayList<String> getJsonStringArrayList(String key) {
-        JsonArray jsonArray = gson.fromJson(getValue(key, apiCallsFile).toString(), JsonArray.class);
+        return getJsonStringArrayList(key, apiCallsFile);
+    }
+
+    public static ArrayList<String> getJsonStringArrayList(String key, String jsonFile) {
+        JsonArray jsonArray = gson.fromJson(getValue(key, jsonFile).toString(), JsonArray.class);
         ArrayList<String> arrayList = new ArrayList<>();
 
         if (jsonArray != null) {
@@ -123,6 +127,7 @@ public class JsonReader {
         }
         return arrayList;
     }
+
 
     private static org.json.simple.JSONObject getJsonObject(String fileName) {
         JSONParser jsonParser = new JSONParser();
