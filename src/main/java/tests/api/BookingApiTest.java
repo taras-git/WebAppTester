@@ -55,15 +55,8 @@ public class BookingApiTest {
 
         Map<String, Object> jsonBody = testHelper.getPostBody(jsonObject);
 
-        given()
-                .contentType(ContentType.JSON)
-                .body(jsonBody)
-                .when()
-                .post(endpoint)
-                .then()
-                .statusCode(200)
-                .and()
-                .contentType(ContentType.JSON);
+        bath.getJsonResponse(endpoint, jsonBody);
+
     }
 
     @DataProvider
@@ -91,16 +84,7 @@ public class BookingApiTest {
         Map<String, Object> jsonBody = testHelper.getPostBody(jsonObject);
 
         //get user id and session
-        Response response =
-                given()
-                        .contentType(ContentType.JSON)
-                        .body(jsonBody)
-                        .when()
-                        .post(endpoint)
-                        .then()
-                        .statusCode(200)
-                        .extract()
-                        .response();
+        Response response = bath.getJsonResponse(endpoint, jsonBody);
 
         String userId = response.path("userId");
         String stormSession = response.path("stormSession");
