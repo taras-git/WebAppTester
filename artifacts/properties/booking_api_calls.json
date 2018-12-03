@@ -4,20 +4,95 @@
     "/storm/booking/planned"
   ],
 
-  "booking_id_get_calls": [
+  "booking_id": [
     "/storm/booking/id/"
   ],
 
-  "booking_id_mystique_get_calls": [
+  "booking_mystique_id": [
     "/storm/booking/mystique/id/"
   ],
 
-  "booking_get_paginated": [
+  "booking_paginated_page_items": [
     "/storm/booking/paginated/{page}/{itemsPerPage}"
   ],
 
-  "booking_xavier_get_call": [
+  "booking_xavier": [
     "/storm/booking/xavier/{bookingId}"
-  ]
+  ],
 
+  "booking_by_email_get_call": {
+    "endpoint" : "/storm/booking/email/{email}",
+    "login" : "jer1@test.com",
+    "password" : "1111"
+  },
+
+  "booking_cerebra_processed_call": {
+    "endpoint": "/storm/booking/cerebra/processed"
+  },
+
+  "booking_customer_edit": {
+    "endpoint": "/storm/booking/customer/edit/",
+    "body": {
+      "additionalDriver": true,
+      "carGroup": "COMPACT",
+      "ci": "2018-09-18T13:00",
+      "co": "2018-09-18T13:00",
+      "deductible": "LOW_PRICE",
+      "fuelIncluded": true,
+      "hosteddataid": "",
+      "lossDamageWaiver": true,
+      "payNow": "",
+      "promocode": "",
+      "roadSafe": true,
+      "stationCI": "TA1706048601DE",
+      "stationCO": "TA1706048601DE"
+    }
+  },
+
+  "booking_helpdesk_edit": {
+    "endpoint": "/storm/booking/helpdesk/edit/",
+    "body": {
+      "additionalDriver": true,
+      "carGroup": "COMPACT",
+      "ci": "2018-09-18T13:00",
+      "co": "2018-09-18T13:00",
+      "deductible": "LOW_PRICE",
+      "fuelIncluded": true,
+      "hosteddataid": "",
+      "lossDamageWaiver": true,
+      "payNow": "",
+      "promocode": "",
+      "roadSafe": true,
+      "stationCI": "TA1706048601DE",
+      "stationCO": "TA1706048601DE",
+      "id": "e9b269bb-7e44-483f-91e2-af6af7a75107",
+      "userId": "e9b269bb-7e44-483f-91e2-af6af7a75107"
+    }
+  },
+
+  "booking_helpdesk_reservation": {
+    "endpoint": "/storm/booking/helpdesk/reservation/",
+    "body": {
+      "additionalDriver": true,
+      "carGroup": "COMPACT",
+      "ci": "2018-09-18T13:00",
+      "co": "2018-09-18T13:00",
+      "createdDate": "2018-12-03T10:33:45.665Z",
+      "deductible": "LOW_PRICE",
+      "fuelIncluded": true,
+      "hosteddataid": "",
+      "lossDamageWaiver": true,
+      "payNow": "",
+      "promocode": "",
+      "roadSafe": true,
+      "stationCI": "TA1706048601DE",
+      "stationCO": "TA1706048601DE",
+      "telephoneBookingFee": true,
+      "userId": "e9b269bb-7e44-483f-91e2-af6af7a75107"
+    }
+  },
+
+  "booking_xavier_state": {
+    "endpoint" : "/storm/booking/xavier/state"
+  }
 }

@@ -85,7 +85,7 @@ public class JsonReader {
         return getString(key, locationsFile);
     }
 
-    private static <T extends Object> T getValue(String key, String fileName) {
+    public static <T extends Object> T getValue(String key, String fileName) {
         org.json.simple.JSONObject jsonObject = getJsonObject(fileName);
         Object value = jsonObject.get(key);
 

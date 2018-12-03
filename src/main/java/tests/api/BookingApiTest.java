@@ -1,116 +1,27 @@
 package tests.api;
 
 import com.google.gson.JsonObject;
-import io.restassured.http.ContentType;
+import io.restassured.http.Header;
 import io.restassured.response.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import utils.Booking;
 import utils.JsonReader;
 
 import java.util.ArrayList;
-import java.util.Map;
-import java.util.stream.Collectors;
 
-import static io.restassured.RestAssured.given;
 import static org.junit.Assert.assertEquals;
 
 
 /**
  * Created by taras on 7/30/18.
  */
-public class BookingApiTest {
+public class BookingApiTest extends AbstractApiTest{
 
     private static final Logger LOG = LoggerFactory.getLogger(BookingApiTest.class);
-
-    private final RestApiTestHelper testHelper = new RestApiTestHelper();
-    private final BookingApiTestHelper bath = new BookingApiTestHelper();
-
-    private final String bookingApiFile = "artifacts/properties/booking_api_calls.json";
-
-
-    @DataProvider
-    public Object[][] getPostApiWithoutLogin() {
-        ArrayList<JsonObject> apiPostCalls = JsonReader.getJsonObjectArrayList("api_post_calls");
-        apiPostCalls.forEach(c -> LOG.info("apiPostCalls : " + c.toString()));
-
-        apiPostCalls = (ArrayList<JsonObject>) apiPostCalls
-                .stream()
-                .filter(call -> !call //api call shalt not contain "login"
-                        .get("endpoint")
-                        .getAsString()
-                        .contains("login"))
-                .collect(Collectors.toList());
-
-        apiPostCalls.forEach(c -> LOG.info("filtered apiPostCalls : " + c.toString()));
-        return testHelper.getDataProviderFromList(apiPostCalls);
-    }
-
-    @Test(dataProvider = "getPostApiWithoutLogin")
-    public void verifyApiPostWithoutLoginTest(JsonObject jsonObject) {
-        String endpoint = testHelper.getPostEndpoint(jsonObject);
-        jsonObject.remove("endpoint");
-
-        Map<String, Object> jsonBody = testHelper.getPostBody(jsonObject);
-
-        bath.getJsonResponse(endpoint, jsonBody);
-
-    }
-
-    @DataProvider
-    public Object[][] getPostApiWithLogin() {
-        ArrayList<JsonObject> apiPostCalls = JsonReader.getJsonObjectArrayList("api_post_calls");
-        apiPostCalls.forEach(c -> LOG.info("apiPostCalls : " + c.toString()));
-
-        apiPostCalls = (ArrayList<JsonObject>) apiPostCalls
-                .stream()
-                .filter(call -> call //api call should contain "login"
-                        .get("endpoint")
-                        .toString()
-                        .contains("login"))
-                .collect(Collectors.toList());
-
-        apiPostCalls.forEach(c -> LOG.info("filtered apiPostCalls : " + c.toString()));
-        return testHelper.getDataProviderFromList(apiPostCalls);
-    }
-
-    @Test(dataProvider = "getPostApiWithLogin")
-    public void verifyApiPostLoginTest(JsonObject jsonObject) {
-        String endpoint = testHelper.getPostEndpoint(jsonObject);
-        jsonObject.remove("endpoint");
-
-        Map<String, Object> jsonBody = testHelper.getPostBody(jsonObject);
-
-        //get user id and session
-        Response response = bath.getJsonResponse(endpoint, jsonBody);
-
-        String userId = response.path("userId");
-        String stormSession = response.path("stormSession");
-        endpoint = endpoint.replace("login/", "");
-        LOG.info("\nID: {} \nSESSION: {} \nENDPOINT: {}", userId, stormSession, endpoint);
-
-        //validate user
-        response = given()
-                .when()
-                .header("STORMSESSION", stormSession)
-                .header("userId", userId)
-                .get(endpoint)
-                .then()
-                .statusCode(200)
-                .and()
-                .contentType(ContentType.JSON)
-                .extract()
-                .response();
-
-        String userLogin = jsonObject.get("login").getAsString();
-        String userEmail = response.path("email");
-        String userIdReturned = response.path("id");
-
-        assertEquals(userLogin, userEmail);
-        assertEquals(userId, userIdReturned);
-    }
 
     @DataProvider
     public Object[][] getBookingGetCalls() {
@@ -121,13 +32,12 @@ public class BookingApiTest {
     @Test(dataProvider = "getBookingGetCalls")
     public void verifyBookingGetCallsTest(String url) {
         String endpoint = testHelper.getGetEndpoint(url);
-        bath.getJsonResponse(endpoint);
-
+        getJsonSuccessResponse(endpoint);
     }
 
     @DataProvider
     public Object[][] getBookingIdCalls() {
-        ArrayList<String> apiGetCalls = JsonReader.getJsonStringArrayList("booking_id_get_calls", bookingApiFile);
+        ArrayList<String> apiGetCalls = JsonReader.getJsonStringArrayList("booking_id", bookingApiFile);
         return testHelper.getDataProviderFromList(apiGetCalls);
     }
 
@@ -135,85 +45,229 @@ public class BookingApiTest {
     public void verifyBookingIdGetCallsTest(String url) {
         String endpoint = testHelper.getGetEndpoint("/storm/booking/");
 
-        Response response = bath.getJsonResponse(endpoint);
+        Response response = getJsonSuccessResponse(endpoint);
 
-        Booking[] bookings = bath.getBookingsFromResponse(response);
+        Booking[] bookings = getBookingsFromResponse(response);
         String firstBookingId = bookings[0].getBookingId();
 
         endpoint = testHelper.getGetEndpoint(url + firstBookingId);
-        response = bath.getJsonResponse(endpoint);
-        bookings = bath.getBookingsFromResponse(response);
+        response = getJsonSuccessResponse(endpoint);
+        bookings = getBookingsFromResponse(response);
         String bookingIdReturned = bookings[0].getBookingId();
 
         assertEquals(firstBookingId, bookingIdReturned);
     }
 
     @DataProvider
-    public Object[][] getBookingIdMystiqueCalls() {
-        ArrayList<String> apiGetCalls = JsonReader.getJsonStringArrayList("booking_id_mystique_get_calls", bookingApiFile);
+    public Object[][] getBookingMystiqueId() {
+        ArrayList<String> apiGetCalls = JsonReader.getJsonStringArrayList("booking_mystique_id", bookingApiFile);
         return testHelper.getDataProviderFromList(apiGetCalls);
     }
 
-    @Test(dataProvider = "getBookingIdMystiqueCalls")
-    public void verifyBookingIdMystiqueGetCallsTest(String url) {
+    @Test(dataProvider = "getBookingMystiqueId")
+    public void verifyBookingMystiqueIdTest(String url) {
         String endpoint = testHelper.getGetEndpoint("/storm/booking/");
-        Response response = bath.getJsonResponse(endpoint);
+        Response response = getJsonSuccessResponse(endpoint);
 
-        Booking[] bookings = bath.getBookingsFromResponse(response);
+        Booking[] bookings = getBookingsFromResponse(response);
         String firstBookingId = bookings[0].getBookingId();
 
         endpoint = testHelper.getGetEndpoint(url + firstBookingId);
-        response = bath.getJsonResponse(endpoint);
-        String bookingIdReturned = response.path("bookingId");
+        response = getJsonSuccessResponse(endpoint);
+        String bookingIdReturned = getBookingId(response);
 
         assertEquals(firstBookingId, bookingIdReturned);
     }
 
     @DataProvider
     public Object[][] getBookingPaginated() {
-        ArrayList<String> apiGetCalls = JsonReader.getJsonStringArrayList("booking_get_paginated", bookingApiFile);
+        ArrayList<String> apiGetCalls = JsonReader.getJsonStringArrayList("booking_paginated_page_items", bookingApiFile);
         return testHelper.getDataProviderFromList(apiGetCalls);
     }
 
     @Test(dataProvider = "getBookingPaginated")
-    public void verifyBookingPaginated(String url) {
+    public void verifyBookingPaginatedTest(String url) {
         String endpoint = testHelper.getGetEndpoint(url);
 
         endpoint = endpoint.replace("{page}", "1");
         endpoint = endpoint.replace("{itemsPerPage}", "100");
-        Response response = bath.getJsonResponse(endpoint);
-        Booking[] bookings = bath.getBookingsFromResponse(response);
+        Response response = getJsonSuccessResponse(endpoint);
+        Booking[] bookings = getBookingsFromResponse(response);
 
         assertEquals(bookings.length, 100);
 
         endpoint = endpoint.replace("100", "50");
-        response = bath.getJsonResponse(endpoint);
-        bookings = bath.getBookingsFromResponse(response);
+        response = getJsonSuccessResponse(endpoint);
+        bookings = getBookingsFromResponse(response);
 
         assertEquals(bookings.length, 50);
     }
 
     @DataProvider
     public Object[][] getBookingXavier() {
-        ArrayList<String> apiGetCalls = JsonReader.getJsonStringArrayList("booking_xavier_get_call", bookingApiFile);
+        ArrayList<String> apiGetCalls = JsonReader.getJsonStringArrayList("booking_xavier", bookingApiFile);
         return testHelper.getDataProviderFromList(apiGetCalls);
     }
 
     @Test(dataProvider = "getBookingXavier")
-    public void verifyBookingXavier(String url) {
+    public void verifyBookingXavierTest(String url) {
         String startEndpoint = testHelper.getGetEndpoint("/storm/booking/paginated/1/1");
         String endpoint = testHelper.getGetEndpoint(url);
-        Response response = bath.getJsonResponse(startEndpoint);
+        Response response = getJsonSuccessResponse(startEndpoint);
 
-        Booking[] bookings = bath.getBookingsFromResponse(response);
+        Booking[] bookings = getBookingsFromResponse(response);
         String bookingId = bookings[0].getBookingId();
 
         endpoint = endpoint.replace("{bookingId}", bookingId);
-        response = bath.getJsonResponse(endpoint);
-        bookings = bath.getBookingsFromResponse(response);
+        response = getJsonSuccessResponse(endpoint);
+        bookings = getBookingsFromResponse(response);
         String xavierBookingId = bookings[0].getBookingId();
 
         assertEquals(bookingId, xavierBookingId);
     }
 
+    @DataProvider
+    public Object[][] getBookingByEmail() {
+        return testHelper.getApiCalls("booking_by_email_get_call", bookingApiFile);
+    }
+
+    @Test(dataProvider = "getBookingByEmail")
+    public void verifyGetBookingByEmailTest(JsonObject jsonObject) {
+        String endpoint = testHelper.getPostEndpoint(jsonObject);
+        removeEndpointFromJsonObject(jsonObject);
+
+        Response response = getJsonSuccessResponse(loginUrl, jsonObject);
+
+        String stormSession = getStormSession(response);
+        String email = jsonObject.get("login").getAsString();
+
+        endpoint = endpoint.replace("{email}", email);
+
+        getJsonSuccessResponse(endpoint, new Header(STORM_SESSION, stormSession));
+    }
+
+    @DataProvider
+    public Object[][] getBookingCerebraProcessed() {
+        return testHelper.getApiCalls("booking_cerebra_processed_call", bookingApiFile);
+    }
+
+    @Test(dataProvider = "getBookingCerebraProcessed")
+    public void verifyBookingCerebraProcessedTest(JsonObject jsonObject) {
+        String endpoint = testHelper.getPostEndpoint(jsonObject);
+        removeEndpointFromJsonObject(jsonObject);
+
+        Response response = getJsonSuccessResponse(bookingUrl);
+
+        Booking[] bookings = getBookingsFromResponse(response);
+        String bookingId = null;
+        for (Booking b : bookings){
+            if (b.getRsoProcessed()) {
+                bookingId = b.getBookingId();
+                break;
+            }
+        }
+
+        JsonObject body = new JsonObject();
+        body.addProperty(BOOKING_ID, bookingId);
+
+        getJsonSuccessResponse(endpoint, body);
+    }
+
+    @DataProvider
+    public Object[][] getBookingCustomerEdit() {
+        return testHelper.getApiCalls("booking_customer_edit", bookingApiFile);
+    }
+
+    @Test(dataProvider = "getBookingCustomerEdit")
+    public void verifyBookingCustomerEditTest(JsonObject jsonObject) {
+        Response response = getJsonSuccessResponse(bookingUrl);
+
+        Booking[] bookings = getBookingsFromResponse(response);
+
+        String bookingId = null;
+        String userId = null;
+        for (Booking b : bookings){
+            if (b.getRsoProcessed()) {
+                bookingId = b.getBookingId();
+                userId = b.getUserId();
+                break;
+            }
+        }
+        LOG.info("bookingId: {}", bookingId);
+        LOG.info("userId:    {}", userId);
+
+        JsonObject loginJson = testHelper.getApiCallAsJson("account_user_login", accountApiFile);
+        JsonObject loginJsonBody = testHelper.getPostBodyAsJson(loginJson);
+
+        response = getJsonSuccessResponse(loginUrl, loginJsonBody);
+        LOG.info("{}: {}", STORM_SESSION, getStormSession(response));
+
+        Header header = new Header(STORM_SESSION, getStormSession(response));
+
+        String endpoint = testHelper.getPostEndpoint(jsonObject);
+
+        JsonObject body = testHelper.getPostBodyAsJson(jsonObject);
+        body.addProperty(USER_ID, userId);
+        body.addProperty(ID, bookingId);
+        LOG.info("POST BODY: {}", body.toString());
+
+        response = getResponse(endpoint, body, header);
+        response.prettyPrint();
+
+    }
+
+    @DataProvider
+    public Object[][] getBookingHelpdeskEdit() {
+        return testHelper.getApiCalls("booking_helpdesk_edit", bookingApiFile);
+    }
+
+    @Test(dataProvider = "getBookingHelpdeskEdit")
+    public void verifyBookingHelpdeskEditTest(JsonObject jsonObject) {
+        String endpoint = testHelper.getPostEndpoint(jsonObject);
+        JsonObject body = testHelper.getPostBodyAsJson(jsonObject);
+        LOG.info("POST BODY: {}", body.toString());
+
+        Response response = getResponse(endpoint, body);
+        response.prettyPrint();
+    }
+
+
+    @DataProvider
+    public Object[][] getBookingHelpdeskReservation() {
+        return testHelper.getApiCalls("booking_helpdesk_reservation", bookingApiFile);
+    }
+
+    @Test(dataProvider = "getBookingHelpdeskReservation")
+    public void verifyBookingHelpdeskReservationTest(JsonObject jsonObject) {
+        String endpoint = testHelper.getPostEndpoint(jsonObject);
+        JsonObject body = testHelper.getPostBodyAsJson(jsonObject);
+        LOG.info("POST BODY: {}", body.toString());
+
+        Response response = getResponse(endpoint, body);
+        response.prettyPrint();
+    }
+
+
+    @DataProvider
+    public Object[][] getBookingXavierState() {
+        return testHelper.getApiCalls("booking_xavier_state", bookingApiFile);
+    }
+
+    @Test(dataProvider = "getBookingXavierState")
+    public void verifyBookingXavierStateTest(JsonObject jsonObject) {
+        String endpoint = testHelper.getPostEndpoint(jsonObject);
+        String bookingId = getBookingIdRsoProcessed(bookingUrl);
+
+        JsonObject body = new JsonObject();
+        body.addProperty(BOOKING_ID, bookingId);
+        body.addProperty("state", "FAILED");
+
+        Response response = getJsonSuccessResponse(endpoint, body);
+        response.prettyPrint();
+    }
+
+    @Test
+    public void verifyBookingSuccessTest(){
+        throw new NotImplementedException();
+    }
 }
