@@ -18,56 +18,55 @@ import java.util.Set;
 import static io.restassured.RestAssured.given;
 
 public abstract class AbstractApiTest {
+    private static final Logger LOG = LoggerFactory.getLogger(AbstractApiTest.class);
 
-    final String bookingApiFile = "artifacts/properties/booking_api_calls.json";
-    final String accountApiFile = "artifacts/properties/account_api_calls.json";
-
-    final String url = JsonReader.getValue(
+    protected final String bookingApiFile = "artifacts/properties/booking_api_calls.json";
+    protected final String accountApiFile = "artifacts/properties/account_api_calls.json";
+    protected final String url = JsonReader.getValue(
             "api_call_url",
             "artifacts/properties/api_calls.json").toString();
-    final String loginUrl = url + "/storm/account/user/login/";
-    final String bookingUrl = url + "/storm/booking/";
+    protected final String loginUrl = url + "/storm/account/user/login/";
+    protected final String bookingUrl = url + "/storm/booking/";
+
+    protected final RestApiTestHelper testHelper = new RestApiTestHelper();
 
     public final static String STORM_SESSION = "STORMSESSION";
     public final static String BOOKING_ID = "bookingId";
     public final static String USER_ID = "userId";
     public final static String ID = "id";
 
-    private static final Logger LOG = LoggerFactory.getLogger(AbstractApiTest.class);
 
-    final RestApiTestHelper testHelper = new RestApiTestHelper();
-
-    void removeEndpointFromJsonObject(JsonObject jsonObject) {
+    protected void removeEndpointFromJsonObject(JsonObject jsonObject) {
         jsonObject.remove("endpoint");
     }
 
-    String getStormSession(Response response) {
+    protected String getStormSession(Response response) {
         return response.path("stormSession");
     }
 
-    String getUserId(Response response) {
+    protected String getUserId(Response response) {
         return response.path("userId");
     }
 
-    String getEmail(Response response) {
+    protected String getEmail(Response response) {
         return response.path("email");
     }
 
-    String getBookingId(Response response) {
+    protected String getBookingId(Response response) {
         return response.path("bookingId");
     }
 
-    String getId(Response response) {
+    protected String getId(Response response) {
         return response.path("id");
     }
 
-    Booking[] getBookingsFromResponse(Response response) {
+    protected Booking[] getBookingsFromResponse(Response response) {
         return response
                 .jsonPath()
                 .getObject("bookings", Booking[].class);
     }
 
-    String getBookingIdRsoProcessed(String url) {
+    protected String getBookingIdRsoProcessed(String url) {
         String bookingId = null;
         Response response;
         response = getResponse(url);
@@ -82,7 +81,7 @@ public abstract class AbstractApiTest {
         return bookingId;
     }
 
-    Map<String, Object> getPostBodyAsMap(JsonObject jsonObject) {
+    protected Map<String, Object> getPostBodyAsMap(JsonObject jsonObject) {
         // create a POST body
         Map<String, Object> jsonBody = new HashMap<>();
         Set<Map.Entry<String, JsonElement>> entrySet = jsonObject.entrySet();
@@ -94,7 +93,7 @@ public abstract class AbstractApiTest {
         return jsonBody;
     }
 
-    Response getResponse(String endpoint) {
+    protected Response getResponse(String endpoint) {
         return given()
                 .when()
                 .get(endpoint)
@@ -104,7 +103,7 @@ public abstract class AbstractApiTest {
                 .response();
     }
 
-    Response getResponse(String endpoint, JsonObject jsonBody) {
+    protected Response getResponse(String endpoint, JsonObject jsonBody) {
         return given()
                 .contentType(ContentType.JSON)
                 .body(jsonBody)
@@ -116,7 +115,7 @@ public abstract class AbstractApiTest {
     }
 
 
-    Response getResponse(String endpoint, JsonObject jsonBody, Header header) {
+    protected Response getResponse(String endpoint, JsonObject jsonBody, Header header) {
         return given()
                 .contentType(ContentType.JSON)
                 .body(jsonBody)
@@ -128,7 +127,7 @@ public abstract class AbstractApiTest {
                 .response();
     }
 
-    Response getJsonSuccessResponse(String endpoint) {
+    protected Response getJsonSuccessResponse(String endpoint) {
         return given()
                 .when()
                 .get(endpoint)
@@ -140,7 +139,7 @@ public abstract class AbstractApiTest {
                 .response();
     }
 
-    Response getJsonSuccessResponse(String endpoint, Map<String, Object> jsonBody) {
+    protected Response getJsonSuccessResponse(String endpoint, Map<String, Object> jsonBody) {
         return given()
                 .contentType(ContentType.JSON)
                 .body(jsonBody)
@@ -152,7 +151,7 @@ public abstract class AbstractApiTest {
                 .response();
     }
 
-    Response getJsonSuccessResponse(String endpoint, JsonObject jsonBody) {
+    protected Response getJsonSuccessResponse(String endpoint, JsonObject jsonBody) {
         return given()
                 .contentType(ContentType.JSON)
                 .body(jsonBody)
@@ -164,7 +163,7 @@ public abstract class AbstractApiTest {
                 .response();
     }
 
-    Response getJsonSuccessResponse(String endpoint, Headers headers) {
+    protected Response getJsonSuccessResponse(String endpoint, Headers headers) {
         return given()
                 .when()
                 .headers(headers)
@@ -177,7 +176,7 @@ public abstract class AbstractApiTest {
                 .response();
     }
 
-    Response getJsonSuccessResponse(String endpoint, Header header) {
+    protected Response getJsonSuccessResponse(String endpoint, Header header) {
         return given()
                 .when()
                 .header(header)
@@ -190,7 +189,7 @@ public abstract class AbstractApiTest {
                 .response();
     }
 
-    Response getJsonSuccessResponse(String endpoint, JsonObject jsonBody, Header header) {
+    protected Response getJsonSuccessResponse(String endpoint, JsonObject jsonBody, Header header) {
         return given()
                 .when()
                 .body(jsonBody)
