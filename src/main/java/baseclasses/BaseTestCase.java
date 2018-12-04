@@ -30,9 +30,9 @@ public class BaseTestCase {
 
     protected WebDriver driver;
 
-    protected final static String LANGUAGE = Utils.getLanguage();
+    protected final static String LANGUAGE = getLanguage();
 
-    private final static String ENVIRONMENT = Utils.getUiTestEnvironment();
+    private final static String ENVIRONMENT = getUiTestEnvironment();
     private final static String SCREENSHOT_FOLDER = JsonReader.getString("failed_tests_screenshot_folder");
     private final static String VIDEO_FOLDER = JsonReader.getString("failed_tests_video_folder");
     private final static String APP2_DRIVER = "app2_driver";

@@ -1,16 +1,13 @@
 package tests.api;
 
-import com.google.gson.JsonElement;
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import io.restassured.http.ContentType;
 import org.json.JSONArray;
 import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import utils.Env;
-import utils.HtmlUtils;
-import utils.JsonReader;
-import utils.Utils;
+import utils.*;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -110,22 +107,16 @@ public class RestApiTestHelper {
             .statusCode(200);
     }
 
-    Map<String, Object> getPostBody(JsonObject jsonObject) {
-        // create a POST body
-        Map<String, Object> jsonBody = new HashMap<>();
-        Set<Map.Entry<String, JsonElement>> entrySet = jsonObject.entrySet();
-
-        for(Map.Entry<String,JsonElement> entry : entrySet){
-            jsonBody.put(entry.getKey(), jsonObject.get(entry.getKey()));
-            LOG.info("API CALL POST BODY: " +entry.getKey()+ " : " + jsonObject.get(entry.getKey()));
-        }
-        return jsonBody;
-    }
-
     String getPostEndpoint(JsonObject jsonObject) {
         String endpoint = ENVIRONMENT + jsonObject.get("endpoint").getAsString();
         LOG.info("POST API CALL ENDPOINT: " + endpoint);
         return endpoint;
+    }
+
+    JsonObject getPostBodyAsJson(JsonObject jsonObject) {
+        JsonObject body =  jsonObject.get("body").getAsJsonObject();
+        LOG.info("POST API CALL BODY: " + body);
+        return body;
     }
 
     String getGetEndpoint(String url) {
@@ -174,4 +165,17 @@ public class RestApiTestHelper {
 
         return locationsIdsList;
     }
+
+    JsonObject getApiCallAsJson(String key, String apiCallsFile) {
+        Gson gson = new Gson();
+        JsonObject jsonObject = gson.fromJson(JsonReader.getValue(key, apiCallsFile).toString(), JsonObject.class);
+        return jsonObject;
+    }
+
+    Object[][] getApiCalls(String key, String file) {
+        JsonObject apiCall = getApiCallAsJson(key, file);
+        List calls = Arrays.asList(apiCall);
+        return getDataProviderFromList(calls);
+    }
+
 }

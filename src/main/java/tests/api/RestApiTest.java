@@ -1,7 +1,8 @@
 package tests.api;
 
 import com.google.gson.JsonObject;
-import io.restassured.http.ContentType;
+import io.restassured.http.Header;
+import io.restassured.http.Headers;
 import io.restassured.response.Response;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -19,7 +20,6 @@ import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static io.restassured.RestAssured.given;
 import static org.junit.Assert.assertEquals;
 import static utils.JsonReader.readJsonFromUrl;
 
@@ -27,7 +27,7 @@ import static utils.JsonReader.readJsonFromUrl;
 /**
  * Created by taras on 7/30/18.
  */
-public class RestApiTest {
+public class RestApiTest extends AbstractApiTest{
 
     private static final Logger LOG = LoggerFactory.getLogger(RestApiTest.class);
     private final RestApiTestHelper testHelper = new RestApiTestHelper();
@@ -96,19 +96,10 @@ public class RestApiTest {
     @Test(dataProvider= "getPostApiWithoutLogin")
     public void verifyApiPostWithoutLoginTest(JsonObject jsonObject){
         String endpoint = testHelper.getPostEndpoint(jsonObject);
-        jsonObject.remove("endpoint");
+        removeEndpointFromJsonObject(jsonObject);
+        Map<String, Object> jsonBody = getPostBodyAsMap(jsonObject);
 
-        Map<String, Object> jsonBody = testHelper.getPostBody(jsonObject);
-
-        given()
-            .contentType(ContentType.JSON)
-            .body(jsonBody)
-        .when()
-            .post(endpoint)
-        .then()
-            .statusCode(200)
-        .and()
-            .contentType(ContentType.JSON);
+        getJsonSuccessResponse(endpoint, jsonBody);
     }
 
     @DataProvider
@@ -131,47 +122,32 @@ public class RestApiTest {
     @Test(dataProvider= "getPostApiWithLogin")
     public void verifyApiPostLoginTest(JsonObject jsonObject){
         String endpoint = testHelper.getPostEndpoint(jsonObject);
-        jsonObject.remove("endpoint");
-
-        Map<String, Object> jsonBody = testHelper.getPostBody(jsonObject);
+        removeEndpointFromJsonObject(jsonObject);
+        Map<String, Object> jsonBody = getPostBodyAsMap(jsonObject);
 
         //get user id and session
-        Response response =
-        given()
-            .contentType(ContentType.JSON)
-            .body(jsonBody)
-        .when()
-            .post(endpoint)
-        .then()
-            .statusCode(200)
-        .extract()
-            .response();
+        Response response = getJsonSuccessResponse(endpoint, jsonBody);
 
-        String userId = response.path("userId");
-        String stormSession = response.path("stormSession");
+        String userId = getUserId(response);
+        String stormSession = getStormSession(response);
         endpoint = endpoint.replace("login/", "");
         LOG.info("\nID: {} \nSESSION: {} \nENDPOINT: {}", userId, stormSession, endpoint);
 
+        Header header1 = new Header(STORM_SESSION, stormSession);
+        Header header2 = new Header(USER_ID, userId);
+        Headers headers = new Headers(header1, header2);
+
         //validate user
-        response = given()
-        .when()
-            .header("STORMSESSION", stormSession)
-            .header("userId", userId)
-            .get(endpoint)
-        .then()
-            .statusCode(200)
-        .and()
-            .contentType(ContentType.JSON)
-        .extract()
-            .response();
+        response = getJsonSuccessResponse(endpoint, headers);
 
         String userLogin = jsonObject.get("login").getAsString();
-        String userEmail = response.path("email");
-        String userIdReturned = response.path("id");
+        String userEmail = getEmail(response);
+        String userIdReturned = getId(response);
 
         assertEquals(userLogin,userEmail);
         assertEquals(userId, userIdReturned);
     }
+
 
     @DataProvider
     public Object[][] getGetParams() {
@@ -184,13 +160,7 @@ public class RestApiTest {
         //this method verifies API GET calls with failing tests
         String endpoint = testHelper.getGetEndpoint(url);
 
-        given()
-        .when()
-            .get(endpoint)
-        .then()
-            .statusCode(200)
-        .and()
-            .contentType(ContentType.JSON);
+        getJsonSuccessResponse(endpoint);
     }
 
     @Test
