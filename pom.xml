@@ -81,56 +81,6 @@
 
                 </configuration>
             </plugin>
-
-            <!-- plugin>
-                <groupId>ch.fortysix</groupId>
-                <artifactId>maven-postman-plugin</artifactId>
-                <version>0.1.6</version>
-                <executions>
-                    <execution>
-                        <id>send a mail</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>send-mail</goal>
-                        </goals>
-                        <inherited>true</inherited>
-
-                        <configuration>
-                            <mailhost>smtp.mail.yahoo.com</mailhost>
-                            <mailport>465</mailport>
-                            <mailssl>true</mailssl>
-                            <mailAltConfig>true</mailAltConfig>
-
-                            <mailuser>app2driver@yahoo.com</mailuser>
-                            <mailpassword>112233Ru$$MaNN!</mailpassword>
-                            <from>app2driver@yahoo.com</from>
-
-                            <receivers>
-                                <receiver>taras.tymchyshyn@russmann.de</receiver>
-                            </receivers>
-
-                            <subject>Selenium Test Run</subject>
-
-                            <htmlMessage> <![CDATA[
-                                        <p>New Test Report Arrived! </p><br>
-                                        <p>Check the  results from attachment</p>
-                                    ]]>
-                            </htmlMessage>
-
-                            <fileSets>
-                                <fileSet>
-                                    <directory>${basedir}/test-output</directory>
-                                    <includes>
-                                        <include>emailable-report.html</include>
-                                    </includes>
-                                </fileSet>
-                            </fileSets>
-
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin -->
-
         </plugins>
     </build>
 
@@ -175,7 +125,6 @@
             <version>3.9.1</version>
         </dependency>
 
-
         <!-- https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java -->
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
@@ -190,13 +139,7 @@
             <version>25.1-jre</version>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/io.rest-assured/rest-assured -->
-        <dependency>
-            <groupId>io.rest-assured</groupId>
-            <artifactId>rest-assured</artifactId>
-            <version>3.1.0</version>
-            <scope>test</scope>
-        </dependency>
+         <!--https://mvnrepository.com/artifact/io.rest-assured/rest-assured -->
         <dependency>
             <groupId>io.rest-assured</groupId>
             <artifactId>rest-assured</artifactId>
