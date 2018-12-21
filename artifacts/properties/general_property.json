@@ -7,7 +7,8 @@
   "//env" : "www3_en",
   "//env" : "www3_de",
   "//env" : "domino_en",
-  "env" : "domino_de",
+  "//env" : "domino_de",
+  "env" : "stg_en",
 
   "//": "allowed browser names: ff, firefox, ch, chrome, ie, edge, safari",
   "browser": "ff",
@@ -25,7 +26,7 @@
   "chrome_driver_windows": "artifacts/drivers/windows/chromedriver.exe",
   "edge_driver_windows": "artifacts/drivers/windows/MicrosoftWebDriver.exe",
   "ie_driver_windows": "artifacts/drivers/windows/IEDriverServer.exe",
-  "safari_driver_macos": "artifacts/drivers/macos/safaridriver",
+  "safari_driver_macos": "/usr/bin/safaridriver",
 
   "//": "path to screenshots",
   "failed_tests_screenshot_folder": "test-output/screenshots/",
