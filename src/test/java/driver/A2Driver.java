@@ -4,10 +4,7 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
-import org.openqa.selenium.firefox.FirefoxBinary;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.firefox.FirefoxOptions;
-import org.openqa.selenium.firefox.FirefoxProfile;
+import org.openqa.selenium.firefox.*;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.safari.SafariDriver;
 import utils.JsonReader;
@@ -90,7 +87,6 @@ public class A2Driver {
         System.setProperty("webdriver.chrome.logfile", "test-output/ChromeTestLog.txt");
 
         ChromeOptions options = new ChromeOptions();
-        options.addArguments("--disable-local-storage");
         options.addArguments("disable-infobars");
         options.addArguments("window-size=1920x1080");
 
@@ -127,21 +123,22 @@ public class A2Driver {
         firefoxProfile.setPreference("geo.prompt.testing", false);
         firefoxProfile.setPreference("geo.prompt.testing.allow", false);
         firefoxProfile.setPreference("geo.enabled", false);
-        FirefoxOptions options = new FirefoxOptions();
 
+        FirefoxOptions options = new FirefoxOptions();
+        options.setLogLevel(FirefoxDriverLogLevel.TRACE);
         options.setProfile(firefoxProfile);
 
         FirefoxBinary firefoxBinary = new FirefoxBinary();
 
         if (useBrowserBinary) {
             firefoxBinary = new FirefoxBinary(new File(JsonReader.getString("firefox_binary")));
+            options.setBinary(firefoxBinary);
         }
 
         if (headlessMode) {
             firefoxBinary.addCommandLineOptions("--headless");
         }
 
-        options.setBinary(firefoxBinary);
         return new FirefoxDriver(options);
     }
 
@@ -204,7 +201,6 @@ public class A2Driver {
                     ("Safari executable file does not exist!");
         }
 
-        System.setProperty("webdriver.ie.driver", safariDriverPathMacos);
         return new SafariDriver();
     }
 

@@ -146,7 +146,7 @@ public class BaseTestCase {
 
 
     protected void login() {
-        if (ENVIRONMENT.contains("intera")){
+        if (isIntera()){
             loginUserIntera(
                     JsonReader.getUserEmail(APP2_DRIVER),
                     JsonReader.getUserPassword(APP2_DRIVER),
@@ -154,9 +154,7 @@ public class BaseTestCase {
             return;
         }
 
-        if (ENVIRONMENT.contains("prod")
-                || ENVIRONMENT.contains("www3")
-                || ENVIRONMENT.contains("domino")) {
+        if (isStaging()) {
             loginUserProd(
                     JsonReader.getUserEmail(APP2_DRIVER),
                     JsonReader.getUserPassword(APP2_DRIVER),
@@ -165,6 +163,17 @@ public class BaseTestCase {
         }
 
         throw new RuntimeException("Please configure environment/url in Env.java");
+    }
+
+    private boolean isStaging() {
+        return ENVIRONMENT.contains("prod")
+                || ENVIRONMENT.contains("www3")
+                || ENVIRONMENT.contains("domino")
+                || ENVIRONMENT.contains("stg");
+    }
+
+    private boolean isIntera() {
+        return ENVIRONMENT.contains("intera");
     }
 
     public static String getUrlFromProperty() {
