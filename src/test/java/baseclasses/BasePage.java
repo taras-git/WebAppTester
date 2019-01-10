@@ -120,13 +120,15 @@ public class BasePage {
     }
 
 
-    public void scrollToElement(WebElement element){
+    public void scrollTo(WebElement element){
+        LOG.info("Scrolling to Element > " + element);
         Actions actions = new Actions(driver);
         actions.moveToElement(element);
         actions.perform();
     }
 
     public void scrollOnePageDown(){
+        LOG.info("Scrolling down one page");
         WebElement root = driver.findElement(By.xpath("(//*)[1]"));
         root.sendKeys(Keys.PAGE_DOWN);
     }
@@ -185,9 +187,21 @@ public class BasePage {
         LOG.info("Click on > " + locator);
     }
 
+    public void sendTextTo(By by, String text){
+        getElement(by).sendKeys(text);
+        LOG.info("Send text:{} to:", text, by);
+    }
+
+    public void sendTextTo(WebElement el, String text){
+        el.sendKeys(text);
+        LOG.info("Send text:{} to:", text, el);
+    }
+
+
     public void setSelect(WebElement element, String value){
         Select select = new Select(element);
         select.selectByValue(value);
+        LOG.info("Set select: {} to: {}", element, value);
     }
 
 

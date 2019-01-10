@@ -22,13 +22,18 @@ public class A2DBookingTest extends BaseTestCase {
 
     @Video
     @Test(groups="Booking", priority=1)
-    public void loggedUserCanBookVehicle(){
-        bookVehicle(null, null);
+    public void loggedUserCanBookVehicleFailedPayment(){
+        bookVehicle();
     }
 
+    @Video
+    @Test(groups="Booking", priority=1)
+    public void loggedUserCanBookVehicleSuccessfulPayment(){
+        bookVehicle("1", "2");
+    }
 
     @Video
-    @Test(groups="Booking", dependsOnMethods = "loggedUserCanBookVehicle", priority=2)
+    @Test(groups="Booking", dependsOnMethods = "loggedUserCanBookVehicleSuccessfulPayment", priority=2)
     public void loggedUserCanCancelBooking(){
         login();
 

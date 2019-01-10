@@ -13,9 +13,10 @@ import pages.*;
 import utils.EmailReader;
 import utils.Env;
 import utils.JsonReader;
-import utils.Utils;
 
 import java.lang.reflect.Method;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 import static utils.Utils.*;
@@ -36,6 +37,9 @@ public class BaseTestCase {
     private final static String SCREENSHOT_FOLDER = JsonReader.getString("failed_tests_screenshot_folder");
     private final static String VIDEO_FOLDER = JsonReader.getString("failed_tests_video_folder");
     private final static String APP2_DRIVER = "app2_driver";
+    private final static String APP2_D_EMAIL = "app2d@ukr.net";
+    private final static String APP2_D_PASSWORD = "112233Yahoo!";
+    private final static String APP2_D_NAME = "App";
 
     protected HomePage homePage;
     protected HomePageIntera homePageIntera;
@@ -54,7 +58,8 @@ public class BaseTestCase {
     protected StationsPage stationsPage;
     protected AirfieldsPage airfieldsPage;
     protected AccountPage accountPage;
-    protected ConfirmBookingPage confirmBookingPage;
+    protected ConfirmPaymentPage confirmPaymentPage;
+    protected TelecashPage telecashPage;
 
     public void initPages(WebDriver driver){
         homePage = new HomePage(driver);
@@ -74,7 +79,8 @@ public class BaseTestCase {
         stationsPage = new StationsPage(driver);
         airfieldsPage = new AirfieldsPage(driver);
         accountPage = new AccountPage(driver);
-        confirmBookingPage = new ConfirmBookingPage(driver);
+        confirmPaymentPage = new ConfirmPaymentPage(driver);
+        telecashPage = new TelecashPage(driver);
     }
 
     @BeforeSuite
@@ -155,10 +161,7 @@ public class BaseTestCase {
         }
 
         if (isStaging()) {
-            loginUserProd(
-                    JsonReader.getUserEmail(APP2_DRIVER),
-                    JsonReader.getUserPassword(APP2_DRIVER),
-                    getUrlFromProperty());
+            loginUserProd(APP2_D_EMAIL, APP2_D_PASSWORD, getUrlFromProperty());
             return;
         }
 
@@ -213,29 +216,68 @@ public class BaseTestCase {
         loginPage.verifyUserLogged();
     }
 
+    protected void bookVehicle() {
+        login();
+
+        bookingPage.chooseLocation()
+                .clickFindCar();
+
+        chooseCarPage.waitChooseCarPageDisplayed()
+                .chooseFirstCarDisplayed();
+
+        confirmPaymentPage.confirmCarBooked();
+
+        telecashPage.verifyTelecashPageDisplayed();
+        telecashPage.makePayment();
+
+        bookingPage.verifyFailedPaymentPageDisplayed();
+    }
+
     protected void bookVehicle(String from, String to) {
         login();
 
-        bookingPage.verifyBookingPageDisplayed()
-                .fillCheckOut(from)
-                .fillCheckIn(to);
-
-        bookingPage.chooseLocation(null)
+        bookingPage.chooseLocation()
                 .clickFindCar();
 
-        chooseCarPage.waitChooseCarDisplayed()
-                .chooseFirstCarDisplayed();
+        chooseCarPage.waitChooseCarPageDisplayed();
 
-        Date withBookingDate = new Date();
+        Date date = new Date();
+        String url = driver.getCurrentUrl();
+        String newUrl = getNewUrl(url);
+        driver.navigate().to(newUrl);
 
-        confirmBookingPage.bookCar()
-                .verifyCarBooked();
+        chooseCarPage.chooseFirstCarDisplayed();
+
+        confirmPaymentPage.confirmCarBooked();
+
+        telecashPage.verifyTelecashPageDisplayed();
+        telecashPage.makePayment();
+
+        bookingPage.verifySuccessPaymentPageDisplayed();
 
         try {
-            EmailReader.checkConfirmationEmailReceived(withBookingDate);
+            EmailReader.checkConfirmationEmailReceived(date);
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private String getNewUrl(String url) {
+        LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'00:00");
+        String startDate = now.plusDays(1).format(formatter);
+        String endDate = now.plusDays(2).format(formatter);
+
+        int index = url.indexOf("co=");
+        url = url.substring(0, index + 3)
+                + startDate
+                + url.substring(index + 19);
+        index = url.indexOf("ci=");
+        url = url.substring(0, index + 3)
+                + endDate
+                + url.substring(index + 19);
+
+        return url;
     }
 
 }
