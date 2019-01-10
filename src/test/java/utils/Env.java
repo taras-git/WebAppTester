@@ -7,8 +7,10 @@ public enum Env {
     WWW3_DE("https://www3.app2drive.com/"),
     INTERA_EN("https://app2drive.intera.de/app2drive/de-en/app2drive.nsf#/rental-data"),
     INTERA_DE("https://app2drive.intera.de/app2drive/dev/de/index.nsf/c/fahrzeug_finden_und_buchen#/rental-data"),
-    DOMINO_EN("http://10.77.3.32/"),
-    DOMINO_DE("http://10.77.3.32/"),
+    DOMINO_EN("https://account.app2drive.tech/"),
+    DOMINO_DE("https://account.app2drive.tech/"),
+    DOMINO_IP_EN("http://10.77.3.32/"),
+    DOMINO_IP_DE("http://10.77.3.32/"),
     STG_EN("http://rental.app2drive.tech/");
 
     private final String url;

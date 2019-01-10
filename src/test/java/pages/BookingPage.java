@@ -14,7 +14,7 @@ import static utils.Utils.*;
 public class BookingPage extends BasePage{
 
     By findCarId = By.id("button1");
-    @FindBy(css = "#button1")
+    @FindBy(css = "button.btn-submit > span.text")
     private WebElement findCar;
 
     @FindBy(css = "#map-location")
@@ -34,6 +34,11 @@ public class BookingPage extends BasePage{
     @FindBy(id = "datetimepicker2")
     private WebElement dateTo;
 
+    @FindBy(css = ".desktop#same-station-field")
+    private WebElement chooseStation;
+
+    private final By choosePickupStation = By.cssSelector("div.desktop > div.search__block > input");
+
     public BookingPage(WebDriver driver) {
         super(driver);
     }
@@ -50,6 +55,14 @@ public class BookingPage extends BasePage{
             }
         }
         throw new RuntimeException("Language is not properly set, please check config files!!!");
+    }
+
+    public void verifyFailedPaymentPageDisplayed(){
+        verifyPageDisplayed("failure=true", "Payment Failed Page");
+    }
+
+    public void verifySuccessPaymentPageDisplayed(){
+        verifyPageDisplayed("successful-reservation", "Payment Success Page");
     }
 
     public BookingPage fillCheckOutCheckIn(String time, WebElement el) {
@@ -82,24 +95,18 @@ public class BookingPage extends BasePage{
     }
 
 
-    public BookingPage chooseLocation(String locationName) {
-        waitElementPresent(By.id("map-location"), SHORT_TIMEOUT);
+    public BookingPage chooseLocation() {
+        clickOn(chooseStation);
+        waitElementDisplayed(choosePickupStation, SHORT_TIMEOUT);
 
-        if (locationName == null) {
-            // location will be set to "Aschaffenburg"
-            location.sendKeys("A");
-            location.sendKeys("s");
-            location.sendKeys("c");
-            location.sendKeys("h");
-        } else {
-            location.sendKeys(locationName);
-        }
+        String aschaffenburg = "Aschaffenburg";
+        sendTextTo(choosePickupStation, aschaffenburg);
+        WebElement station = getElement(By.xpath("//div[@class='station__list desktop d-none d-md-block']" +
+                "//li[@data-city='" +
+                aschaffenburg +
+                "']"));
+        clickOn(station);
 
-        sleep(0.5);
-        location.sendKeys(Keys.DOWN);
-        sleep(0.2);
-        location.sendKeys(Keys.RETURN);
-        sleep(0.2);
         return this;
     }
 

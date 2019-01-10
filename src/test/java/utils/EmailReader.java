@@ -34,8 +34,12 @@ public class EmailReader {
     private static Folder getFolder(Properties props) throws MessagingException {
         Store store = getStore(props);
 
-        String login = JsonReader.getUserEmail("app2_driver_mail");
-        String password = JsonReader.getUserPassword("app2_driver_mail");
+//        String login = JsonReader.getUserEmail("app2_driver_mail");
+//        String password = JsonReader.getUserPassword("app2_driver_mail");
+
+        String login = "app2d@ukr.net";
+        String password = "112233Yahoo!";
+
         String imap = JsonReader.getUserImap("app2_driver_mail_imap");
         store.connect(imap, login, password);
 

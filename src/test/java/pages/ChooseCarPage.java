@@ -14,13 +14,13 @@ import static utils.Utils.EN;
  */
 public class ChooseCarPage extends BasePage {
 
-    private final String chooseFirstCarXpathEn = "(//button[contains(text(), ' Choose car ')])[1]";
-    private final String chooseFirstCarXpathDe = "(//button[contains(text(), ' Fahrzeug w')])[1]";
+    private final String chooseFirstCarXpathEn = "(//button[@class='btn green__btn rounded choose'])[1]";
+    private final String chooseFirstCarXpathDe = "(//button[@class='btn green__btn rounded choose'])[1]";
 
-    @FindBy(xpath = "(//button[contains(text(), ' Choose car ')])[1]")
+    @FindBy(xpath = "(//button[@class='btn green__btn rounded choose'])[1]")
     WebElement choosefirstCarEn;
 
-    @FindBy(xpath = "(//button[contains(text(), ' Fahrzeug w')])[1]")
+    @FindBy(xpath = "(//button[@class='btn green__btn rounded choose'])[1]")
     WebElement choosefirstCarDe;
 
     public ChooseCarPage(WebDriver driver) {
@@ -32,7 +32,7 @@ public class ChooseCarPage extends BasePage {
         super.verifyPageDisplayed("choose-car", "Choose Car Page");
     }
 
-    public ChooseCarPage waitChooseCarDisplayed(){
+    public ChooseCarPage waitChooseCarPageDisplayed(){
         switch (LANGUAGE){
             case DE : {
                 waitElementDisplayed(chooseFirstCarXpathDe, LONGER_TIMEOUT);
@@ -61,12 +61,10 @@ public class ChooseCarPage extends BasePage {
     }
 
     public void chooseFirstCarDisplayedEn(){
-        scrollOnePageDown();
         clickOn(choosefirstCarEn);
     }
 
     public void chooseFirstCarDisplayedDe(){
-        scrollOnePageDown();
         clickOn(choosefirstCarDe);
     }
 

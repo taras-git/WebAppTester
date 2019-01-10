@@ -21,11 +21,9 @@ public class LoginPage extends BasePage{
 
     private static final Logger LOG = LoggerFactory.getLogger(LoginPage.class);
 
-    private final String bookVehicleEnXath = "//nav//*[contains(text(), 'Book a vehicle')]";
     @FindBy(xpath = "//nav//*[contains(text(), 'Book a vehicle')]")
     private WebElement bookVehicleEn;
 
-    private final String bookVehicleDeXath = "//nav//*[contains(text(), 'Fahrzeug buchen')]";
     @FindBy(xpath = "//nav//*[contains(text(), 'Fahrzeug buchen')]")
     private WebElement bookVehicleDe;
 
@@ -54,6 +52,8 @@ public class LoginPage extends BasePage{
     private final By closeActiveBookingAlertCss = By.cssSelector("button#closemodal");
     @FindBy(css = "button#closemodal")
     private WebElement closeActiveBookingAlert;
+
+    private final String greetingXpath = "(//span[contains(text(), 'Hallo, ')])[1]";
 
     public LoginPage(WebDriver driver) {
         super(driver);
@@ -88,7 +88,7 @@ public class LoginPage extends BasePage{
     }
 
     public LoginPage verifyUserLogged(){
-        waitElementDisplayed(logoutXpath, LONG_TIMEOUT);
+        waitElementDisplayed(greetingXpath, LONG_TIMEOUT);
         WebElement closeAlert = null;
 
         try {
@@ -96,15 +96,6 @@ public class LoginPage extends BasePage{
             clickOn(closeAlert, false);
         } catch (Exception e) {
             LOG.info("FAILED: getElementFluentWait for Element " + closeActiveBookingAlertCss );
-        }
-
-        switch (LANGUAGE) {
-            case DE :
-                clickOn(bookVehicleDe);
-                break;
-            case EN :
-                clickOn(bookVehicleEn);
-                break;
         }
 
         return this;
