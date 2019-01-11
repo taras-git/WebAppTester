@@ -8,6 +8,8 @@ import org.slf4j.LoggerFactory;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
+import java.util.concurrent.TimeUnit;
+
 import static utils.Utils.DE;
 import static utils.Utils.EN;
 
@@ -29,7 +31,7 @@ public class A2DBookingTest extends BaseTestCase {
     @Video
     @Test(groups="Booking", priority=1)
     public void loggedUserCanBookVehicleSuccessfulPayment(){
-        bookVehicle("1", "2");
+        bookVehicle(TimeUnit.DAYS, 1, 2);
     }
 
     @Video
