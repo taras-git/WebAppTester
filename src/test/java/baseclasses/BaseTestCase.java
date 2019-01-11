@@ -295,23 +295,4 @@ public class BaseTestCase {
         return url;
     }
 
-
-    private String getModifiedUrl(String url) {
-        LocalDateTime now = LocalDateTime.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'00:00");
-        String startDate = now.plusDays(1).format(formatter);
-        String endDate = now.plusDays(2).format(formatter);
-
-        int index = url.indexOf("co=");
-        url = url.substring(0, index + 3)
-                + startDate
-                + url.substring(index + 19);
-        index = url.indexOf("ci=");
-        url = url.substring(0, index + 3)
-                + endDate
-                + url.substring(index + 19);
-
-        return url;
-    }
-
 }
