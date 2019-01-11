@@ -253,7 +253,7 @@ public class BaseTestCase {
 
         bookingPage.verifySuccessPaymentPageDisplayed();
 
-        if (!isUrlModified){
+        if (isUrlModified){
             try {
                 EmailReader.checkConfirmationEmailReceived(date);
             } catch (Exception e) {
