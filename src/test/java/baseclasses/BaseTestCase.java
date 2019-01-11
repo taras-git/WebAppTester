@@ -18,6 +18,7 @@ import java.lang.reflect.Method;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 import static utils.Utils.*;
 
@@ -217,23 +218,10 @@ public class BaseTestCase {
     }
 
     protected void bookVehicle() {
-        login();
-
-        bookingPage.chooseLocation()
-                .clickFindCar();
-
-        chooseCarPage.waitChooseCarPageDisplayed()
-                .chooseFirstCarDisplayed();
-
-        confirmPaymentPage.confirmCarBooked();
-
-        telecashPage.verifyTelecashPageDisplayed();
-        telecashPage.makePayment();
-
-        bookingPage.verifyFailedPaymentPageDisplayed();
+        bookVehicle(TimeUnit.HOURS, 0, 0);
     }
 
-    protected void bookVehicle(String from, String to) {
+    protected void bookVehicle(TimeUnit timeUnit, int fromOffset, int toOffset) {
         login();
 
         bookingPage.chooseLocation()
@@ -242,31 +230,63 @@ public class BaseTestCase {
         chooseCarPage.waitChooseCarPageDisplayed();
 
         Date date = new Date();
-        String url = driver.getCurrentUrl();
-        String newUrl = getNewUrl(url);
-        driver.navigate().to(newUrl);
+
+        // modify booking time in URL in case: fromOffset and toOffset != 0
+        boolean isUrlModified = false;
+        if(!(0 == fromOffset && 0 == toOffset)){
+            isUrlModified = true;
+
+            String currentUrl = driver.getCurrentUrl();
+            String modifiedUrl = getModifiedUrl(timeUnit, fromOffset, toOffset, currentUrl);
+
+            driver.navigate().to(modifiedUrl);
+
+            LOG.info("URL is modified with time unit: {}", timeUnit.toString());
+        }
 
         chooseCarPage.chooseFirstCarDisplayed();
 
+        boolean paymentSumWithoutCents = confirmPaymentPage.isWithoutCents();
         confirmPaymentPage.confirmCarBooked();
 
-        telecashPage.verifyTelecashPageDisplayed();
-        telecashPage.makePayment();
+        telecashPage.verifyTelecashPageDisplayed()
+                .makePayment();
 
-        bookingPage.verifySuccessPaymentPageDisplayed();
+        if (paymentSumWithoutCents) {
+            bookingPage.verifySuccessPaymentPageDisplayed();
+        } else {
+            bookingPage.verifyFailedPaymentPageDisplayed();
+        }
 
-        try {
-            EmailReader.checkConfirmationEmailReceived(date);
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (isUrlModified){
+            try {
+                EmailReader.checkConfirmationEmailReceived(date);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
-    private String getNewUrl(String url) {
+    private String getModifiedUrl(TimeUnit timeUnit, int from, int to, String url) {
         LocalDateTime now = LocalDateTime.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'00:00");
-        String startDate = now.plusDays(1).format(formatter);
-        String endDate = now.plusDays(2).format(formatter);
+        DateTimeFormatter formatter;
+        String startDate = null;
+        String endDate = null;
+
+        switch (timeUnit){
+            case HOURS:
+                formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
+                startDate = now.plusHours(from).format(formatter);
+                endDate = now.plusHours(to).format(formatter);
+                break;
+
+            case DAYS:
+                formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'00:00");
+                startDate = now.plusDays(from).format(formatter);
+                endDate = now.plusDays(to).format(formatter);
+                break;
+        }
+
 
         int index = url.indexOf("co=");
         url = url.substring(0, index + 3)

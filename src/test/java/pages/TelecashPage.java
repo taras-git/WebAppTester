@@ -5,7 +5,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-import static utils.Timeouts.SHORTEST_TIMEOUT;
 import static utils.Timeouts.SHORT_TIMEOUT;
 
 public class TelecashPage extends BasePage {
@@ -27,8 +26,9 @@ public class TelecashPage extends BasePage {
 
     public TelecashPage(WebDriver driver) { super(driver); }
 
-    public void verifyTelecashPageDisplayed(){
+    public TelecashPage verifyTelecashPageDisplayed(){
         verifyPageDisplayed("test.ipg-online.com", "Telecash Page");
+        return this;
     }
 
     public void makePayment(){

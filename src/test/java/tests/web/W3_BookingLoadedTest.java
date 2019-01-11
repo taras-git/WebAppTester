@@ -8,6 +8,8 @@ import org.slf4j.LoggerFactory;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
+import java.util.concurrent.TimeUnit;
+
 import static utils.Utils.getCurrentDateTime;
 
 
@@ -24,7 +26,7 @@ public class W3_BookingLoadedTest extends BaseTestCase {
     public void loggedUserCanBookVehicle_Loaded(){
         String from = getCurrentDateTime(2);
         String to = getCurrentDateTime(6);
-        bookVehicle(from, to);
+        bookVehicle(TimeUnit.HOURS, 2, 6);
     }
 
     @Video
