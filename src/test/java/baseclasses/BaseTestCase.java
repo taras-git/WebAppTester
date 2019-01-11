@@ -246,12 +246,17 @@ public class BaseTestCase {
 
         chooseCarPage.chooseFirstCarDisplayed();
 
+        boolean paymentSumWithoutCents = confirmPaymentPage.isWithoutCents();
         confirmPaymentPage.confirmCarBooked();
 
-        telecashPage.verifyTelecashPageDisplayed();
-        telecashPage.makePayment();
+        telecashPage.verifyTelecashPageDisplayed()
+                .makePayment();
 
-        bookingPage.verifySuccessPaymentPageDisplayed();
+        if (paymentSumWithoutCents) {
+            bookingPage.verifySuccessPaymentPageDisplayed();
+        } else {
+            bookingPage.verifyFailedPaymentPageDisplayed();
+        }
 
         if (isUrlModified){
             try {

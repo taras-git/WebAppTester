@@ -14,8 +14,16 @@ public class ConfirmPaymentPage extends BasePage {
     @FindBy(xpath = "//input[@name='submit']")
     private WebElement bookCar;
 
+    @FindBy(css = "div.summary__row div.value")
+    private WebElement totalPayment;
+
     public ConfirmPaymentPage(WebDriver driver) {
         super(driver);
+    }
+
+    public boolean isWithoutCents(){
+        scrollTo(totalPayment);
+        return totalPayment.getText().endsWith(".00");
     }
 
     public ConfirmPaymentPage confirmCarBooked(){
