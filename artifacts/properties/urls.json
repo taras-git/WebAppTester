@@ -1,8 +1,0 @@
-{
-  "booking_page_production": "https://book.app2drive.com/app2drive/de/app2drive.nsf/c/fahrzeug_finden_und_buchen#/rental-data",
-  "booking_page_intera_de": "https://app2drive.intera.de/app2drive/dev/de/index.nsf/c/fahrzeug_finden_und_buchen#/rental-data",
-  "booking_page_intera_en": "https://app2drive.intera.de/app2drive/de-en/app2drive.nsf#/rental-data",
-
-  "intera_base_page_en": "https://book.app2drive.com/app2drive/de-en/app2drive.nsf/c/",
-  "intera_base_page_de": "https://book.app2drive.com/app2drive/de/app2drive.nsf/c/"
-}

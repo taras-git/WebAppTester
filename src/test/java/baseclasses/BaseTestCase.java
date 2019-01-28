@@ -43,7 +43,6 @@ public class BaseTestCase {
     private final static String APP2_D_NAME = "App";
 
     protected HomePage homePage;
-    protected HomePageIntera homePageIntera;
     protected BookingPage bookingPage;
     protected RatesPage ratesPage;
     protected FleetPage fleetPage;
@@ -64,7 +63,6 @@ public class BaseTestCase {
 
     public void initPages(WebDriver driver){
         homePage = new HomePage(driver);
-        homePageIntera = new HomePageIntera(driver);
         bookingPage = new BookingPage(driver);
         ratesPage = new RatesPage(driver);
         fleetPage = new FleetPage(driver);
@@ -153,32 +151,9 @@ public class BaseTestCase {
 
 
     protected void login() {
-        if (isIntera()){
-            loginUserIntera(
-                    JsonReader.getUserEmail(APP2_DRIVER),
-                    JsonReader.getUserPassword(APP2_DRIVER),
-                    getUrlFromProperty());
-            return;
-        }
-
-        if (isStaging()) {
-            loginUserProd(APP2_D_EMAIL, APP2_D_PASSWORD, getUrlFromProperty());
-            return;
-        }
-
-        throw new RuntimeException("Please configure environment/url in Env.java");
+        login(APP2_D_EMAIL, APP2_D_PASSWORD, getUrlFromProperty());
     }
 
-    private boolean isStaging() {
-        return ENVIRONMENT.contains("prod")
-                || ENVIRONMENT.contains("www3")
-                || ENVIRONMENT.contains("domino")
-                || ENVIRONMENT.contains("stg");
-    }
-
-    private boolean isIntera() {
-        return ENVIRONMENT.contains("intera");
-    }
 
     public static String getUrlFromProperty() {
         String url;
@@ -200,7 +175,7 @@ public class BaseTestCase {
         return url;
     }
 
-    private void loginUserProd(String email, String password, String url) {
+    private void login(String email, String password, String url) {
         homePage.start(url)
                 .clickLogin();
 
@@ -208,13 +183,6 @@ public class BaseTestCase {
                 .waitLoginFieldDisplayed()
                 .login(email, password)
                 .verifyUserLogged();
-    }
-
-    private void loginUserIntera(String email, String password, String url) {
-        homePageIntera.start(url)
-                .login(email, password);
-
-        loginPage.verifyUserLogged();
     }
 
     protected void bookVehicle() {

@@ -28,23 +28,6 @@ public class RestApiTestHelper {
     private final String www3PageEn = Env.WWW3_EN.getUrl();
     private final String www3PageDe = Env.WWW3_DE.getUrl();
 
-    private final String interaBasePageEn = JsonReader.getUrl("intera_base_page_en");
-    private final String interaBasePageDe = JsonReader.getUrl("intera_base_page_de");
-
-    private final String bookingPageEn = interaBasePageEn + "find_and_book_a_vehicle#/rental-data";
-    private final String findHotspotsPageEn = interaBasePageEn + "find_hotspots_and_stations";
-    private final String ratesPageEn = interaBasePageEn + "rates";
-    private final String contactPageEn = interaBasePageEn + "siteservice,contact";
-    private final String registrationPageEn = interaBasePageEn + "siteservice,register";
-    private final String loginPageEn = interaBasePageEn + "login";
-    private final String corporateMobilityPageEn = interaBasePageEn + "more,become_a_corporate_customer?open&TYPE=CORPORATE";
-    private final String bookingPageDe = interaBasePageDe + "fahrzeug_finden_und_buchen#/rental-data";
-    private final String findHotspotsPageDe = interaBasePageDe + "hotspots_und_stationen_finden";
-    private final String ratesPageDe = interaBasePageDe + "tarife";
-    private final String contactPageDe = interaBasePageDe + "siteservice,kontakt";
-    private final String registrationPageDe = interaBasePageDe + "siteservice,kunde_werden";
-    private final String loginPageDe = interaBasePageDe + "login";
-    private final String corporateMobilityPageDe = interaBasePageDe + "more,firmenkunde_werden?open&TYPE=CORPORATE";
     private final String fleetPageEn = homePageEnProduction + "fleet";
     private final String fleetPageDe = homePageDeProduction + "fahrzeugflotte";
     private final String howItWorksPageEn = homePageEnProduction + "how-it-works";
@@ -57,20 +40,6 @@ public class RestApiTestHelper {
     protected final List<String> pageNames = asList(
             homePageEnProduction,
             homePageDeProduction,
-            bookingPageEn,
-            findHotspotsPageEn,
-            ratesPageEn,
-            contactPageEn,
-            registrationPageEn,
-            loginPageEn,
-            corporateMobilityPageEn,
-            bookingPageDe,
-            findHotspotsPageDe,
-            ratesPageDe,
-            contactPageDe,
-            registrationPageDe,
-            loginPageDe,
-            corporateMobilityPageDe,
             fleetPageEn,
             fleetPageDe,
             howItWorksPageEn,
@@ -84,8 +53,6 @@ public class RestApiTestHelper {
     protected final List<String> startUrls = asList(
             homePageEnProduction,
             homePageDeProduction,
-            interaBasePageEn,
-            interaBasePageDe,
             www3PageEn,
             www3PageDe
     );

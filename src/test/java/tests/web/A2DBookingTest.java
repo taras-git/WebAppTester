@@ -138,6 +138,7 @@ public class A2DBookingTest extends BaseTestCase {
             case EN : expexctedCountry = "GERMANY";
                 break;
         }
+
         if (!currentCountry.equalsIgnoreCase(expexctedCountry)) {
             throw new RuntimeException("Failed to restore land! Current land is still: " + currentCountry);
         }
