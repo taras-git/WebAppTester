@@ -17,7 +17,6 @@ import java.util.ArrayList;
 public class JsonReader {
 
     private static String propertyFile = "artifacts/properties/general_property.json";
-    private static String urlsFile = "artifacts/properties/urls.json";
     private static String usersFile = "artifacts/properties/users.json";
     private static String locationsFile = "artifacts/properties/locations.json";
     private static String emailsFile = "artifacts/properties/emails.json";
@@ -55,10 +54,6 @@ public class JsonReader {
 
     public static ArrayList<String> getApiPostCalls(String key){
         return getArray(key, apiCallsFile);
-    }
-
-    public static String getUrl(String key) {
-        return getString(key, urlsFile);
     }
 
     public static String getUserEmail(String key) {

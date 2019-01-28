@@ -22,7 +22,7 @@ All basic configuration needed for the project is stored in ```artifacts/propert
 Some important keys:
 
 ###### Environment
-  - "env" - the main property for the project, possible values are: prod_en, prod_de, intera_en, intera_de.
+  - "env" - the main property for the project, possible values are: prod_en, prod_de.
   Language is set with end part of the value ("..._en" - English, "..._de" - German)
   This value is also set in Jenkins jobs, and is used for remote test runs.
 
@@ -43,9 +43,6 @@ Holds information about emails subjects (in English and German languages) that a
 Holds time pattern for creating file name during making screenshots, 
 and time pattern for booking an auto.
 
-#### urls.json
-
-Holds URLs which are used in ATF.
 
 #### users.json
 
