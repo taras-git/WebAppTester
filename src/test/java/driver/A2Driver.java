@@ -10,6 +10,7 @@ import org.openqa.selenium.safari.SafariDriver;
 import utils.JsonReader;
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.Map;
 
 import static utils.OsName.isMac;
@@ -48,8 +49,8 @@ public class A2Driver {
             if (isWindows()) return firefoxDriverPathWindows;
         }
 
-        if (browserName.equalsIgnoreCase("chrome") ||
-                browserName.equalsIgnoreCase("ch")) {
+        if (browserName.equalsIgnoreCase("ch") ||
+                browserName.contains("chrome")) {
             if (isUnix()) return chromeDriverPathLinux;
             if (isMac()) return chromeDriverPathMacos;
             if (isWindows()) return chromeDriverPathWindows;
@@ -95,8 +96,34 @@ public class A2Driver {
         }
         if (headlessMode) {
             options.setHeadless(true);
-            options.addArguments("window-size=1920x1080");
         }
+
+        return new ChromeDriver(options);
+    }
+
+    public WebDriver chromeMobileDriver(String browserName, String deviceName) {
+        chromeDriverPath = getDriverPath(browserName);
+
+        if (chromeDriverPath == null) {
+            throw new RuntimeException
+                    ("chromeDriverPath is not correctly set, please check the property file");
+        }
+
+        if (!new File(chromeDriverPath).exists()) {
+            throw new RuntimeException
+                    ("chromedriver executable file does not exist!");
+        }
+
+        System.setProperty("webdriver.chrome.driver", chromeDriverPath);
+        System.setProperty("webdriver.chrome.logfile", "test-output/ChromeTestLog.txt");
+
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("disable-infobars");
+
+        Map<String, String> mobileEmulation = new HashMap<>();
+        mobileEmulation.put("deviceName", deviceName);
+
+        options.setExperimentalOption("mobileEmulation", mobileEmulation);
 
         return new ChromeDriver(options);
     }

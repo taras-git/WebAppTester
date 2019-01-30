@@ -5,6 +5,7 @@ import exceptions.PropertyMisconfigureException;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 
+import static utils.Timeouts.SHORTER_TIMEOUT;
 import static utils.Timeouts.SHORT_TIMEOUT;
 import static utils.Utils.*;
 
@@ -13,7 +14,6 @@ import static utils.Utils.*;
  */
 public class BookingPage extends BasePage{
 
-    By findCarId = By.id("button1");
     @FindBy(css = "button.btn-submit > span.text")
     private WebElement findCar;
 
@@ -37,7 +37,11 @@ public class BookingPage extends BasePage{
     @FindBy(css = ".desktop#same-station-field")
     private WebElement chooseStation;
 
+    @FindBy(css = ".mobile#same-station-field")
+    private WebElement chooseStationMobile;
+
     private final By choosePickupStation = By.cssSelector("div.desktop > div.search__block > input");
+    private final By choosePickupStationMobile = By.cssSelector("div.mobile > div.search__block > input");
 
     public BookingPage(WebDriver driver) {
         super(driver);
@@ -96,21 +100,52 @@ public class BookingPage extends BasePage{
 
 
     public BookingPage chooseLocation() {
-        clickOn(chooseStation);
-        waitElementDisplayed(choosePickupStation, SHORT_TIMEOUT);
-
         String aschaffenburg = "Aschaffenburg";
-        sendTextTo(choosePickupStation, aschaffenburg);
-        WebElement station = getElement(By.xpath("//div[@class='station__list desktop d-none d-md-block']" +
-                "//li[@data-city='" +
-                aschaffenburg +
-                "']"));
-        clickOn(station);
+        WebElement station;
+
+        switch (LANGUAGE) {
+            case DE :
+            case EN : clickOn(chooseStation);
+                waitElementDisplayed(choosePickupStation, SHORT_TIMEOUT);
+                sendTextTo(choosePickupStation, aschaffenburg);
+
+                station = getElement(By.xpath("//div[@class='station__list desktop d-none d-md-block']" +
+                        "//li[@data-city='" +
+                        aschaffenburg +
+                        "']"));
+                clickOn(station);
+
+                break;
+
+            case DE_MOBILE:
+            case EN_MOBILE: clickOn(chooseStationMobile);
+                waitElementDisplayed(choosePickupStationMobile, SHORT_TIMEOUT);
+                sendTextTo(choosePickupStationMobile, aschaffenburg);
+
+                station = getElement(By.xpath("//div[@class='station__list mobile d-md-none']" +
+                        "//li[@data-city='" +
+                        aschaffenburg +
+                        "']/p[contains(text(), '" +
+                        aschaffenburg +
+                        "')]"));
+                clickOn(station);
+
+                clickOn(getElement(By.cssSelector("span.apply__station")));
+                break;
+        }
+
+
 
         return this;
     }
 
     public BookingPage clickFindCar() {
+        switch (LANGUAGE) {
+            case DE_MOBILE:
+            case EN_MOBILE:
+                sleep(0.5);
+        }
+
         clickOn(findCar);
         return this;
     }

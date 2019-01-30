@@ -32,6 +32,9 @@ public class Utils {
     private static final Logger LOG = LoggerFactory.getLogger(Utils.class);
     public static final String DE = "DE";
     public static final String EN = "EN";
+    public static final String DE_MOBILE = "DE_MOBILE";
+    public static final String EN_MOBILE = "EN_MOBILE";
+
 
     public static void sleep(double seconds){
         try {
@@ -61,10 +64,15 @@ public class Utils {
     }
 
     public static void createFolder(String folderName) {
+        createFolder(folderName, true);
+    }
+
+    public static void createFolder(String folderName, boolean deleteBeforeCreate) {
         Path dirsPath = Paths.get(folderName);
 
-        deleteOldScreenshots(dirsPath);
-
+        if (deleteBeforeCreate) {
+            deleteDirs(dirsPath);
+        }
         try {
             Files.createDirectories(dirsPath);
             LOG.info(folderName + " folder created");
@@ -73,7 +81,7 @@ public class Utils {
         }
     }
 
-    private static void deleteOldScreenshots(Path path) {
+    private static void deleteDirs(Path path) {
         try {
             Files.walk(path)
                     .sorted(Comparator.reverseOrder())
@@ -198,8 +206,16 @@ public class Utils {
         return System.getProperty("Browser");
     }
 
+    private static String getMobileDeviceFromJenkins() {
+        return System.getProperty("Deivce");
+    }
+
     private static String getBrowserFromJson() {
         return JsonReader.getString("browser");
+    }
+
+    public static String getMobileDeviceFromJson(){
+        return JsonReader.getString("device");
     }
 
     public static String getBrowser(){
@@ -212,7 +228,22 @@ public class Utils {
         return getBrowserFromJson();
     }
 
+    public static String getMobileDevice(){
+        if(null != getMobileDeviceFromJenkins()){
+            LOG.info("Device is set by Jenkins: " + getMobileDeviceFromJenkins());
+            return getMobileDeviceFromJenkins();
+        }
+
+        LOG.info("Device is set by JSON: " + getMobileDeviceFromJson());
+        return getMobileDeviceFromJson();
+    }
+
     public static String getLanguage() {
+        if (!getMobileDevice().isEmpty()){
+            if(getUiTestEnvironment().toLowerCase().contains("_de")) return DE_MOBILE;
+            if(getUiTestEnvironment().toLowerCase().contains("_en")) return EN_MOBILE;
+        }
+
         if(getUiTestEnvironment().toLowerCase().contains("_de")) return DE;
         if(getUiTestEnvironment().toLowerCase().contains("_en")) return EN;
 

@@ -1,25 +1,27 @@
 package baseclasses;
 
+import com.testautomationguru.ocular.Ocular;
 import driver.A2Driver;
 import org.openqa.selenium.WebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.testng.Assert;
 import org.testng.ITestContext;
 import org.testng.ITestResult;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.*;
 import pages.*;
 import utils.EmailReader;
 import utils.Env;
 import utils.JsonReader;
 
 import java.lang.reflect.Method;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
+import static utils.Timeouts.SHORTEST_TIMEOUT;
 import static utils.Utils.*;
 
 
@@ -37,6 +39,9 @@ public class BaseTestCase {
     private final static String ENVIRONMENT = getUiTestEnvironment();
     private final static String SCREENSHOT_FOLDER = JsonReader.getString("failed_tests_screenshot_folder");
     private final static String VIDEO_FOLDER = JsonReader.getString("failed_tests_video_folder");
+    private final static String OCULAR_SNAPSHOTS = "test-output/ocular/snapshots/";
+    private final static String OCULAR_RESULTS = "test-output/ocular/results/";
+
     private final static String APP2_DRIVER = "app2_driver";
     private final static String APP2_D_EMAIL = "app2d@ukr.net";
     private final static String APP2_D_PASSWORD = "112233Yahoo!";
@@ -92,6 +97,10 @@ public class BaseTestCase {
 
         createFolder(SCREENSHOT_FOLDER);
         createFolder(VIDEO_FOLDER);
+        createFolder(OCULAR_RESULTS, false);
+        createFolder(OCULAR_SNAPSHOTS, false);
+        createFolder(OCULAR_SNAPSHOTS + "/web", false);
+        createFolder(OCULAR_SNAPSHOTS + "/iphone", false);
     }
 
     @BeforeMethod
@@ -100,9 +109,17 @@ public class BaseTestCase {
     }
 
     @BeforeMethod
-    public void getDriver(ITestContext context) throws Exception {
-        driver = new BaseTestCase().createDriver(getBrowser());
+    public void getDriver(ITestContext context) {
+        driver = new BaseTestCase().createDriver(getBrowser(), getMobileDevice());
         initPages(driver);
+    }
+
+    public void setOcular(String device){
+        Ocular.config()
+                .resultPath(Paths.get(OCULAR_RESULTS))
+                .snapshotPath(Paths.get(OCULAR_SNAPSHOTS, device))
+                .globalSimilarity(95)
+                .saveSnapshot(true);
     }
 
     private String getResultDescription(int statusCode){
@@ -128,7 +145,12 @@ public class BaseTestCase {
         driver.quit();
     }
 
-    private WebDriver createDriver(String browserName) {
+    private WebDriver createDriver(String browserName, String deviceName) {
+        if(!deviceName.isEmpty()){
+            if (browserName.equalsIgnoreCase("chrome"))
+                return new A2Driver().chromeMobileDriver(browserName, deviceName);
+        }
+
         if (browserName.equalsIgnoreCase("firefox") ||
                 browserName.equalsIgnoreCase("ff"))
             return new A2Driver().firefoxDriver(browserName);
@@ -176,14 +198,21 @@ public class BaseTestCase {
     }
 
     private void login(String email, String password, String url) {
-        homePage.start(url)
-                .clickLogin();
+
+        homePage.start(url);
+        homePage.clickLogin();
 
         loginPage.verifyLoginPageDisplayed()
                 .waitLoginFieldDisplayed()
                 .login(email, password)
                 .verifyUserLogged();
     }
+
+    protected void openHomePage() {
+        homePage.start(getUrlFromProperty());
+        Assert.assertTrue(homePage.compare().isEqualsImages());
+    }
+
 
     protected void bookVehicle() {
         bookVehicle(TimeUnit.HOURS, 0, 0);
@@ -200,33 +229,36 @@ public class BaseTestCase {
         Date date = new Date();
 
         // modify booking time in URL in case: fromOffset and toOffset != 0
-        boolean isUrlModified = false;
         if(!(0 == fromOffset && 0 == toOffset)){
-            isUrlModified = true;
-
             String currentUrl = driver.getCurrentUrl();
             String modifiedUrl = getModifiedUrl(timeUnit, fromOffset, toOffset, currentUrl);
 
             driver.navigate().to(modifiedUrl);
+            LOG.info("URL is modified with time unit: {}, from: {}  to: {}", timeUnit.toString(), fromOffset, toOffset);
 
-            LOG.info("URL is modified with time unit: {}", timeUnit.toString());
+            sleep(SHORTEST_TIMEOUT);
         }
 
         chooseCarPage.chooseFirstCarDisplayed();
 
-        boolean paymentSumWithoutCents = confirmPaymentPage.isWithoutCents();
-        confirmPaymentPage.confirmCarBooked();
+        confirmPaymentPage.isWithoutCents();
+
+        boolean paymentSumWithoutCents = confirmPaymentPage.confirmCarBooked();
+        LOG.info("Payment sum is without cents: {}", paymentSumWithoutCents);
 
         telecashPage.verifyTelecashPageDisplayed()
                 .makePayment();
 
+        boolean isBookingSuccess = false;
         if (paymentSumWithoutCents) {
             bookingPage.verifySuccessPaymentPageDisplayed();
+            isBookingSuccess = true;
         } else {
             bookingPage.verifyFailedPaymentPageDisplayed();
         }
 
-        if (isUrlModified){
+        //booking should be successful and email sent
+        if (isBookingSuccess){
             try {
                 EmailReader.checkConfirmationEmailReceived(date);
             } catch (Exception e) {
