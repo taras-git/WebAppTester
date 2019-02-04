@@ -105,7 +105,6 @@ public class LoginPage extends BasePage{
             }
         }
 
-//        waitElementDisplayed(greetingXpath, LONG_TIMEOUT);
         WebElement closeAlert = null;
 
         try {
