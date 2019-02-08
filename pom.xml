@@ -195,6 +195,13 @@
             <version>LATEST</version>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/com.testautomationguru.ocular/ocular -->
+        <dependency>
+            <groupId>com.testautomationguru.ocular</groupId>
+            <artifactId>ocular</artifactId>
+            <version>1.0.0.Alpha</version>
+        </dependency>
+
     </dependencies>
 
 </project>

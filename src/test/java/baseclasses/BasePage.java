@@ -1,7 +1,10 @@
 package baseclasses;
 
+import com.testautomationguru.ocular.Ocular;
+import com.testautomationguru.ocular.comparator.OcularResult;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.*;
 import org.slf4j.Logger;
@@ -24,11 +27,20 @@ public class BasePage {
     public final static String LANGUAGE = Utils.getLanguage();
     private static final Logger LOG = LoggerFactory.getLogger(BasePage.class);
 
+    @FindBy(css = "div.mobile__btn")
+    public WebElement burgerMenu;
+
     protected BasePage(WebDriver driver){
         this.driver = driver;
         PageFactory.initElements(driver, this);
         this.wait = new WebDriverWait(driver, MIDDLE_TIMEOUT);
         driver.manage().window().setSize(new Dimension(1920, 1080));
+    }
+
+    public OcularResult compare() {
+        return Ocular.snapshot().from(this)
+                .sample().using(driver)
+                .compare();
     }
 
     public void verifyPageDisplayed(String textInUrl, String pageName) {
@@ -68,7 +80,6 @@ public class BasePage {
         wait.until(ExpectedConditions.elementToBeClickable(el));
     }
 
-
     public void waitElementDisplayed(String xpath, int timeout){
         waitElementDisplayed(By.xpath(xpath), timeout);
     }
@@ -85,6 +96,33 @@ public class BasePage {
         wait
                 .withMessage("Cannot find element: " + by.toString())
                 .until(ExpectedConditions.presenceOfElementLocated(by));
+    }
+
+    public boolean isElementVisible(WebElement e, int timeout){
+        LOG.info("Wait Element present > " + e.toString() + " Timeout: " + timeout);
+        WebDriverWait wait = new WebDriverWait(driver, timeout);
+
+        try {
+            wait
+                .withMessage("Cannot find element: " + e.toString())
+                .until(ExpectedConditions.visibilityOf(e)
+                );
+            return true;
+        } catch (Exception ex) {
+            return false;
+        }
+    }
+
+    public boolean isElementPresent(By by) {
+        boolean found = false;
+        try {
+            if (driver.findElements(by).size() > 0) {
+                found = true;
+            }
+        } catch (NoSuchElementException e) {
+                found = false;
+        }
+        return found;
     }
 
     public WebElement getElementWaitFound(By by, int timeout){
@@ -176,10 +214,37 @@ public class BasePage {
         clickOn(element, true);
     }
 
+    protected void clickOn(By by){
+        clickOn(by, true);
+    }
+
     protected void clickOn(WebElement element, boolean shouldWait){
         if(shouldWait) {
             waitElementClickable(element, LONG_TIMEOUT);
         }
+        element.click();
+
+        String locator = element.toString();
+        locator = locator.substring(locator.lastIndexOf("->") + 2);
+        LOG.info("Click on > " + locator);
+    }
+
+    protected void clickOn(By by, boolean shouldWait){
+        if(shouldWait) {
+            waitElementClickable(by, LONG_TIMEOUT);
+        }
+        WebElement element = driver.findElement(by);
+        element.click();
+
+        String locator = element.toString();
+        locator = locator.substring(locator.lastIndexOf("->") + 2);
+        LOG.info("Click on > " + locator);
+    }
+
+    protected void clickOn(By by, int timeout){
+        waitElementClickable(by, timeout);
+
+        WebElement element = driver.findElement(by);
         element.click();
 
         String locator = element.toString();

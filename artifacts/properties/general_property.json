@@ -9,7 +9,18 @@
   "//env" : "stg_en",
 
   "//": "allowed browser names: ff, firefox, ch, chrome, ie, edge, safari",
-  "browser": "ch",
+  "browser": "chrome",
+
+  "//": "allowed device names: '' (empty - for Web App tests), Galaxy S5, iPhone 5/SE, iPhone X, Pixel 2, Nexus 7",
+  "//": "LEAVE EMPTY IF WEB APP",
+  "//device": "",
+
+  "//device": "iPhone X",
+  "device": "iPhone 5/SE",
+  "//device": "Galaxy S5",
+  "//device": "Pixel 2",
+  "//device": "Nexus 7",
+
   "headless_mode": false,
   "use_browser_binary": false,
   "chrome_binary": "artifacts/binaries/linux/chrome/chrome",

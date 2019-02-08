@@ -11,8 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import static utils.Timeouts.*;
-import static utils.Utils.DE;
-import static utils.Utils.EN;
+import static utils.Utils.*;
 
 /**
  * Created by taras on 7/27/18.
@@ -55,6 +54,8 @@ public class LoginPage extends BasePage{
 
     private final String greetingXpath = "(//span[contains(text(), 'Hallo, ')])[1]";
 
+    private final String greetingXpathMobile = "(//span[contains(text(), 'Hallo, ')])[2]";
+
     public LoginPage(WebDriver driver) {
         super(driver);
     }
@@ -75,7 +76,8 @@ public class LoginPage extends BasePage{
         passwordInput.sendKeys(password);
 
         switch (LANGUAGE){
-            case DE : {
+            case DE :
+            case DE_MOBILE:{
                 clickOn(loginButton);
                 break;
             }
@@ -88,7 +90,21 @@ public class LoginPage extends BasePage{
     }
 
     public LoginPage verifyUserLogged(){
-        waitElementDisplayed(greetingXpath, LONG_TIMEOUT);
+        switch (LANGUAGE){
+            case EN_MOBILE:
+            case DE_MOBILE:{
+                clickOn(burgerMenu);
+                waitElementDisplayed(greetingXpathMobile, LONG_TIMEOUT);
+                clickOn(burgerMenu);
+                break;
+            }
+            case DE :
+            case EN : {
+                waitElementDisplayed(greetingXpath, LONG_TIMEOUT);
+                break;
+            }
+        }
+
         WebElement closeAlert = null;
 
         try {

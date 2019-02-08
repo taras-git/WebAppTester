@@ -2,6 +2,7 @@ package pages;
 
 import baseclasses.BasePage;
 import baseclasses.BaseTestCase;
+import com.testautomationguru.ocular.snapshot.Snap;
 import exceptions.PropertyMisconfigureException;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -10,16 +11,16 @@ import org.openqa.selenium.support.FindBy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.Assert;
-import utils.JsonReader;
 
 import java.util.List;
 
-import static utils.Utils.DE;
-import static utils.Utils.EN;
+import static utils.Timeouts.SHORTEST_TIMEOUT;
+import static utils.Utils.*;
 
 /**
  * Created by taras on 7/19/18.
  */
+@Snap("HomePage.png")
 public class HomePage extends BasePage{
 
     private static final Logger LOG = LoggerFactory.getLogger(HomePage.class);
@@ -84,6 +85,9 @@ public class HomePage extends BasePage{
     @FindBy(xpath = "(//*[contains(text(), 'Mein Konto')])[1]")
     private WebElement loginDeEn;
 
+    @FindBy(xpath = "(//*[contains(text(), 'Mein Konto')])[2]")
+    private WebElement loginDeEnMobile;
+
     @FindBy(xpath = "(//a[contains(text(), 'Locations')])[2]")
     private WebElement locationsEn;
 
@@ -136,6 +140,8 @@ public class HomePage extends BasePage{
     @FindBy(css = ".desktop#same-station-field")
     private WebElement chooseStation;
 
+    By acceptCookies = By.cssSelector("span.cookies__accept");
+
     By station = By.cssSelector(".desktop .station");
 
     public HomePage(WebDriver driver) {
@@ -175,8 +181,26 @@ public class HomePage extends BasePage{
     }
 
     public void clickLogin(){
-        clickOn(loginDeEn);
-        return;
+
+        if (isElementPresent(acceptCookies)) {
+            clickOn(acceptCookies, SHORTEST_TIMEOUT);
+        }
+
+        switch (LANGUAGE){
+            case DE :
+            case EN : {
+                clickOn(loginDeEn);
+                return;
+            }
+
+            case DE_MOBILE:
+            case EN_MOBILE: {
+                clickOn(burgerMenu);
+                clickOn(loginDeEnMobile);
+                return;
+            }
+        }
+
     }
 
     public void clickRates(){
