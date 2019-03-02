@@ -34,13 +34,10 @@ public class EmailReader {
     private static Folder getFolder(Properties props) throws MessagingException {
         Store store = getStore(props);
 
-//        String login = JsonReader.getUserEmail("app2_driver_mail");
-//        String password = JsonReader.getUserPassword("app2_driver_mail");
 
-        String login = "app2d@ukr.net";
-        String password = "112233Yahoo!";
-
-        String imap = JsonReader.getUserImap("app2_driver_mail_imap");
+        String login = "___LOGIN___";
+        String password = "___PASSWORD___";
+        String imap = "____IMAP___";
         store.connect(imap, login, password);
 
         Folder inbox = store.getFolder("Inbox");
@@ -87,29 +84,6 @@ public class EmailReader {
         return false;
     }
 
-    public static boolean getBookingConfirmation(Date bookingDate) throws MessagingException {
-        Properties props = setImapProps();
-        Folder inbox = getFolder(props);
-
-        return emailWithSubjectExists(inbox,
-                bookingDate,
-                JsonReader.getConfirmationSubjectEN(),
-                JsonReader.getConfirmationSubjectDE());
-    }
-
-    public static void checkConfirmationEmailReceived(Date bookingDate) throws MessagingException {
-        //check for confirmation email every 1 second during 3 minutes
-        LOG.info("Waiting for confirmation email > ");
-
-        for(int i = 0; i < 180; i++) {
-            if (getBookingConfirmation(bookingDate)){
-                LOG.info("CONFIRMATION EMAIL FOUND!");
-                return;
-            }
-            sleep(1);
-        }
-        throw new RuntimeException("CONFIRMATION EMAIL NOT FOUND!");
-    }
 
     private static void showMails(Folder inbox, boolean showAll) throws IOException, MessagingException {
         FlagTerm ft = new FlagTerm(new Flags(Flags.Flag.SEEN), false);

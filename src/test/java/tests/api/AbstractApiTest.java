@@ -8,8 +8,7 @@ import io.restassured.http.Headers;
 import io.restassured.response.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import utils.Booking;
-import utils.JsonReader;
+
 
 import java.util.HashMap;
 import java.util.Map;
@@ -20,21 +19,7 @@ import static io.restassured.RestAssured.given;
 public abstract class AbstractApiTest {
     private static final Logger LOG = LoggerFactory.getLogger(AbstractApiTest.class);
 
-    protected final String bookingApiFile = "artifacts/properties/booking_api_calls.json";
-    protected final String accountApiFile = "artifacts/properties/account_api_calls.json";
-    protected final String url = JsonReader.getValue(
-            "api_call_url",
-            "artifacts/properties/api_calls.json").toString();
-    protected final String loginUrl = url + "/storm/account/user/login/";
-    protected final String bookingUrl = url + "/storm/booking/";
-
     protected final RestApiTestHelper testHelper = new RestApiTestHelper();
-
-    public final static String STORM_SESSION = "STORMSESSION";
-    public final static String BOOKING_ID = "bookingId";
-    public final static String USER_ID = "userId";
-    public final static String ID = "id";
-
 
     protected void removeEndpointFromJsonObject(JsonObject jsonObject) {
         jsonObject.remove("endpoint");
@@ -60,26 +45,7 @@ public abstract class AbstractApiTest {
         return response.path("id");
     }
 
-    protected Booking[] getBookingsFromResponse(Response response) {
-        return response
-                .jsonPath()
-                .getObject("bookings", Booking[].class);
-    }
 
-    protected String getBookingIdRsoProcessed(String url) {
-        String bookingId = null;
-        Response response;
-        response = getResponse(url);
-        Booking[] bookings = getBookingsFromResponse(response);
-
-        for (Booking b : bookings){
-            if (b.getRsoProcessed()) {
-                bookingId = b.getBookingId();
-                break;
-            }
-        }
-        return bookingId;
-    }
 
     protected Map<String, Object> getPostBodyAsMap(JsonObject jsonObject) {
         // create a POST body

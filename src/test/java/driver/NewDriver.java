@@ -20,7 +20,7 @@ import static utils.OsName.isWindows;
 /**
  * Created by taras on 7/18/18.
  */
-public class A2Driver {
+public class NewDriver {
 
     private String chromeDriverPath;
     private String firefoxDriverPath;
@@ -89,7 +89,7 @@ public class A2Driver {
 
         ChromeOptions options = new ChromeOptions();
         options.addArguments("disable-infobars");
-        options.addArguments("window-size=1920x1080");
+        options.addArguments("window-size=1280x777");
 
         if (useBrowserBinary) {
             options.setBinary(JsonReader.getString("chrome_binary"));

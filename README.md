@@ -1,6 +1,6 @@
 # UI Automation test framework (ATF)
 
-ATF is designed to execute testcases for "Booking a car" functionality, the execution can be performed on local machine,
+ATF is designed to execute UI browser tests, the execution can be performed on local machine,
 or on CI (Jenkins)
 
 
@@ -34,19 +34,9 @@ Some important keys:
   - "chrome_binary" and "firefox_binary" - path, where particular binaries of browser are stored;
   - "path to driver executables" - specifies the exact path where the Web-Driver executables are stored.
 
-#### emails.json
-
-Holds information about emails subjects (in English and German languages) that are received while booking.
-
-#### time_pattern.json
-
-Holds time pattern for creating file name during making screenshots, 
-and time pattern for booking an auto.
-
-
-#### users.json
-
-Holds cashed login and password to access email (app2driver@yahoo.com) and login to app2drive.com . 
+###### Device
+  - default value is empty for web tests;
+  - used for emulating mobile devices for Chrome browser only, so "browser" value must be set to "chrome", if "device" holds some value
 
 #### api_calls.json
 
@@ -107,7 +97,7 @@ There are 2 main base classes:
     BasePage.java
     BaseTestCase.java
 
-Every page (HomePage, BookingPage...) is inherited from BasePage.
+Every page is inherited from BasePage.
 Every testcase is inherited from BaseTestCase.
 
 All pages are instantiated in 
@@ -122,14 +112,14 @@ All pages are instantiated in
     }
 ```
 
-Doing this, writing the testcase becomes very straightforward
-###### for example  - A2DNavigationTests.java:
+Doing this, writing the testcases becomes very straightforward
+###### for example  :
 
 ```$xslt
     @Test
     public void navigateToBookingPage() {
         homePage.start()
-                .clickBookVehicle();
+                .clickBooking();
         bookingPage.verifyBookingPageDisplayed();
     }
 ```
@@ -204,8 +194,7 @@ For GET test add an endpoint to "api_get_calls":
 
 ```$xslt
 "api_get_calls": [
-    "/storm/station/",
-    "/storm/station/ids?id=",
+    "/___get_endpoint___",
     "... 
 ``` 
 
@@ -214,11 +203,8 @@ For POST test add JSON object with "endpoint" and POST body:
 ```$xslt
 "api_post_calls":[
     {
-      "endpoint": "/storm/price/",
-      "ci": 1537275600000,
-      "ciLocationCode": "TA1706048601DE",
-      "co": 1537102800000,
-      "coLocationCode": "TA1706048601DE"
+      "endpoint": "/___post_endpoint___",
+      "..." : "...",
     },
     {
     ...

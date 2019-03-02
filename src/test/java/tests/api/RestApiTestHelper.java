@@ -22,41 +22,6 @@ import static java.util.Arrays.asList;
 public class RestApiTestHelper {
 
     private static final Logger LOG = LoggerFactory.getLogger(RestApiTestHelper.class);
-
-    private final String homePageEnProduction = Env.PROD_EN.getUrl();
-    private final String homePageDeProduction = Env.PROD_DE.getUrl();
-    private final String www3PageEn = Env.WWW3_EN.getUrl();
-    private final String www3PageDe = Env.WWW3_DE.getUrl();
-
-    private final String fleetPageEn = homePageEnProduction + "fleet";
-    private final String fleetPageDe = homePageDeProduction + "fahrzeugflotte";
-    private final String howItWorksPageEn = homePageEnProduction + "how-it-works";
-    private final String howItWorksPageDe = homePageDeProduction + "so-funktioniert-es";
-    private final String companyPageEn = homePageEnProduction + "company";
-    private final String companyPageDe = homePageDeProduction + "unternehmen";
-    private final String blogPageEn = homePageEnProduction + "category/news-en";
-    private final String blogPageDe = homePageDeProduction + "category/news";
-
-    protected final List<String> pageNames = asList(
-            homePageEnProduction,
-            homePageDeProduction,
-            fleetPageEn,
-            fleetPageDe,
-            howItWorksPageEn,
-            howItWorksPageDe,
-            companyPageEn,
-            companyPageDe,
-            blogPageEn,
-            blogPageDe
-    );
-
-    protected final List<String> startUrls = asList(
-            homePageEnProduction,
-            homePageDeProduction,
-            www3PageEn,
-            www3PageDe
-    );
-
     private final String ENVIRONMENT = Utils.getRestApiTestEnvironment();
 
     Object[][] getDataProviderFromList(List<?> list) {

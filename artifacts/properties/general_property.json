@@ -2,10 +2,7 @@
   "//":"allowed values: prod_en, prod_de, www3_en, www3_de",
   "//env" : "prod_en",
   "//env" : "prod_de",
-  "//env" : "www3_en",
-  "//env" : "www3_de",
-  "//env" : "domino_en",
-  "env" : "domino_de",
+  "env" : "stg_de",
   "//env" : "stg_en",
 
   "//": "allowed browser names: ff, firefox, ch, chrome, ie, edge, safari",
@@ -13,10 +10,10 @@
 
   "//": "allowed device names: '' (empty - for Web App tests), Galaxy S5, iPhone 5/SE, iPhone X, Pixel 2, Nexus 7",
   "//": "LEAVE EMPTY IF WEB APP",
-  "//device": "",
+  "device": "",
 
   "//device": "iPhone X",
-  "device": "iPhone 5/SE",
+  "//device": "iPhone 5/SE",
   "//device": "Galaxy S5",
   "//device": "Pixel 2",
   "//device": "Nexus 7",
