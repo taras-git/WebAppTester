@@ -1,11 +1,11 @@
 package utils;
 
 public enum Env {
-    PROD_EN("https://www.google.com/"),
-    PROD_DE("https://www.google.com/"),
+    PROD_EN("https://www.funda.nl/"),
+    PROD_DE("https://www.funda.nl/"),
 
-    STG_DE("https://www.google.com/"),
-    STG_EN("https://www.google.com/");
+    STG_DE("https://www.funda.nl/"),
+    STG_EN("https://www.funda.nl/");
 
     private final String url;
 

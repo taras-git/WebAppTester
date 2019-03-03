@@ -34,7 +34,7 @@ public class BasePage {
         this.driver = driver;
         PageFactory.initElements(driver, this);
         this.wait = new WebDriverWait(driver, MIDDLE_TIMEOUT);
-        driver.manage().window().setSize(new Dimension(1920, 1080));
+        driver.manage().window().setSize(new Dimension(1280, 777));
     }
 
     public OcularResult compare() {

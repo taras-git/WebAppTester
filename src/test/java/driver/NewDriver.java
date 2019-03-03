@@ -88,8 +88,7 @@ public class NewDriver {
         System.setProperty("webdriver.chrome.logfile", "test-output/ChromeTestLog.txt");
 
         ChromeOptions options = new ChromeOptions();
-        options.addArguments("disable-infobars");
-        options.addArguments("window-size=1280x777");
+        options.addArguments("--disable-infobars");
 
         if (useBrowserBinary) {
             options.setBinary(JsonReader.getString("chrome_binary"));
