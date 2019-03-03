@@ -18,9 +18,53 @@ public class FirstTest extends BaseTestCase {
     private static final Logger LOG = LoggerFactory.getLogger(FirstTest.class);
 
     @Video
-    @Test(groups="Booking", priority=1)
-    public void openHomePage(){
-        homePage.start();
+    @Test(groups="Smoke", priority=1)
+    public void verifyKoopLink(){
+        homePage.start()
+                .clickKoop()
+                .verifyKoopDisplayed()
+                .clickZoek()
+                .verifyResultsGreaterThanZero();
+    }
+
+    @Video
+    @Test(groups="Smoke", priority=1)
+    public void verifyHuurLink(){
+        homePage.start()
+                .clickHuur()
+                .verifyHuurDisplayed()
+                .clickZoek()
+                .verifyResultsGreaterThanZero();
+    }
+
+    @Video
+    @Test(groups="Smoke", priority=1)
+    public void verifyNieuwbouwLink(){
+        homePage.start()
+                .clickNieuwbouw()
+                .verifyNieuwbouwDisplayed()
+                .clickZoek()
+                .verifyResultsGreaterThanZero();
+    }
+
+    @Video
+    @Test(groups="Smoke", priority=1)
+    public void verifyRecreatieLink(){
+        homePage.start()
+                .clickRecreatie()
+                .verifyRecreatieDisplayed()
+                .clickZoek()
+                .verifyResultsGreaterThanZero();
+    }
+
+    @Video
+    @Test(groups="Smoke", priority=1)
+    public void verifyEuropaLink(){
+        homePage.start()
+                .clickEuropa()
+                .verifyEuropaDisplayed()
+                .clickZoek()
+                .verifyResultsGreaterThanZero();
     }
 
 }
